@@ -1,13 +1,13 @@
-package game;
+package game.grounds;
 
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Ground;
 
 /**
+ * A class that represents a wall.
  * Created by:
  * @author Riordan D. Alfredo
  * Modified by:
- *
  */
 public class Wall extends Ground {
 
