@@ -1,4 +1,4 @@
-package game;
+package game.behaviours;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -11,13 +11,15 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.actors.Behaviour;
 
 /**
+ * Class representing a wander behaviour for an NPC.
  * Created by:
  * @author Riordan D. Alfredo
- * Modified by:
- *
+ * Modified by: Laura Zhakupova
  */
 public class WanderBehaviour implements Behaviour {
-
+    /**
+     * Random number generator
+     */
     private final Random random = new Random();
 
     /**

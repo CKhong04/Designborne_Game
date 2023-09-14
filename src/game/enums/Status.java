@@ -1,4 +1,4 @@
-package game;
+package game.enums;
 
 /**
  * Use this enum class to represent a status.
@@ -8,4 +8,9 @@ package game;
  */
 public enum Status {
     HOSTILE_TO_ENEMY,
+    EQUIPPED_WEAPON,
+    HAS_KEY,
+    LOCKED_GATE,
+    SKILL_ACTIVATED,
+    FOCUS_SKILL
 }

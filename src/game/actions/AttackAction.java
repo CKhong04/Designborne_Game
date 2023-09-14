@@ -1,14 +1,24 @@
-package game;
+package game.actions;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
+import game.enums.Status;
 
+import java.util.List;
 import java.util.Random;
 
+/**
+ * Class representing the attack action.
+ * Created by:
+ * @author
+ * Modified by: Laura Zhakupova
+ */
 public class AttackAction extends Action {
-
+    // Private attributes
     /**
      * The Actor that is to be attacked
      */
@@ -52,6 +62,13 @@ public class AttackAction extends Action {
         this.direction = direction;
     }
 
+    /**
+     * One actor attacks another.
+     *
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return a string which says who attacked who and how much damage.
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         if (weapon == null) {
@@ -66,12 +83,26 @@ public class AttackAction extends Action {
         String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
         target.hurt(damage);
         if (!target.isConscious()) {
+            // Dropping all items from the inventory
+            if (!(target.hasCapability(Status.HOSTILE_TO_ENEMY))){
+                List<Item> inventory = target.getItemInventory();
+                Location deathLocation = map.locationOf(target);
+                for(Item item : inventory){
+                    deathLocation.addItem(item);
+                }
+            }
+            result += "\n" + new DeathAction().execute(target, map);
             result += "\n" + target.unconscious(actor, map);
         }
-
         return result;
     }
 
+    /**
+     * Description of an action for the console menu.
+     *
+     * @param actor The actor performing the action.
+     * @return a string which says who attack who.
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor + " attacks " + target + " at " + direction + " with " + (weapon != null ? weapon : "Intrinsic Weapon");
