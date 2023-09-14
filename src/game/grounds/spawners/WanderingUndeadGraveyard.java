@@ -1,7 +1,7 @@
 package game.grounds.spawners;
 
 import edu.monash.fit2099.engine.positions.Location;
-import game.actors.enemies.WanderingUndead;
+import game.actors.npcs.enemies.WanderingUndead;
 
 /**
  * Class representing a Graveyard for Wandering Undead.

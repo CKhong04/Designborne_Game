@@ -1,7 +1,7 @@
 package game.grounds.spawners;
 
 import edu.monash.fit2099.engine.positions.Location;
-import game.actors.enemies.HollowSoldier;
+import game.actors.npcs.enemies.HollowSoldier;
 
 /**
  * Class representing a Graveyard for Hollow Soldier.
