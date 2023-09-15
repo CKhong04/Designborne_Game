@@ -7,15 +7,16 @@ import game.actors.enemies.WanderingUndead;
  * Class representing a Graveyard for Wandering Undead.
  * Created by:
  * @author Laura Zhakupova
+ * Modified by:
+ * @author Carissa Khong
  */
-public class WanderingUndeadGraveyard extends Graveyard{
+public class WanderingUndeadGraveyard extends SpawningGround {
     /**
-     * A constructor which takes chance to spawn as a parameter.
-     *
-     * @param chanceToSpawn chance to spawn in percentage.
+     * A constructor for the WanderingUndeadGraveyard class. Each turn, this graveyard has a 25% chance of spawning an
+     * enemy. On a map, this class is always displayed as an 'n'.
      */
-    public WanderingUndeadGraveyard(int chanceToSpawn) {
-        super(chanceToSpawn);
+    public WanderingUndeadGraveyard() {
+        super(25, 'n');
     }
 
     /**

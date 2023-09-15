@@ -7,15 +7,16 @@ import game.actors.enemies.HollowSoldier;
  * Class representing a Graveyard for Hollow Soldier.
  * Created by:
  * @author Laura Zhakupova
+ * Modified by:
+ * @author Carissa Khong
  */
-public class HollowSoldierGraveyard extends Graveyard{
+public class HollowSoldierGraveyard extends SpawningGround {
     /**
-     * A constructor which takes chance to spawn as a parameter.
-     *
-     * @param chanceToSpawn chance to spawn in percentage.
+     * A constructor for the HollowSoldierGraveyard class. The chance this has of spawning an enemy each turn is 10%.
+     * It is always displayed with an 'n' on a map.
      */
-    public HollowSoldierGraveyard(int chanceToSpawn) {
-        super(chanceToSpawn);
+    public HollowSoldierGraveyard() {
+        super(10, 'n');
     }
 
     /**
