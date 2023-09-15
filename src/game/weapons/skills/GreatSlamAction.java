@@ -44,8 +44,8 @@ public class GreatSlamAction extends Action {
             weaponItem.updateDamageMultiplier(NEW_DAMAGE_MULTIPLIER);
             actor.hurt(weaponItem.damage());
 
-            for (Exit exit: availableExits) {
-                Location destination = exit.getDestination();
+            for (Exit availableExit: availableExits) {
+                Location destination = availableExit.getDestination();
 
                 if (destination.containsAnActor()) {
                     Actor otherActor = destination.getActor();

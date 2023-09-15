@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.Weapon;
+import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.DeathAction;
 import game.enums.Ability;
 import game.enums.Status;
@@ -73,14 +74,19 @@ public abstract class Enemy extends Actor {
         if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)){
             actions.add(new AttackAction(this, direction));
 
-            if (otherActor.hasCapability(Status.EQUIPPED_WEAPON)){
-                for(Item item : otherActor.getItemInventory()){
-                    if (item.hasCapability(Status.EQUIPPED_WEAPON)){
-                        actions.add(new AttackAction(this, direction, (Weapon) item));
-                    }
-                }
+//            if (otherActor.hasCapability(Status.EQUIPPED_WEAPON)){
+//                for(Item item : otherActor.getItemInventory()){
+//                    if (item.hasCapability(Status.EQUIPPED_WEAPON)){
+//                        actions.add(new AttackAction(this, direction, (Weapon) item));
+//                    }
+//                }
+//            }
+
+            for (Item item: otherActor.getItemInventory()) {
+                actions.add(new AttackAction(this, direction, (WeaponItem) item));
             }
         }
+
         return actions;
     }
 }

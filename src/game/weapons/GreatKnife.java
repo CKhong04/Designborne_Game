@@ -5,9 +5,8 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.weapons.skills.StabAndStepAction;
-import game.weapons.skills.StabAndStepCapable;
 
-public class GreatKnife extends WeaponItem implements StabAndStepCapable {
+public class GreatKnife extends WeaponItem {
     private static final String NAME = "Great Knife";
     private static final char DISPLAY_CHAR = '>';
     private static final int DAMAGE = 75;
@@ -19,14 +18,14 @@ public class GreatKnife extends WeaponItem implements StabAndStepCapable {
         super(NAME, DISPLAY_CHAR, DAMAGE, VERB, HIT_RATE);
     }
 
-    public StabAndStepAction getStabAndStepAction() {
-        return new StabAndStepAction(this, STAMINA_DECREASE_PERCENTAGE);
+    public StabAndStepAction getStabAndStepAction(Actor otherActor){
+        return new StabAndStepAction(this, otherActor, STAMINA_DECREASE_PERCENTAGE);
     }
 
     @Override
     public ActionList allowableActions(Actor otherActor, Location location) {
-        ActionList actions = super.allowableActions(otherActor, location);
-        actions.add(this.getStabAndStepAction());
+        ActionList actions =  super.allowableActions(otherActor, location);
+        actions.add(this.getStabAndStepAction(otherActor));
         return actions;
     }
 }
