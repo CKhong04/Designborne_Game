@@ -9,11 +9,10 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.Weapon;
 import game.actions.DeathAction;
+import game.behaviours.*;
 import game.enums.Ability;
 import game.enums.Status;
 import game.actions.AttackAction;
-import game.behaviours.AttackBehaviour;
-import game.behaviours.WanderBehaviour;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +27,8 @@ public abstract class Enemy extends Actor {
     private Map<Integer, Behaviour> behaviours = new HashMap<>();
     /**
      * A constructor which accepts name, display character and hit points.
+     * Adds the possible behaviours the enemy could exhibit into a HashMap. If they are from the Ancient Woods, these
+     * enemies also have the ability to follow the player around once the player is within their surroundings.
      *
      * @param name Name to call the enemy in the UI.
      * @param displayChar Character to represent the enemy in the UI.
@@ -38,6 +39,9 @@ public abstract class Enemy extends Actor {
         this.addCapability(Ability.CANNOT_ACCESS_FLOOR);
         this.behaviours.put(0, new AttackBehaviour());
         this.behaviours.put(1, new WanderBehaviour());
+        if (this.hasCapability(Status.RESIDENT_ANCIENT_WOODS)){
+            this.behaviours.put(2, new FollowBehaviour());
+        }
     }
 
     /**
@@ -60,7 +64,7 @@ public abstract class Enemy extends Actor {
     }
 
     /**
-     * The wandering undead can be attacked by any actor that has the HOSTILE_TO_ENEMY capability
+     * Any enemies can be attacked by any actor that has the HOSTILE_TO_ENEMY capability
      *
      * @param otherActor the Actor that might be performing attack
      * @param direction  String representing the direction of the other Actor
