@@ -11,9 +11,10 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.World;
 import game.actors.Player;
 import game.grounds.*;
+import game.grounds.spawners.Bush;
 import game.grounds.spawners.HollowSoldierGraveyard;
+import game.grounds.spawners.Hut;
 import game.grounds.spawners.WanderingUndeadGraveyard;
-import game.items.consumableitems.HealingVile;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 
@@ -21,7 +22,7 @@ import game.weapons.Broadsword;
  * The main class to start the game.
  * Created by:
  * @author Adrian Kristanto
- * Modified by: Laura Zhakupova
+ * Modified by: Laura Zhakupova, Carissa Khong
  */
 public class Application {
 
@@ -54,8 +55,8 @@ public class Application {
         Item broadsword = new Broadsword(110,80,5,10,90);
         gameMap.at(27, 6).addItem(broadsword);
 
-        gameMap.at(55,2).setGround(new WanderingUndeadGraveyard(25));
-        gameMap.at(34,10).setGround(new WanderingUndeadGraveyard(25));
+        gameMap.at(55,2).setGround(new WanderingUndeadGraveyard());
+        gameMap.at(34,10).setGround(new WanderingUndeadGraveyard());
 
         // Set up second map
         List<String> burialGroundMap = Arrays.asList(
@@ -78,18 +79,53 @@ public class Application {
         GameMap burialGroundGameMap = new GameMap(groundFactory,burialGroundMap);
         world.addGameMap(burialGroundGameMap);
 
-        burialGroundGameMap.at(23,2).setGround(new HollowSoldierGraveyard(10));
-        burialGroundGameMap.at(13,11).setGround(new HollowSoldierGraveyard(10));
-        burialGroundGameMap.at(2,14).setGround(new HollowSoldierGraveyard(10));
+        burialGroundGameMap.at(23,2).setGround(new HollowSoldierGraveyard());
+        burialGroundGameMap.at(13,11).setGround(new HollowSoldierGraveyard());
+        burialGroundGameMap.at(2,14).setGround(new HollowSoldierGraveyard());
 
         // Set up gates
-        Gate villageGate = new Gate();
-        gameMap.at(27,0).setGround(villageGate);
-        villageGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(39, 14), "to The Burial Ground"));
+        Gate villageToBurialGroundGate = new Gate();
+        gameMap.at(27,0).setGround(villageToBurialGroundGate);
+        villageToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(39, 14), "to the Burial Ground."));
 
-        Gate groundGate = new Gate();
-        burialGroundGameMap.at(38,14).setGround(groundGate);
-        groundGate.addMoveAction(new MoveActorAction(gameMap.at(27, 0), "to The Abandoned Village"));
+        Gate groundToVillageGate = new Gate();
+        burialGroundGameMap.at(38,14).setGround(groundToVillageGate);
+        groundToVillageGate.addMoveAction(new MoveActorAction(gameMap.at(27, 0), "to the Abandoned Village."));
+
+        //Create the Ancient Woods Map
+        List<String> ancientWoodsMap = Arrays.asList(
+                "...............++++++..............++++++..................",
+                "...#######.......+++++...........++++......................",
+                "...#__...#........++++..........+++++++....................",
+                "...#..___#.....+++..................++++.........+++++++...",
+                "...###_###......+..................++++...........+++++....",
+                ".....................................+++............+++++..",
+                "........~~..........................+++.........+++++++....",
+                ".........~~~..............###_###....+.............++++....",
+                "...~~~~~~~~.....+++++.....#.___.#.....................++...",
+                "....~~~~~.....++++........#....._.......................+..",
+                "~~~~~~~.........+++.......#######..........................",
+                "~~~~~~..........++.........................................",
+                "~~~~~~~~~........+++.......................................");
+        GameMap ancientWoodsGameMap = new GameMap(groundFactory, ancientWoodsMap);
+        world.addGameMap(ancientWoodsGameMap);
+
+        //Add the bushes and huts to the Ancient Woods map
+        ancientWoodsGameMap.at(11, 3).setGround(new Bush());
+        ancientWoodsGameMap.at(30,2).setGround(new Bush());
+        ancientWoodsGameMap.at(3, 11).setGround(new Bush());
+
+        ancientWoodsGameMap.at(46,9).setGround(new Hut());
+        ancientWoodsGameMap.at(8, 7).setGround(new Hut());
+
+        //Add the gates to and from this place
+        Gate burialGroundToWoodsGate = new Gate();
+        burialGroundToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(24,4)," to the Ancient Woods."));
+        burialGroundGameMap.at(4,6).setGround(burialGroundToWoodsGate);
+
+        Gate woodsToBurialGroundGate = new Gate();
+        woodsToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(5,6)," to the Burial Ground."));
+        ancientWoodsGameMap.at(25,4).setGround(woodsToBurialGroundGate);
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
@@ -105,8 +141,6 @@ public class Application {
         Player player = new Player("The Abstracted One", '@', 150, 200);
         world.addPlayer(player, gameMap.at(29, 5));
 
-        //Item n = new HealingVile();
-        //gameMap.at(29,8).addItem(n);
         world.run();
     }
 }
