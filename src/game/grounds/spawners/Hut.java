@@ -12,10 +12,11 @@ import game.actors.enemies.ForestKeeper;
 public class Hut extends SpawningGround {
     /**
      * Constructor.
-     * An instance of the Hut class may spawn an enemy with a chance of 15% each turn. The display symbol of a hut is 'h'.
+     * An instance of the Hut class may spawn an enemy, with a chance which is passed in as a parameter when
+     * instantiating a new Hut. The display symbol of a hut is 'h'.
      */
-    public Hut() {
-        super(15, 'h');
+    public Hut(int chanceToSpawn) {
+        super(chanceToSpawn, 'h');
     }
 
     /**

@@ -15,8 +15,8 @@ public class Bush extends SpawningGround{
      *
      * Bushes have a 30% chance of spawning an enemy each turn and are displayed with the character 'm' on the map.
      */
-    public Bush() {
-        super(30, 'm');
+    public Bush(int chanceToSpawn) {
+        super(chanceToSpawn, 'm');
     }
 
     /**

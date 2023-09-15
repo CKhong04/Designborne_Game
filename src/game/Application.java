@@ -55,8 +55,8 @@ public class Application {
         Item broadsword = new Broadsword(110,80,5,10,90);
         gameMap.at(27, 6).addItem(broadsword);
 
-        gameMap.at(55,2).setGround(new WanderingUndeadGraveyard());
-        gameMap.at(34,10).setGround(new WanderingUndeadGraveyard());
+        gameMap.at(55,2).setGround(new WanderingUndeadGraveyard(25));
+        gameMap.at(34,10).setGround(new WanderingUndeadGraveyard(25));
 
         // Set up second map
         List<String> burialGroundMap = Arrays.asList(
@@ -79,9 +79,9 @@ public class Application {
         GameMap burialGroundGameMap = new GameMap(groundFactory,burialGroundMap);
         world.addGameMap(burialGroundGameMap);
 
-        burialGroundGameMap.at(23,2).setGround(new HollowSoldierGraveyard());
-        burialGroundGameMap.at(13,11).setGround(new HollowSoldierGraveyard());
-        burialGroundGameMap.at(2,14).setGround(new HollowSoldierGraveyard());
+        burialGroundGameMap.at(23,2).setGround(new HollowSoldierGraveyard(10));
+        burialGroundGameMap.at(13,11).setGround(new HollowSoldierGraveyard(10));
+        burialGroundGameMap.at(2,14).setGround(new HollowSoldierGraveyard(10));
 
         // Set up gates
         Gate villageToBurialGroundGate = new Gate();
@@ -96,36 +96,33 @@ public class Application {
         List<String> ancientWoodsMap = Arrays.asList(
                 "...............++++++..............++++++..................",
                 "...#######.......+++++...........++++......................",
-                "...#__...#........++++..........+++++++....................",
-                "...#..___#.....+++..................++++.........+++++++...",
-                "...###_###......+..................++++...........+++++....",
-                ".....................................+++............+++++..",
-                "........~~..........................+++.........+++++++....",
-                ".........~~~..............###_###....+.............++++....",
-                "...~~~~~~~~.....+++++.....#.___.#.....................++...",
-                "....~~~~~.....++++........#....._.......................+..",
-                "~~~~~~~.........+++.......#######..........................",
-                "~~~~~~..........++.........................................",
-                "~~~~~~~~~........+++.......................................");
+                "...#__...#........++++..........+++++++....###.............",
+                "...#..___#.....+++..................++++...#.#......++++...",
+                "...###_###......+..................++++...........+++.+....",
+                ".....................................+++.............++.+..",
+                "++......~~..........................+++.........+++++++....",
+                "++++.....~~~..............###_###....+.............++++....",
+                ".+++++~~~~~.....+++++.....#.___.#.....................++...",
+                "....+++++.....++++........#....._.......................+..",
+                "~~~~~+++........+++.......#######...................+.++...",
+                "~~~~~~..........++.................................+++.....");
         GameMap ancientWoodsGameMap = new GameMap(groundFactory, ancientWoodsMap);
         world.addGameMap(ancientWoodsGameMap);
 
         //Add the bushes and huts to the Ancient Woods map
-        ancientWoodsGameMap.at(11, 3).setGround(new Bush());
-        ancientWoodsGameMap.at(30,2).setGround(new Bush());
-        ancientWoodsGameMap.at(3, 11).setGround(new Bush());
+        ancientWoodsGameMap.at(11, 3).setGround(new Bush(30));
 
-        ancientWoodsGameMap.at(46,9).setGround(new Hut());
-        ancientWoodsGameMap.at(8, 7).setGround(new Hut());
+        ancientWoodsGameMap.at(46,9).setGround(new Hut(15));
+        ancientWoodsGameMap.at(8, 7).setGround(new Hut(15));
 
         //Add the gates to and from this place
         Gate burialGroundToWoodsGate = new Gate();
-        burialGroundToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(24,4)," to the Ancient Woods."));
+        burialGroundToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(26,6)," to the Ancient Woods."));
         burialGroundGameMap.at(4,6).setGround(burialGroundToWoodsGate);
 
         Gate woodsToBurialGroundGate = new Gate();
         woodsToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(5,6)," to the Burial Ground."));
-        ancientWoodsGameMap.at(25,4).setGround(woodsToBurialGroundGate);
+        ancientWoodsGameMap.at(27,6).setGround(woodsToBurialGroundGate);
 
 
         //Creating the room in ancient woods
@@ -155,15 +152,15 @@ public class Application {
         world.addGameMap(roomGameMap);
 
         //Adding the bushes and huts to the Room
-        ancientWoodsGameMap.at(30, 2).setGround(new Bush());
+        roomGameMap.at(30, 2).setGround(new Bush(30));
 
-        ancientWoodsGameMap.at(19,10).setGround(new Hut());
-        ancientWoodsGameMap.at(2, 11).setGround(new Hut());
+        roomGameMap.at(19,10).setGround(new Hut(15));
+        roomGameMap.at(2, 11).setGround(new Hut(15));
 
-        //Adding gate to come to the room
+        //Adding gates for access to the room
         Gate woodsToRoomGate = new Gate();
-        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13)," to the Room"));
-        ancientWoodsGameMap.at(36,10).setGround(woodsToRoomGate);
+        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13)," to the Room."));
+        ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
 
         // Print starting message

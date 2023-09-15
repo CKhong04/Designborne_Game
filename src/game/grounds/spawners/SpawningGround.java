@@ -18,7 +18,7 @@ public abstract class SpawningGround extends Ground {
      * Random number generator
      */
     private Random rand = new Random();
-    private int chanceToSpawn;
+    private static int chanceToSpawn;
 
     /**
      * A constructor which takes chance to spawn as a parameter.
@@ -27,7 +27,7 @@ public abstract class SpawningGround extends Ground {
      */
     public SpawningGround(int chanceToSpawn, char displayChar){
         super(displayChar);
-        this.chanceToSpawn = chanceToSpawn;
+        SpawningGround.chanceToSpawn = chanceToSpawn;
     }
 
     /**
@@ -39,7 +39,7 @@ public abstract class SpawningGround extends Ground {
      */
     protected void spawnEnemy(Actor enemy, Location location){
         if (!location.containsAnActor()){
-            if (rand.nextInt(100) <= this.chanceToSpawn) {
+            if (rand.nextInt(100) <= chanceToSpawn) {
                 location.addActor(enemy);
             }
         }

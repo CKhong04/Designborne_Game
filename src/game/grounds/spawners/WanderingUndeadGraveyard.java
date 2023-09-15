@@ -12,11 +12,11 @@ import game.actors.enemies.WanderingUndead;
  */
 public class WanderingUndeadGraveyard extends SpawningGround {
     /**
-     * A constructor for the WanderingUndeadGraveyard class. Each turn, this graveyard has a 25% chance of spawning an
-     * enemy. On a map, this class is always displayed as an 'n'.
+     * A constructor for the WanderingUndeadGraveyard class. Each turn, this graveyard has a chance of spawning an
+     * enemy. This chance is passed as a parameter upon instantiating. On a map, this class is always displayed as an 'n'.
      */
-    public WanderingUndeadGraveyard() {
-        super(25, 'n');
+    public WanderingUndeadGraveyard(int chanceToSpawn) {
+        super(chanceToSpawn, 'n');
     }
 
     /**
