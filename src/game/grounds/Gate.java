@@ -3,6 +3,7 @@ package game.grounds;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.enums.Status;
@@ -16,6 +17,7 @@ import game.actions.UnlockGateAction;
 public class Gate extends Ground {
     // Private attributes
     private Action moveAction;
+    private final Display display = new Display();
 
     /**
      * A constructor.
@@ -52,8 +54,10 @@ public class Gate extends Ground {
     @Override
     public ActionList allowableActions(Actor actor, Location location, String direction){
         ActionList actions = new ActionList();
-        if (this.hasCapability(Status.LOCKED_GATE)){
+        if (this.hasCapability(Status.LOCKED_GATE) && actor.hasCapability(Status.HAS_KEY)){
             actions.add(new UnlockGateAction(this));
+        } else if (this.hasCapability(Status.LOCKED_GATE)){
+            display.println("The gate is locked. " + actor + " must have an Old Key to unlock it.");
         } else {
             actions.add(this.moveAction);
         }
