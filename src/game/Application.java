@@ -22,7 +22,7 @@ import game.weapons.Broadsword;
  * The main class to start the game.
  * Created by:
  * @author Adrian Kristanto
- * Modified by: Laura Zhakupova, Carissa Khong
+ * Modified by: Laura Zhakupova, Carissa Khong, Ishita Gupta
  */
 public class Application {
 
@@ -126,6 +126,45 @@ public class Application {
         Gate woodsToBurialGroundGate = new Gate();
         woodsToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(5,6)," to the Burial Ground."));
         ancientWoodsGameMap.at(25,4).setGround(woodsToBurialGroundGate);
+
+
+        //Creating the room in ancient woods
+        List<String> roomMap = Arrays.asList(
+                "~~~~.......+++......~+++++..............",
+                "~~~~.......+++.......+++++..............",
+                "~~~++......+++........++++..............",
+                "~~~++......++...........+..............+",
+                "~~~~~~...........+.......~~~++........++",
+                "~~~~~~..........++++....~~~~++++......++",
+                "~~~~~~...........+++++++~~~~.++++.....++",
+                "~~~~~..............++++++~~...+++.....++",
+                "......................+++......++.....++",
+                ".......................+~~............++",
+                ".......................~~~~...........++",
+                "........................~~++...........+",
+                ".....++++...............+++++...........",
+                ".....++++~..............+++++...........",
+                "......+++~~.............++++...........~",
+                ".......++..++++.......................~~",
+                "...........+++++......................~~",
+                "...........++++++.....................~~",
+                "..........~~+++++......................~",
+                ".........~~~~++++..................~~..~"
+        );
+        GameMap roomGameMap = new GameMap(groundFactory, roomMap);
+        world.addGameMap(roomGameMap);
+
+        //Adding the bushes and huts to the Room
+        ancientWoodsGameMap.at(30, 2).setGround(new Bush());
+
+        ancientWoodsGameMap.at(19,10).setGround(new Hut());
+        ancientWoodsGameMap.at(2, 11).setGround(new Hut());
+
+        //Adding gate to come to the room
+        Gate woodsToRoomGate = new Gate();
+        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13)," to the Room"));
+        ancientWoodsGameMap.at(36,10).setGround(woodsToRoomGate);
+
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
