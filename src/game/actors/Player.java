@@ -101,4 +101,19 @@ public class Player extends Actor {
             return menu.showMenu(this, display);
         }
     }
+
+    @Override
+    public String toString() {
+        String output = name + " health (" +
+                this.getAttribute(BaseActorAttributes.HEALTH) + "/" +
+                this.getAttributeMaximum(BaseActorAttributes.HEALTH) +
+                ") ";
+
+        output += "stamina (" +
+                this.getAttribute(BaseActorAttributes.STAMINA) + "/" +
+                this.getAttributeMaximum(BaseActorAttributes.STAMINA) +
+                ")";
+
+        return output;
+    }
 }

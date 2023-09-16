@@ -18,6 +18,8 @@ import game.grounds.spawners.WanderingUndeadGraveyard;
 import game.items.consumableitems.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
+import game.weapons.GiantHammer;
+import game.weapons.GreatKnife;
 
 /**
  * The main class to start the game.
@@ -54,7 +56,13 @@ public class Application {
         world.addGameMap(gameMap);
 
         Item broadsword = new Broadsword(110,80,5,10,90);
-        gameMap.at(27, 6).addItem(broadsword);
+        gameMap.at(27, 5).addItem(broadsword);
+
+        Item greatKnife = new GreatKnife();
+        gameMap.at(31, 6).addItem(greatKnife);
+
+        Item giantHammer = new GiantHammer();
+        gameMap.at(27, 6).addItem(giantHammer);
 
         gameMap.at(55,2).setGround(new WanderingUndeadGraveyard(25));
         gameMap.at(34,10).setGround(new WanderingUndeadGraveyard(25));
