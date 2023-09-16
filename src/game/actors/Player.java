@@ -36,6 +36,7 @@ public class Player extends Actor {
     public Player(String name, char displayChar, int hitPoints, int staminaPoints) {
         super(name, displayChar, hitPoints);
         this.addCapability(Status.HOSTILE_TO_ENEMY);
+        this.addCapability(Status.DRINK_WATER);
         this.addAttribute(BaseActorAttributes.STAMINA, new BaseActorAttribute(staminaPoints));
     }
 
@@ -46,7 +47,8 @@ public class Player extends Actor {
     public String displayStatistics(){
         return this.name +
                 "\nHP: " + this.getAttribute(BaseActorAttributes.HEALTH) + "/" + this.getAttributeMaximum(BaseActorAttributes.HEALTH) +
-                "\nStamina: " + this.getAttribute(BaseActorAttributes.STAMINA) + "/" + this.getAttributeMaximum(BaseActorAttributes.STAMINA);
+                "\nStamina: " + this.getAttribute(BaseActorAttributes.STAMINA) + "/" + this.getAttributeMaximum(BaseActorAttributes.STAMINA) +
+                "\nWallet Balance: " + this.getBalance() + " Runes";
     }
 
     /**

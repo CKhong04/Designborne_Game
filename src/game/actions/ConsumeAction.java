@@ -19,6 +19,8 @@ public class ConsumeAction extends Action {
     private BaseActorAttributes baseActorAttributes;
     private int percentageValue;
 
+    private boolean isDiscount;
+
     /**
      * A constructor which accepts an operation to be done on the attribute, attribute
      * itself and the percentage to be changed from the maximum value.
@@ -28,11 +30,12 @@ public class ConsumeAction extends Action {
      * @param baseActorAttributes attribute which is modified.
      * @param percentageValue percentage by which attribute is modified.
      */
-    public ConsumeAction(Item item, ActorAttributeOperations actorAttributeOperation, BaseActorAttributes baseActorAttributes, int percentageValue){
+    public ConsumeAction(Item item, ActorAttributeOperations actorAttributeOperation, BaseActorAttributes baseActorAttributes, int percentageValue, boolean isDiscount){
         this.item = item;
         this.actorAttributeOperation = actorAttributeOperation;
         this.baseActorAttributes = baseActorAttributes;
         this.percentageValue = percentageValue;
+        this.isDiscount = isDiscount;
     }
 
     /**
@@ -44,8 +47,11 @@ public class ConsumeAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        int value = actor.getAttributeMaximum(this.baseActorAttributes) * this.percentageValue / 100;
-        actor.modifyAttribute(this.baseActorAttributes, this.actorAttributeOperation, value);
+        int updateValue = this.percentageValue;
+        if (isDiscount){
+            updateValue = actor.getAttributeMaximum(this.baseActorAttributes) * this.percentageValue / 100;
+        }
+        actor.modifyAttribute(this.baseActorAttributes, this.actorAttributeOperation, updateValue);
         actor.removeItemFromInventory(this.item);
         return menuDescription(actor);
     }

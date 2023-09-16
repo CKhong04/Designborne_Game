@@ -6,7 +6,8 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.items.GateKey;
-import game.items.consumableitems.HealingVile;
+import game.items.Rune;
+import game.items.consumableitems.HealingVial;
 import game.utilities.Utility;
 
 /**
@@ -17,8 +18,9 @@ import game.utilities.Utility;
  */
 public class WanderingUndead extends Enemy {
     // Private attributes
-    private int chanceDropKey = 25;
-    private int chanceDropHealingVile = 20;
+    private final int chanceDropKey = 25;
+    private final int chanceDropHealingVial = 20;
+    private final int chanceDropRune = 100;
 
     /**
      * A constructor.
@@ -27,7 +29,8 @@ public class WanderingUndead extends Enemy {
     public WanderingUndead() {
         super("Wandering Undead", 't', 100);
         Utility.addItemByChance(this, chanceDropKey, new GateKey("Old Key"));
-        Utility.addItemByChance(this, chanceDropHealingVile, new HealingVile());
+        Utility.addItemByChance(this, chanceDropHealingVial, new HealingVial());
+        Utility.addItemByChance(this,chanceDropRune, new Rune(50));
     }
 
     /**
@@ -53,4 +56,6 @@ public class WanderingUndead extends Enemy {
     public IntrinsicWeapon getIntrinsicWeapon() {
         return new IntrinsicWeapon(30, "whacks");
     }
+
+
 }
