@@ -36,6 +36,7 @@ public class Player extends Actor {
     public Player(String name, char displayChar, int hitPoints, int staminaPoints) {
         super(name, displayChar, hitPoints);
         this.addCapability(Status.HOSTILE_TO_ENEMY);
+        this.addCapability(Status.DRINK_WATER);
         this.addAttribute(BaseActorAttributes.STAMINA, new BaseActorAttribute(staminaPoints));
     }
 
