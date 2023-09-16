@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.enums.Status;
+import game.items.Rune;
 import game.items.consumableitems.HealingVial;
 import game.utilities.Utility;
 
@@ -30,6 +31,7 @@ public class ForestKeeper extends Enemy{
     public ForestKeeper() {
         super("The Forest Keeper", '8', 125);
         Utility.addItemByChance(this, dropVialChance, new HealingVial());
+        this.addItemToInventory(new Rune(22));
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
     }
 

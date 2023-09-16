@@ -15,6 +15,7 @@ import game.grounds.spawners.Bush;
 import game.grounds.spawners.HollowSoldierGraveyard;
 import game.grounds.spawners.Hut;
 import game.grounds.spawners.WanderingUndeadGraveyard;
+import game.items.consumableitems.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 
@@ -114,6 +115,8 @@ public class Application {
 
         ancientWoodsGameMap.at(46,9).setGround(new Hut(15));
         ancientWoodsGameMap.at(8, 7).setGround(new Hut(15));
+
+        ancientWoodsGameMap.at(47,3).addItem(new BloodBerry());
 
         //Add the gates to and from this place
         Gate burialGroundToWoodsGate = new Gate();
