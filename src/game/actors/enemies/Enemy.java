@@ -87,4 +87,15 @@ public abstract class Enemy extends Actor {
         }
         return actions;
     }
+
+    /**
+     * Method that can be executed when the actor is unconscious due to the action of another actor
+     * @param actor the perpetrator
+     * @param map where the actor fell unconscious
+     * @return a string describing what happened when the actor is unconscious
+     */
+    @Override
+    public String unconscious(Actor actor, GameMap map) {
+        return this + " met their demise in the hand of " + actor;
+    }
 }
