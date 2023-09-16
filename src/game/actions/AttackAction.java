@@ -88,7 +88,6 @@ public class AttackAction extends Action {
 
             }
 
-//        }
         return result;
     }
 

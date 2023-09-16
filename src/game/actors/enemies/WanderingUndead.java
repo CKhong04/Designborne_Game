@@ -2,11 +2,11 @@ package game.actors.enemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.items.GateKey;
+import game.items.Rune;
 import game.items.consumableitems.HealingVial;
 import game.utilities.Utility;
 
@@ -18,8 +18,9 @@ import game.utilities.Utility;
  */
 public class WanderingUndead extends Enemy {
     // Private attributes
-    private int chanceDropKey = 25;
-    private int chanceDropHealingVial = 20;
+    private final int chanceDropKey = 25;
+    private final int chanceDropHealingVial = 20;
+    private final int chanceDropRune = 100;
 
     /**
      * A constructor.
@@ -29,6 +30,7 @@ public class WanderingUndead extends Enemy {
         super("Wandering Undead", 't', 100);
         Utility.addItemByChance(this, chanceDropKey, new GateKey("Old Key"));
         Utility.addItemByChance(this, chanceDropHealingVial, new HealingVial());
+        Utility.addItemByChance(this,chanceDropRune, new Rune(50));
     }
 
     /**
@@ -55,18 +57,5 @@ public class WanderingUndead extends Enemy {
         return new IntrinsicWeapon(30, "whacks");
     }
 
-    /**
-     * Method that can be executed when the actor is unconscious due to the action of another actor
-     * @param actor the perpetrator
-     * @param map where the actor fell unconscious
-     * @return a string describing what happened when the actor is unconscious
-     */
-    @Override
-    public String unconscious(Actor actor, GameMap map) {
 
-        for (int i = 0; i < this.getItemInventory().size();i++) {
-            this.getItemInventory().get(i).getDropAction(this).execute(this, map);
-        }
-        return this + " met their demise in the hand of " + actor;
-    }
 }

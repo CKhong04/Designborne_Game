@@ -47,7 +47,8 @@ public class Player extends Actor {
     public String displayStatistics(){
         return this.name +
                 "\nHP: " + this.getAttribute(BaseActorAttributes.HEALTH) + "/" + this.getAttributeMaximum(BaseActorAttributes.HEALTH) +
-                "\nStamina: " + this.getAttribute(BaseActorAttributes.STAMINA) + "/" + this.getAttributeMaximum(BaseActorAttributes.STAMINA);
+                "\nStamina: " + this.getAttribute(BaseActorAttributes.STAMINA) + "/" + this.getAttributeMaximum(BaseActorAttributes.STAMINA) +
+                "\nWallet Balance: " + this.getBalance() + " Runes";
     }
 
     /**

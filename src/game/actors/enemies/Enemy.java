@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
 import game.actions.DeathAction;
 import game.behaviours.*;
@@ -15,6 +16,7 @@ import game.enums.Status;
 import game.actions.AttackAction;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -96,6 +98,11 @@ public abstract class Enemy extends Actor {
      */
     @Override
     public String unconscious(Actor actor, GameMap map) {
+        List<Item> inventory = this.getItemInventory();
+        Location deathLocation = map.locationOf(this);
+        for(Item item : inventory){
+            deathLocation.addItem(item);
+        }
         return this + " met their demise in the hand of " + actor;
     }
 }

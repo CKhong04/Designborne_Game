@@ -2,10 +2,10 @@ package game.actors.enemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.items.Rune;
 import game.items.consumableitems.HealingVial;
 import game.items.consumableitems.RefreshingFlask;
 import game.utilities.Utility;
@@ -17,22 +17,23 @@ import game.utilities.Utility;
  */
 public class HollowSoldier extends Enemy {
     // Private attributes
-    private int chanceDropHealingVial = 20;
-    private int chanceDropRefreshingFlask = 30;
+    private final int chanceDropHealingVial = 20;
+    private final int chanceDropRefreshingFlask = 30;
 
+    private final int chanceDropRune = 100;
     /**
      * A constructor.
      * Adds an item that is dropped after death by chance.
      */
     public HollowSoldier() {
         super("Hollow Soldier", '&', 200);
+        Utility.addItemByChance(this,chanceDropRune, new Rune(100));
         Utility.addItemByChance(this, chanceDropHealingVial, new HealingVial());
         Utility.addItemByChance(this, chanceDropRefreshingFlask, new RefreshingFlask());
     }
 
     /**
      * Executes an allowable action every turn
-     *
      * @param actions    collection of possible Actions for this Actor
      * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
      * @param map        the map containing the Actor
@@ -54,18 +55,6 @@ public class HollowSoldier extends Enemy {
         return new IntrinsicWeapon(50, "whacks");
     }
 
-    /**
-     * Method that can be executed when the actor is unconscious due to the action of another actor
-     * @param actor the perpetrator
-     * @param map where the actor fell unconscious
-     * @return a string describing what happened when the actor is unconscious
-     */
-    @Override
-    public String unconscious(Actor actor, GameMap map) {
-        for (int i = 0; i < this.getItemInventory().size();i++) {
-            this.getItemInventory().get(i).getDropAction(this).execute(this, map);
-        }
-        return this + " met their demise in the hand of " + actor;
-    }
+
 
 }
