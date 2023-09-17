@@ -83,17 +83,11 @@ public class AttackAction extends Action {
         String result = actor + " " + weapon.verb() + " " + target + " for " + damage + " damage.";
         target.hurt(damage);
         if (!target.isConscious()) {
-            // Dropping all items from the inventory
-            if (!(target.hasCapability(Status.HOSTILE_TO_ENEMY))){
-                List<Item> inventory = target.getItemInventory();
-                Location deathLocation = map.locationOf(target);
-                for(Item item : inventory){
-                    deathLocation.addItem(item);
-                }
-            }
-            result += "\n" + new DeathAction().execute(target, map);
             result += "\n" + target.unconscious(actor, map);
-        }
+            result += "\n" + new DeathAction().execute(target, map);
+
+            }
+
         return result;
     }
 

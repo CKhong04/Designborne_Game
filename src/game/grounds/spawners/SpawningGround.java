@@ -7,26 +7,27 @@ import edu.monash.fit2099.engine.positions.Location;
 import java.util.Random;
 
 /**
- * Class representing an abstract Graveyard.
+ * Class representing an abstract ground which is able to spawn different enemies..
  * Created by:
  * @author Laura Zhakupova
+ * @author Carissa Khong
  */
-public abstract class Graveyard extends Ground {
+public abstract class SpawningGround extends Ground {
     // Attributes
     /**
      * Random number generator
      */
     private Random rand = new Random();
-    private int chanceToSpawn;
+    private static int chanceToSpawn;
 
     /**
      * A constructor which takes chance to spawn as a parameter.
      *
      * @param chanceToSpawn chance to spawn in percentage.
      */
-    public Graveyard(int chanceToSpawn){
-        super('n');
-        this.chanceToSpawn = chanceToSpawn;
+    public SpawningGround(int chanceToSpawn, char displayChar){
+        super(displayChar);
+        SpawningGround.chanceToSpawn = chanceToSpawn;
     }
 
     /**
@@ -38,7 +39,7 @@ public abstract class Graveyard extends Ground {
      */
     protected void spawnEnemy(Actor enemy, Location location){
         if (!location.containsAnActor()){
-            if (rand.nextInt(100) <= this.chanceToSpawn) {
+            if (rand.nextInt(100) <= chanceToSpawn) {
                 location.addActor(enemy);
             }
         }
