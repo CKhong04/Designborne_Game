@@ -14,8 +14,8 @@ import game.utilities.Utility;
  */
 public class SellAction extends Action {
     // Private attributes
-    private Actor trader;
-    private Sellable item;
+    private final Actor trader;
+    private final Sellable item;
 
     /**
      * A constructor which accepts a trader and an item.
@@ -37,7 +37,7 @@ public class SellAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        if (Utility.getChance(this.item.getSellScamChance())){
+        if (!(Utility.getChance(this.item.getSellScamChance()))){
             actor.addBalance(this.item.getSellPrice());
         }
         actor.removeItemFromInventory((Item) this.item);

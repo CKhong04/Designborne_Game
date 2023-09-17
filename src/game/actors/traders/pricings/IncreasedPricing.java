@@ -34,7 +34,7 @@ public class IncreasedPricing implements Pricing {
     public int getPrice(int originalPrice){
         Random rand = new Random();
         if (rand.nextInt(100) <= this.chanceToIncrease) {
-            return originalPrice * (1+(this.percentageIncrease/100));
+            return (int)(originalPrice * (1+(this.percentageIncrease/100.0)));
         } else {
             return originalPrice;
         }

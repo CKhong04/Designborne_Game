@@ -34,7 +34,7 @@ public class ReducedPricing implements Pricing {
     public int getPrice(int originalPrice){
         Random rand = new Random();
         if (rand.nextInt(100) <= this.chanceToIncrease) {
-            return originalPrice * (1-(this.percentageDecrease/100));
+            return (int)(originalPrice * (1-(this.percentageDecrease/100.0)));
         } else {
             return originalPrice;
         }

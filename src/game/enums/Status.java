@@ -15,5 +15,6 @@ public enum Status {
     FOCUS_SKILL,
     RESIDENT_ANCIENT_WOODS,
     FOLLOWING_ACTOR,
-    DRINK_WATER
+    DRINK_WATER,
+    SELLABLE
 }
