@@ -6,11 +6,11 @@ import game.actors.traders.pricings.Pricing;
 import game.actors.traders.pricings.RegularPricing;
 
 public class BloodBerry  extends ConsumableItem {
-    private static int BUY_PRICE = 0;
-    private static Pricing BUY_PRICING = new RegularPricing();
-    private static int SELL_PRICE = 10;
-    private static Pricing SELL_PRICING = new RegularPricing();
-    private static int SCAM_CHANCE = 0;
+    private static final int BUY_PRICE = 0;
+    private static final Pricing BUY_PRICING = new RegularPricing();
+    private static final int SELL_PRICE = 10;
+    private static final Pricing SELL_PRICING = new RegularPricing();
+    private static final int SCAM_CHANCE = 0;
     /***
      * Constructor.
      */

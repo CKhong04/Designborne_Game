@@ -26,14 +26,14 @@ public abstract class ConsumableItem extends Item implements Buyable, Sellable{
     private boolean isDiscount;
 
     // Buyable attributes
-    private int buyPrice;
-    private Pricing buyPricingStrategy;
-    private int buyChanceScam;
+    private final int buyPrice;
+    private final Pricing buyPricingStrategy;
+    private final int buyChanceScam;
 
     // Sellable attributes
-    private int sellPrice;
-    private Pricing sellPricingStrategy;
-    private int sellChanceScam;
+    private final int sellPrice;
+    private final Pricing sellPricingStrategy;
+    private final int sellChanceScam;
     /***
      * Constructor.
      * @param name the name of this Item

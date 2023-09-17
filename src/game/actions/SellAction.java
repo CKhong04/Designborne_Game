@@ -15,7 +15,7 @@ import game.utilities.Utility;
 public class SellAction extends Action {
     // Private attributes
     private Actor trader;
-    private Sellable item;
+    private final Sellable item;
 
     /**
      * A constructor which accepts a trader and an item.

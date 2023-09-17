@@ -29,12 +29,12 @@ public class Broadsword extends WeaponItem implements AbleToActivateSkill, Buyab
     private Action weaponAbility;
 
     // Buyable/Sellable attributes
-    private static int BUY_PRICE = 250;
-    private static Pricing BUY_PRICING = new RegularPricing();
-    private static int SELL_PRICE = 100;
-    private static Pricing SELL_PRICING = new RegularPricing();
-    private static int BUY_SCAM_CHANCE = 5;
-    private static int SELL_SCAM_CHANCE = 0;
+    private static final int BUY_PRICE = 250;
+    private static final Pricing BUY_PRICING = new RegularPricing();
+    private static final int SELL_PRICE = 100;
+    private static final Pricing SELL_PRICING = new RegularPricing();
+    private static final int BUY_SCAM_CHANCE = 5;
+    private static final int SELL_SCAM_CHANCE = 0;
 
     /**
      * A constructor which accepts values of damage, hit rate, number of turns for the skill to ba activated,

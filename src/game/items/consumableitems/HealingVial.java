@@ -11,11 +11,11 @@ import game.actors.traders.pricings.Pricing;
  * @author Laura Zhakupova
  */
 public class HealingVial extends ConsumableItem {
-    private static int BUY_PRICE = 100;
-    private static Pricing BUY_PRICING = new IncreasedPricing(25, 50);
-    private static int SELL_PRICE = 35;
-    private static Pricing SELL_PRICING = new IncreasedPricing(10, 100);
-    private static int SCAM_CHANCE = 0;
+    private static final int BUY_PRICE = 100;
+    private static final Pricing BUY_PRICING = new IncreasedPricing(25, 50);
+    private static final int SELL_PRICE = 35;
+    private static final Pricing SELL_PRICING = new IncreasedPricing(10, 100);
+    private static final int SCAM_CHANCE = 0;
     /***
      * Constructor.
      */
