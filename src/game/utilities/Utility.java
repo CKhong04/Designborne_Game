@@ -18,4 +18,15 @@ public class Utility {
             actor.addItemToInventory(item);
         }
     }
+
+    /**
+     * Returns True if the chance is successful.
+     *
+     * @param chance chance
+     * @return if the chance is successful or not.
+     */
+    public static boolean getChance(int chance){
+        Random rand = new Random();
+        return rand.nextInt(100) <= chance;
+    }
 }

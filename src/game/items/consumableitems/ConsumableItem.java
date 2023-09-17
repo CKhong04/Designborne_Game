@@ -6,6 +6,9 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.items.Item;
 import game.actions.ConsumeAction;
+import game.actors.traders.pricings.Pricing;
+import game.items.tradableitems.Buyable;
+import game.items.tradableitems.Sellable;
 
 /**
  * Class representing an abstract consumable item.
