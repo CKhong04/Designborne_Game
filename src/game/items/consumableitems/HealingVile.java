@@ -10,7 +10,7 @@ import game.actors.traders.pricings.Pricing;
  * Created by:
  * @author Laura Zhakupova
  */
-public class HealingVial extends ConsumableItem{
+public class HealingVile extends ConsumableItem{
     private static int BUY_PRICE = 100;
     private static Pricing BUY_PRICING = new IncreasedPricing(25, 50);
     private static int SELL_PRICE = 35;
@@ -18,7 +18,7 @@ public class HealingVial extends ConsumableItem{
     /***
      * Constructor.
      */
-    public HealingVial() {
+    public HealingVile() {
         super("the Healing vial", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, 10, BUY_PRICE, BUY_PRICING, 0, SELL_PRICE,SELL_PRICING, 0);
     }
 }

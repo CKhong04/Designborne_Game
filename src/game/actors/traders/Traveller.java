@@ -6,7 +6,7 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.BuyAction;
 import game.actions.SellAction;
-import game.items.consumableitems.HealingVial;
+import game.items.consumableitems.HealingVile;
 import game.items.consumableitems.RefreshingFlask;
 import game.items.tradableitems.Sellable;
 
@@ -35,7 +35,7 @@ public class Traveller extends Trader {
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList list = super.allowableActions(otherActor, direction, map);
 
-        list.add(new BuyAction(this, new HealingVial()));
+        list.add(new BuyAction(this, new HealingVile()));
         list.add(new BuyAction(this, new RefreshingFlask()));
         //list.add(new BuyAction(this, new Broadsword(110,80,5,10,90)));
 
