@@ -14,7 +14,7 @@ import game.utilities.Utility;
  */
 public class SellAction extends Action {
     // Private attributes
-    private Actor trader;
+    private final Actor trader;
     private final Sellable item;
 
     /**
