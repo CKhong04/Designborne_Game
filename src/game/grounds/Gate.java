@@ -13,6 +13,8 @@ import game.actions.UnlockGateAction;
  * Class representing a gate.
  * Created by:
  * @author Laura Zhakupova
+ * Modified by:
+ * Carissa Khong
  */
 public class Gate extends Ground {
     // Private attributes
