@@ -11,10 +11,15 @@ import game.actors.traders.pricings.Pricing;
  * @author Laura Zhakupova
  */
 public class HealingVial extends ConsumableItem {
+    private static int BUY_PRICE = 100;
+    private static Pricing BUY_PRICING = new IncreasedPricing(25, 50);
+    private static int SELL_PRICE = 35;
+    private static Pricing SELL_PRICING = new IncreasedPricing(10, 100);
+    private static int SCAM_CHANCE = 0;
     /***
      * Constructor.
      */
     public HealingVial() {
-        super("the Healing Vial", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, 10,true);
+        super("the Healing Vial", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, 10,true, BUY_PRICE, BUY_PRICING, SCAM_CHANCE, SELL_PRICE,SELL_PRICING, SCAM_CHANCE);
     }
 }

@@ -4,12 +4,14 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.monash.fit2099.engine.actions.MoveActorAction;
+import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.FancyGroundFactory;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.World;
 import game.actors.Player;
+import game.actors.traders.Traveller;
 import game.grounds.*;
 import game.grounds.spawners.Bush;
 import game.grounds.spawners.HollowSoldierGraveyard;
@@ -135,6 +137,9 @@ public class Application {
         woodsToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(5,6)," to the Burial Ground."));
         ancientWoodsGameMap.at(27,6).setGround(woodsToBurialGroundGate);
 
+        //Add Traveller
+        Actor Traveller = new Traveller();
+        world.addPlayer(Traveller, ancientWoodsGameMap.at(6, 3));
 
         //Creating the room in ancient woods
         List<String> roomMap = Arrays.asList(

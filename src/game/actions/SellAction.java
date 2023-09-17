@@ -37,7 +37,7 @@ public class SellAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        if (Utility.getChance(this.item.getSellScamChance())){
+        if (!(Utility.getChance(this.item.getSellScamChance()))){
             actor.addBalance(this.item.getSellPrice());
         }
         actor.removeItemFromInventory((Item) this.item);
