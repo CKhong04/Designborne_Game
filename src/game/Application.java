@@ -130,11 +130,11 @@ public class Application {
 
         //Add the gates to and from this place
         Gate burialGroundToWoodsGate = new Gate();
-        burialGroundToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(26,6)," to the Ancient Woods."));
+        burialGroundToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(26,6),"to the Ancient Woods."));
         burialGroundGameMap.at(4,6).setGround(burialGroundToWoodsGate);
 
         Gate woodsToBurialGroundGate = new Gate();
-        woodsToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(5,6)," to the Burial Ground."));
+        woodsToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(5,6),"to the Burial Ground."));
         ancientWoodsGameMap.at(27,6).setGround(woodsToBurialGroundGate);
 
         //Add Traveller
@@ -175,7 +175,7 @@ public class Application {
 
         //Adding gates for access to the room
         Gate woodsToRoomGate = new Gate();
-        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13)," to the Room."));
+        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the Room."));
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
 
