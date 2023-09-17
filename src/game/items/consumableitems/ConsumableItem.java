@@ -17,16 +17,19 @@ public abstract class ConsumableItem extends Item {
     private ActorAttributeOperations actorAttributeOperation;
     private BaseActorAttributes baseActorAttributes;
     private int percentageValue;
+
+    private boolean isDiscount;
     /***
      * Constructor.
      * @param name the name of this Item
      * @param displayChar the character to use to represent this item if it is on the ground
      */
-    public ConsumableItem(String name, char displayChar, ActorAttributeOperations actorAttributeOperation, BaseActorAttributes baseActorAttributes, int percentageValue) {
+    public ConsumableItem(String name, char displayChar, ActorAttributeOperations actorAttributeOperation, BaseActorAttributes baseActorAttributes, int percentageValue, boolean isDiscount) {
         super(name, displayChar, true);
         this.actorAttributeOperation = actorAttributeOperation;
         this.baseActorAttributes = baseActorAttributes;
         this.percentageValue = percentageValue;
+        this.isDiscount = isDiscount;
     }
 
     /**
@@ -38,7 +41,7 @@ public abstract class ConsumableItem extends Item {
     @Override
     public ActionList allowableActions(Actor actor) {
         ActionList actions = super.allowableActions(actor);
-        actions.add(new ConsumeAction(this, this.actorAttributeOperation, this.baseActorAttributes, this.percentageValue));
+        actions.add(new ConsumeAction(this, this.actorAttributeOperation, this.baseActorAttributes, this.percentageValue, this.isDiscount));
         return actions;
     }
 }

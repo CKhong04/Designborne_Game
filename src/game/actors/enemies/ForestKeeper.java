@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.enums.Status;
+import game.items.Rune;
 import game.items.consumableitems.HealingVial;
 import game.utilities.Utility;
 
@@ -18,10 +19,10 @@ public class ForestKeeper extends Enemy{
 
     //Private attributes
     private final int dropVialChance = 20;
+    private final int chanceDropRune = 100;
 
     /**
      * A constructor which accepts name, display character and hit points.
-     *
      * The Forest Keeper is an enemy which the player can encounter in the Ancient Woods. They can spawn from the huts
      * in the map. The Forest Keeper has the display character '8' and 125 hit points to start.
      * The Forest Keeper can also drop a Healing Vial when killed by the player, which has a 20% chance of occurring.
@@ -29,6 +30,8 @@ public class ForestKeeper extends Enemy{
     public ForestKeeper() {
         super("The Forest Keeper", '8', 125);
         Utility.addItemByChance(this, dropVialChance, new HealingVial());
+        Utility.addItemByChance(this,chanceDropRune, new Rune(50));
+
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
     }
 
@@ -52,4 +55,6 @@ public class ForestKeeper extends Enemy{
     public IntrinsicWeapon getIntrinsicWeapon() {
         return new IntrinsicWeapon(25, "hits", 75);
     }
+
+
 }

@@ -7,7 +7,9 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.Weapon;
+import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.DeathAction;
 import game.behaviours.*;
 import game.enums.Ability;
@@ -15,6 +17,7 @@ import game.enums.Status;
 import game.actions.AttackAction;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -76,14 +79,35 @@ public abstract class Enemy extends Actor {
         if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)){
             actions.add(new AttackAction(this, direction));
 
-            if (otherActor.hasCapability(Status.EQUIPPED_WEAPON)){
-                for(Item item : otherActor.getItemInventory()){
-                    if (item.hasCapability(Status.EQUIPPED_WEAPON)){
-                        actions.add(new AttackAction(this, direction, (Weapon) item));
-                    }
-                }
+//            if (otherActor.hasCapability(Status.EQUIPPED_WEAPON)){
+//                for(Item item : otherActor.getItemInventory()){
+//                    if (item.hasCapability(Status.EQUIPPED_WEAPON)){
+//                        actions.add(new AttackAction(this, direction, (Weapon) item));
+//                    }
+//                }
+//            }
+
+            for (Item item: otherActor.getItemInventory()) {
+                actions.add(new AttackAction(this, direction, (WeaponItem) item));
             }
         }
+
         return actions;
+    }
+
+    /**
+     * Method that can be executed when the actor is unconscious due to the action of another actor
+     * @param actor the perpetrator
+     * @param map where the actor fell unconscious
+     * @return a string describing what happened when the actor is unconscious
+     */
+    @Override
+    public String unconscious(Actor actor, GameMap map) {
+        List<Item> inventory = this.getItemInventory();
+        Location deathLocation = map.locationOf(this);
+        for(Item item : inventory){
+            deathLocation.addItem(item);
+        }
+        return this + " met their demise in the hand of " + actor;
     }
 }

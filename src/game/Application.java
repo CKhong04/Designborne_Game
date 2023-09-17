@@ -15,8 +15,11 @@ import game.grounds.spawners.Bush;
 import game.grounds.spawners.HollowSoldierGraveyard;
 import game.grounds.spawners.Hut;
 import game.grounds.spawners.WanderingUndeadGraveyard;
+import game.items.consumableitems.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
+import game.weapons.GiantHammer;
+import game.weapons.GreatKnife;
 
 /**
  * The main class to start the game.
@@ -53,7 +56,13 @@ public class Application {
         world.addGameMap(gameMap);
 
         Item broadsword = new Broadsword(110,80,5,10,90);
-        gameMap.at(27, 6).addItem(broadsword);
+        gameMap.at(27, 5).addItem(broadsword);
+
+        Item greatKnife = new GreatKnife();
+        gameMap.at(31, 6).addItem(greatKnife);
+
+        Item giantHammer = new GiantHammer();
+        gameMap.at(27, 6).addItem(giantHammer);
 
         gameMap.at(55,2).setGround(new WanderingUndeadGraveyard(25));
         gameMap.at(34,10).setGround(new WanderingUndeadGraveyard(25));
@@ -114,6 +123,8 @@ public class Application {
 
         ancientWoodsGameMap.at(46,9).setGround(new Hut(15));
         ancientWoodsGameMap.at(8, 7).setGround(new Hut(15));
+
+        ancientWoodsGameMap.at(47,3).addItem(new BloodBerry());
 
         //Add the gates to and from this place
         Gate burialGroundToWoodsGate = new Gate();

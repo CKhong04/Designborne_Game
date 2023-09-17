@@ -13,6 +13,6 @@ public class HealingVial extends ConsumableItem {
      * Constructor.
      */
     public HealingVial() {
-        super("the Healing Vial", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, 10);
+        super("the Healing Vial", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, 10,true);
     }
 }
