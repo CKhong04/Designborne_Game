@@ -20,16 +20,13 @@ public class Utility {
     }
 
     /**
-     * Returns True if the chance is successful
-     * @param chance
-     * @return
+     * Returns True if the chance is successful.
+     *
+     * @param chance chance
+     * @return if the chance is successful or not.
      */
     public static boolean getChance(int chance){
         Random rand = new Random();
-        if (rand.nextInt(100) <= chance) {
-            return true;
-        } else {
-            return false;
-        }
+        return rand.nextInt(100) <= chance;
     }
 }

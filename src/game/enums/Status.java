@@ -12,6 +12,5 @@ public enum Status {
     HAS_KEY,
     LOCKED_GATE,
     SKILL_ACTIVATED,
-    FOCUS_SKILL,
-    NEXT_TO_TRADER
+    FOCUS_SKILL
 }
