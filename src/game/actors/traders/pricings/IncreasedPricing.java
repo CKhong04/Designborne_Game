@@ -1,4 +1,4 @@
-package game.actors.npcs.traders.pricings;
+package game.actors.traders.pricings;
 
 import java.util.Random;
 
