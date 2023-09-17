@@ -15,6 +15,6 @@ public class HealingVile extends ConsumableItem{
      * Constructor.
      */
     public HealingVile() {
-        super("the Healing vial", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, 10, BUY_PRICE, BUY_PRICING, 0, SELL_PRICE,SELL_PRICING, 0);
+        super("the Healing vial", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, 10);
     }
 }

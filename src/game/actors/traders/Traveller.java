@@ -35,8 +35,8 @@ public class Traveller extends Trader {
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList list = super.allowableActions(otherActor, direction, map);
 
-        list.add(new BuyAction(this, new HealingVile()));
-        list.add(new BuyAction(this, new RefreshingFlask()));
+        //list.add(new BuyAction(this, new HealingVile()));
+        //list.add(new BuyAction(this, new RefreshingFlask()));
         //list.add(new BuyAction(this, new Broadsword(110,80,5,10,90)));
 
         for (Item item : otherActor.getItemInventory()){
