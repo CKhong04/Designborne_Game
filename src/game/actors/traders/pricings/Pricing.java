@@ -1,15 +1,16 @@
 package game.actors.traders.pricings;
 
 /**
- * Abstract PricingStrategy class
- * Base class for all the pricing strategies
+ * Interface for all the pricing strategies.
+ * Created by:
+ * @author Laura Zhakupova
  */
-public abstract class Pricing {
+public interface Pricing {
     /**
-     * Calculates the new price based on the original price and the specific pricing strategy
+     * Calculates the new price based on the original price and the pricing strategy.
      *
-     * @param originalPrice original price of the product
-     * @return new price calculated using the pricing strategy
+     * @param originalPrice original price.
+     * @return a new price calculated using the pricing strategy.
      */
-    public abstract int getPrice(int originalPrice);
+    int getPrice(int originalPrice);
 }
