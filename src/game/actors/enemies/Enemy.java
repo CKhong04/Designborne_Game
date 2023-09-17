@@ -27,8 +27,7 @@ public abstract class Enemy extends Actor {
     private Map<Integer, Behaviour> behaviours = new HashMap<>();
     /**
      * A constructor which accepts name, display character and hit points.
-     * Adds the possible behaviours the enemy could exhibit into a HashMap. If they are from the Ancient Woods, these
-     * enemies also have the ability to follow the player around once the player is within their surroundings.
+     * An enemy cannot move through a Floor in the maps, therefore, an Ability is added preventing this from happening.
      *
      * @param name Name to call the enemy in the UI.
      * @param displayChar Character to represent the enemy in the UI.
@@ -37,11 +36,6 @@ public abstract class Enemy extends Actor {
     public Enemy(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.addCapability(Ability.CANNOT_ACCESS_FLOOR);
-        this.behaviours.put(0, new AttackBehaviour());
-        this.behaviours.put(1, new WanderBehaviour());
-        if (this.hasCapability(Status.RESIDENT_ANCIENT_WOODS)){
-            this.behaviours.put(2, new FollowBehaviour());
-        }
     }
 
     /**
@@ -54,6 +48,11 @@ public abstract class Enemy extends Actor {
         if (!this.isConscious()){
             return new DeathAction();
         } else {
+            if (this.hasCapability(Status.RESIDENT_ANCIENT_WOODS)){
+                this.behaviours.put(0, new FollowBehaviour());
+            }
+            this.behaviours.put(1, new AttackBehaviour());
+            this.behaviours.put(2, new WanderBehaviour());
             for (Behaviour behaviour : behaviours.values()) {
                 Action action = behaviour.getAction(this, map);
                 if(action != null)
@@ -64,7 +63,7 @@ public abstract class Enemy extends Actor {
     }
 
     /**
-     * Any enemies can be attacked by any actor that has the HOSTILE_TO_ENEMY capability
+     * Enemies can be attacked by any actor that has the HOSTILE_TO_ENEMY capability
      *
      * @param otherActor the Actor that might be performing attack
      * @param direction  String representing the direction of the other Actor
