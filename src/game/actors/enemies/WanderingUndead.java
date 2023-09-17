@@ -1,4 +1,4 @@
-package game.actors.npcs.enemies;
+package game.actors.enemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
@@ -6,7 +6,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.items.GateKey;
-import game.items.consumableitems.HealingVile;
+import game.items.consumableitems.HealingVial;
 import game.utilities.Utility;
 
 /**
@@ -27,7 +27,7 @@ public class WanderingUndead extends Enemy {
     public WanderingUndead() {
         super("Wandering Undead", 't', 100);
         Utility.addItemByChance(this, chanceDropKey, new GateKey("Old Key"));
-        Utility.addItemByChance(this, chanceDropHealingVile, new HealingVile());
+        Utility.addItemByChance(this, chanceDropHealingVile, new HealingVial());
     }
 
     /**

@@ -1,4 +1,4 @@
-package game.actors.npcs.enemies;
+package game.actors.enemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;

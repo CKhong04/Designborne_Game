@@ -1,11 +1,11 @@
-package game.actors.npcs.enemies;
+package game.actors.enemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import game.items.consumableitems.HealingVile;
+import game.items.consumableitems.HealingVial;
 import game.items.consumableitems.RefreshingFlask;
 import game.utilities.Utility;
 
@@ -25,7 +25,7 @@ public class HollowSoldier extends Enemy {
      */
     public HollowSoldier() {
         super("Hollow Soldier", '&', 200);
-        Utility.addItemByChance(this, chanceDropHealingVile, new HealingVile());
+        Utility.addItemByChance(this, chanceDropHealingVile, new HealingVial());
         Utility.addItemByChance(this, chanceDropRefreshingFlask, new RefreshingFlask());
     }
 
