@@ -6,15 +6,15 @@ import game.actors.traders.pricings.IncreasedPricing;
 import game.actors.traders.pricings.Pricing;
 
 /**
- * Class representing a healing vial.
+ * Class representing a healing vile.
  * Created by:
  * @author Laura Zhakupova
  */
-public class HealingVile extends ConsumableItem{
+public class HealingVile extends ConsumableItem {
     /***
      * Constructor.
      */
     public HealingVile() {
-        super("the Healing vial", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, 10);
+        super("the Healing vile", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, 10);
     }
 }

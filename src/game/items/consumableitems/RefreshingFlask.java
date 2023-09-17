@@ -18,4 +18,5 @@ public class RefreshingFlask extends ConsumableItem {
     public RefreshingFlask() {
         super("the Refreshing Flask", 'u', ActorAttributeOperations.INCREASE, BaseActorAttributes.STAMINA, 20);
     }
+
 }

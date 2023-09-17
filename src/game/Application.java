@@ -13,6 +13,7 @@ import game.actors.Player;
 import game.grounds.*;
 import game.grounds.spawners.HollowSoldierGraveyard;
 import game.grounds.spawners.WanderingUndeadGraveyard;
+import game.items.consumableitems.HealingVile;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 
