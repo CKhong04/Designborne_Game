@@ -12,11 +12,6 @@ import game.actors.traders.pricings.RegularPricing;
  * @author Laura Zhakupova
  */
 public class RefreshingFlask extends ConsumableItem {
-    private static int BUY_PRICE = 75;
-    private static Pricing BUY_PRICING = new ReducedPricing(10, 20);
-    private static int SELL_PRICE = 25;
-    private static Pricing SELL_PRICING = new RegularPricing();
-
     /***
      * Constructor.
      */

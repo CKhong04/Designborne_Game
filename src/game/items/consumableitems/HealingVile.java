@@ -11,10 +11,6 @@ import game.actors.traders.pricings.Pricing;
  * @author Laura Zhakupova
  */
 public class HealingVile extends ConsumableItem{
-    private static int BUY_PRICE = 100;
-    private static Pricing BUY_PRICING = new IncreasedPricing(25, 50);
-    private static int SELL_PRICE = 35;
-    private static Pricing SELL_PRICING = new IncreasedPricing(10, 100);
     /***
      * Constructor.
      */
