@@ -59,7 +59,7 @@ public class Gate extends Ground {
         //Only add an unlocking action if the gate is locked, the actor has a key and is hostile to enemies.
         if (this.hasCapability(Status.LOCKED_GATE) && actor.hasCapability(Status.HAS_KEY) && actor.hasCapability(Status.HOSTILE_TO_ENEMY)){
             actions.add(new UnlockGateAction(this));
-        } else if (this.hasCapability(Status.LOCKED_GATE)){
+        } else if (this.hasCapability(Status.LOCKED_GATE) && actor.hasCapability(Status.HOSTILE_TO_ENEMY)){
             display.println("The gate is locked. " + actor + " must have an Old Key to unlock it.");
         } else {
             actions.add(this.moveAction);

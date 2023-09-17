@@ -24,6 +24,8 @@ import java.util.Map;
  * Class representing an enemy abstract class.
  * Created by:
  * @author Laura Zhakupova
+ * Modified by:
+ * Carissa Khong, Ishita Gupta, Khoi Nguyen
  */
 public abstract class Enemy extends Actor {
     // Private attributes
@@ -88,7 +90,9 @@ public abstract class Enemy extends Actor {
 //            }
 
             for (Item item: otherActor.getItemInventory()) {
-                actions.add(new AttackAction(this, direction, (WeaponItem) item));
+                if (item.hasCapability(Ability.USED_AS_WEAPON)) { //Only weapons should be able to give new Attack Actions.
+                    actions.add(new AttackAction(this, direction, (WeaponItem) item));
+                }
             }
         }
 
@@ -108,6 +112,6 @@ public abstract class Enemy extends Actor {
         for(Item item : inventory){
             deathLocation.addItem(item);
         }
-        return this + " met their demise in the hand of " + actor;
+        return this + " met their demise at the hand of " + actor;
     }
 }

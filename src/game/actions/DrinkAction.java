@@ -29,6 +29,6 @@ public class DrinkAction extends Action {
 
     @Override
     public String menuDescription(Actor actor) {
-        return "Drink Water in the Puddle";
+        return "Drink water from the Puddle";
     }
 }
