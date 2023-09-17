@@ -5,5 +5,6 @@ package game.enums;
  * Example #1: if the player is capable jumping over walls, you can attach Ability.WALL_JUMP to the player class
  */
 public enum Ability {
-    CANNOT_ACCESS_FLOOR
+    CANNOT_ACCESS_FLOOR,
+    USED_AS_WEAPON
 }

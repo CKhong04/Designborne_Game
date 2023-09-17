@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actors.traders.pricings.Pricing;
 import game.actors.traders.pricings.RegularPricing;
+import game.enums.Ability;
 import game.enums.Status;
 import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
@@ -55,6 +56,7 @@ public class Broadsword extends WeaponItem implements AbleToActivateSkill, Buyab
         this.weaponAbility = new FocusAction(this,20);
         this.addCapability(Status.EQUIPPED_WEAPON);
         this.addCapability(Status.SELLABLE);
+        this.addCapability(Ability.USED_AS_WEAPON);
     }
 
     /**
