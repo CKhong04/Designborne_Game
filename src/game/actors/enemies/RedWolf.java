@@ -14,13 +14,14 @@ import game.utilities.Utility;
  * The class RedWolf is a child class of the abstract class Enemy. It is encountered in the Ancient Woods.
  * Created by:
  * @author Carissa Khong
+ * Modified by: Ishita Gupta
  */
 public class RedWolf extends Enemy {
 
     //Private attributes
-    private final int dropVialChance = 10;
+    private static final int dropVialChance = 10;
 
-    private final int chanceDropRune = 100;
+    private static final int chanceDropRune = 100;
 
     /**
      * The constructor of the Actor class.
@@ -28,6 +29,7 @@ public class RedWolf extends Enemy {
      * The Red Wolf is an enemy which the player can encounter in the Ancient Woods. It is spawned from the bushes and
      * has the display character 'r' and 25 hit points to start.
      * The Red Wolf can also drop a Healing Vial when they are killed by the player. The chance of this occurring is 10%.
+     * </p>
      */
     public RedWolf() {
         super("Red Wolf", 'r', 25);

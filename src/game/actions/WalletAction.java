@@ -19,6 +19,8 @@ public class WalletAction extends Action {
      * Constructor
      * @param item the item being added to the wallet
      * @param quantity the quantity of the item
+     * Created by:
+     * @author Ishita Gupta
      */
     public WalletAction(Item item, int quantity){
         this.item = item;

@@ -13,14 +13,14 @@ import game.utilities.Utility;
 /**
  * Class representing the Hollow Soldier.
  * Created by:
- * @author Laura Zhakupova
+ * @author Laura Zhakupova, Ishita Gupta
  */
 public class HollowSoldier extends Enemy {
     // Private attributes
-    private final int chanceDropHealingVial = 20;
-    private final int chanceDropRefreshingFlask = 30;
+    private static final int chanceDropHealingVial = 20;
+    private static final int chanceDropRefreshingFlask = 30;
 
-    private final int chanceDropRune = 100;
+    private static final int chanceDropRune = 100;
     /**
      * A constructor.
      * Adds an item that is dropped after death by chance.

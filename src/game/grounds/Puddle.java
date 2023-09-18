@@ -12,7 +12,7 @@ import game.enums.Status;
  * A class that represents a puddle.
  * Created by:
  * @author
- * Modified by:
+ * Modified by: Ishita Gupta
  */
 public class Puddle extends Ground {
     public Puddle() {
