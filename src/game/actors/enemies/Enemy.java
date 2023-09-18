@@ -111,4 +111,6 @@ public abstract class Enemy extends Actor {
         }
         return this + " met their demise in the hand of " + actor;
     }
+
+
 }

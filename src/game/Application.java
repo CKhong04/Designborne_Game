@@ -57,12 +57,8 @@ public class Application {
 
         Item broadsword = new Broadsword(110,80,5,10,90);
         gameMap.at(27, 5).addItem(broadsword);
-
-        Item greatKnife = new GreatKnife();
-        gameMap.at(31, 6).addItem(greatKnife);
-
-        Item giantHammer = new GiantHammer();
-        gameMap.at(27, 6).addItem(giantHammer);
+        gameMap.at(28, 5).addItem(new GreatKnife());
+        gameMap.at(31, 5).addItem(new GiantHammer());
 
         gameMap.at(55,2).setGround(new WanderingUndeadGraveyard(25));
         gameMap.at(34,10).setGround(new WanderingUndeadGraveyard(25));
@@ -167,6 +163,9 @@ public class Application {
 
         roomGameMap.at(19,10).setGround(new Hut(15));
         roomGameMap.at(2, 11).setGround(new Hut(15));
+
+        Item giantHammer = new GiantHammer();
+        roomGameMap.at(27, 6).addItem(giantHammer);
 
         //Adding gates for access to the room
         Gate woodsToRoomGate = new Gate();
