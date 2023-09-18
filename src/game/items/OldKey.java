@@ -8,15 +8,13 @@ import game.enums.Status;
  * Created by:
  * @author Laura Zhakupova
  */
-public class GateKey extends Item {
+public class OldKey extends Item {
     /***
      * A constructor.
      * Item has a capability HAS_KEY, which allows the user to open the gate.
-     *
-     *  @param name the name of this Item
      */
-    public GateKey(String name) {
-        super(name, '-', true);
+    public OldKey() {
+        super("Old Key", '-', true);
         this.addCapability(Status.HAS_KEY);
     }
 }

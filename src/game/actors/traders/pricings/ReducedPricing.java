@@ -9,18 +9,18 @@ import java.util.Random;
  */
 public class ReducedPricing implements Pricing {
     // Private attributes
-    private int chanceToIncrease;
-    private int percentageDecrease;
+    private final int chanceToDecrease;
+    private final int percentageDecrease;
 
     /**
      * A constructor which accepts the chance that the price reduces and the percentage by which
      * the price must be reduced.
      *
-     * @param chanceToIncrease chance for the price to be reduced.
+     * @param chanceToDecrease chance for the price to be reduced.
      * @param percentageDecrease percentage by which the price is reduced.
      */
-    public ReducedPricing(int chanceToIncrease, int percentageDecrease){
-        this.chanceToIncrease = chanceToIncrease;
+    public ReducedPricing(int chanceToDecrease, int percentageDecrease){
+        this.chanceToDecrease = chanceToDecrease;
         this.percentageDecrease = percentageDecrease;
     }
 
@@ -33,7 +33,7 @@ public class ReducedPricing implements Pricing {
     @Override
     public int getPrice(int originalPrice){
         Random rand = new Random();
-        if (rand.nextInt(100) <= this.chanceToIncrease) {
+        if (rand.nextInt(100) <= this.chanceToDecrease) {
             return (int)(originalPrice * (1-(this.percentageDecrease/100.0)));
         } else {
             return originalPrice;
