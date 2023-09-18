@@ -81,14 +81,6 @@ public abstract class Enemy extends Actor {
         if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)){
             actions.add(new AttackAction(this, direction));
 
-//            if (otherActor.hasCapability(Status.EQUIPPED_WEAPON)){
-//                for(Item item : otherActor.getItemInventory()){
-//                    if (item.hasCapability(Status.EQUIPPED_WEAPON)){
-//                        actions.add(new AttackAction(this, direction, (Weapon) item));
-//                    }
-//                }
-//            }
-
             for (Item item: otherActor.getItemInventory()) {
                 if (item.hasCapability(Ability.USED_AS_WEAPON)) { //Only weapons should be able to give new Attack Actions.
                     actions.add(new AttackAction(this, direction, (WeaponItem) item));
