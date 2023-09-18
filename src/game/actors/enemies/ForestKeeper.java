@@ -14,11 +14,13 @@ import game.utilities.Utility;
  * The ForestKeeper class is a child class of the Enemy class. Forest Keepers are encountered in the Ancient Woods.
  * Created by:
  * @author Carissa Khong
+ * Modified by: Ishita Gupta
+ *
  */
 public class ForestKeeper extends Enemy{
 
     //Private attributes
-    private final int dropVialChance = 20;
+    private static final int dropVialChance = 20;
     private final int chanceDropRune = 100;
 
     /**

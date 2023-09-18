@@ -12,6 +12,8 @@ public class DrinkAction extends Action {
      * A constructor which accepts an operation to be done on the attribute, attribute
      * itself and the percentage to be changed from the maximum value.
      * @param actor The actor drinking the water
+     * Created by:
+     * @author Ishita Gupta
      */
 
     @Override
