@@ -10,13 +10,16 @@ import game.actors.enemies.RedWolf;
  */
 public class Bush extends SpawningGround{
 
+    //Private attributes
+    private static final int CHANCE_TO_SPAWN = 30;
+
     /**
      * This is the constructor for the Bush class.
      *
      * Bushes have a 30% chance of spawning an enemy each turn and are displayed with the character 'm' on the map.
      */
-    public Bush(int chanceToSpawn) {
-        super(chanceToSpawn, 'm');
+    public Bush() {
+        super(CHANCE_TO_SPAWN,'m');
     }
 
     /**

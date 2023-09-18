@@ -66,8 +66,8 @@ public class Application {
         Item giantHammer = new GiantHammer();
         gameMap.at(27, 6).addItem(giantHammer);
 
-        gameMap.at(55,2).setGround(new WanderingUndeadGraveyard(25));
-        gameMap.at(34,10).setGround(new WanderingUndeadGraveyard(25));
+        gameMap.at(55,2).setGround(new WanderingUndeadGraveyard());
+        gameMap.at(34,10).setGround(new WanderingUndeadGraveyard());
 
         // Set up second map
         List<String> burialGroundMap = Arrays.asList(
@@ -90,9 +90,9 @@ public class Application {
         GameMap burialGroundGameMap = new GameMap(groundFactory,burialGroundMap);
         world.addGameMap(burialGroundGameMap);
 
-        burialGroundGameMap.at(23,2).setGround(new HollowSoldierGraveyard(10));
-        burialGroundGameMap.at(13,11).setGround(new HollowSoldierGraveyard(10));
-        burialGroundGameMap.at(2,14).setGround(new HollowSoldierGraveyard(10));
+        burialGroundGameMap.at(23,2).setGround(new HollowSoldierGraveyard());
+        burialGroundGameMap.at(13,11).setGround(new HollowSoldierGraveyard());
+        burialGroundGameMap.at(2,14).setGround(new HollowSoldierGraveyard());
 
         // Set up gates
         Gate villageToBurialGroundGate = new Gate();
@@ -121,10 +121,10 @@ public class Application {
         world.addGameMap(ancientWoodsGameMap);
 
         //Add the bushes and huts to the Ancient Woods map
-        ancientWoodsGameMap.at(11, 3).setGround(new Bush(30));
+        ancientWoodsGameMap.at(11, 3).setGround(new Bush());
 
-        ancientWoodsGameMap.at(46,9).setGround(new Hut(15));
-        ancientWoodsGameMap.at(8, 7).setGround(new Hut(15));
+        ancientWoodsGameMap.at(46,9).setGround(new Hut());
+        ancientWoodsGameMap.at(8, 7).setGround(new Hut());
 
         ancientWoodsGameMap.at(47,3).addItem(new BloodBerry());
 
@@ -168,10 +168,10 @@ public class Application {
         world.addGameMap(roomGameMap);
 
         //Adding the bushes and huts to the Room
-        roomGameMap.at(30, 2).setGround(new Bush(30));
+        roomGameMap.at(30, 2).setGround(new Bush());
 
-        roomGameMap.at(19,10).setGround(new Hut(15));
-        roomGameMap.at(2, 11).setGround(new Hut(15));
+        roomGameMap.at(19,10).setGround(new Hut());
+        roomGameMap.at(2, 11).setGround(new Hut());
 
         //Adding gates for access to the room
         Gate woodsToRoomGate = new Gate();

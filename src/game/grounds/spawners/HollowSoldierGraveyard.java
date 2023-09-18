@@ -8,16 +8,19 @@ import game.actors.enemies.HollowSoldier;
  * Created by:
  * @author Laura Zhakupova
  * Modified by:
- * @author Carissa Khong
+ * Carissa Khong
  */
 public class HollowSoldierGraveyard extends SpawningGround {
+
+    //Private attributes
+    private static final int CHANCE_TO_SPAWN = 10;
+
     /**
-     * A constructor for the HollowSoldierGraveyard class. The chance this has of spawning an enemy each turn is taken
-     * in as a parameter.
+     * A constructor for the HollowSoldierGraveyard class. The chance this has of spawning an enemy each turn is 10%.
      * It is always displayed with an 'n' on a map.
      */
-    public HollowSoldierGraveyard(int chanceToSpawn) {
-        super(chanceToSpawn, 'n');
+    public HollowSoldierGraveyard() {
+        super(CHANCE_TO_SPAWN,'n');
     }
 
     /**
