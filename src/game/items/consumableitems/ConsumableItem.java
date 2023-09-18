@@ -19,11 +19,10 @@ import game.items.tradableitems.Sellable;
 public abstract class ConsumableItem extends Item implements Buyable, Sellable{
     // Private attributes
     // Consumable attributes
-    private ActorAttributeOperations actorAttributeOperation;
-    private BaseActorAttributes baseActorAttributes;
-    private int percentageValue;
-
-    private boolean isDiscount;
+    private final ActorAttributeOperations actorAttributeOperation;
+    private final BaseActorAttributes baseActorAttributes;
+    private final int percentageValue;
+    private final boolean isDiscount;
 
     // Buyable attributes
     private final int buyPrice;
@@ -41,13 +40,19 @@ public abstract class ConsumableItem extends Item implements Buyable, Sellable{
      */
     public ConsumableItem(String name, char displayChar, ActorAttributeOperations actorAttributeOperation, BaseActorAttributes baseActorAttributes, int percentageValue, boolean isDiscount, int buyPrice, Pricing buyPricingStrategy, int buyChanceScam, int sellPrice, Pricing sellPricingStrategy, int sellChanceScam) {
         super(name, displayChar, true);
+
+        //Consumable attributes
         this.actorAttributeOperation = actorAttributeOperation;
         this.baseActorAttributes = baseActorAttributes;
         this.percentageValue = percentageValue;
         this.isDiscount = isDiscount;
+
+        //Buyable attributes
         this.buyPrice = buyPrice;
         this.buyPricingStrategy = buyPricingStrategy;
         this.buyChanceScam = buyChanceScam;
+
+        //Sellable attributes
         this.sellPrice = sellPrice;
         this.sellPricingStrategy = sellPricingStrategy;
         this.sellChanceScam = sellChanceScam;
