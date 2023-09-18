@@ -18,7 +18,7 @@ public class Rune extends Item {
      * @author Ishita Gupta
      */
     public Rune(int quantity) {
-        super("Rune", '$', true);
+        super("Runes", '$', true);
         this.quantity = quantity;
     }
     /**

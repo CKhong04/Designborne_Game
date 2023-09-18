@@ -5,7 +5,12 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
+import game.actors.traders.pricings.Pricing;
+import game.actors.traders.pricings.RegularPricing;
+import game.enums.Ability;
 import game.enums.Status;
+import game.items.tradableitems.Buyable;
+import game.items.tradableitems.Sellable;
 import game.weapons.skills.AbleToActivateSkill;
 import game.weapons.skills.FocusAction;
 
@@ -14,7 +19,7 @@ import game.weapons.skills.FocusAction;
  * Created by:
  * @author Laura Zhakupova
  */
-public class Broadsword extends WeaponItem implements AbleToActivateSkill {
+public class Broadsword extends WeaponItem implements AbleToActivateSkill, Buyable, Sellable {
     // Private attributes
     private static final float DEFAULT_DAMAGE_MULTIPLIER = 1.0f;
     private int turnCounter = 0;
@@ -23,6 +28,14 @@ public class Broadsword extends WeaponItem implements AbleToActivateSkill {
     private int skillDamageMultiplier;
     private int skillHitRate;
     private Action weaponAbility;
+
+    // Buyable/Sellable attributes
+    private static final int BUY_PRICE = 250;
+    private static final Pricing BUY_PRICING = new RegularPricing();
+    private static final int SELL_PRICE = 100;
+    private static final Pricing SELL_PRICING = new RegularPricing();
+    private static final int BUY_SCAM_CHANCE = 5;
+    private static final int SELL_SCAM_CHANCE = 0;
 
     /**
      * A constructor which accepts values of damage, hit rate, number of turns for the skill to ba activated,
@@ -42,6 +55,8 @@ public class Broadsword extends WeaponItem implements AbleToActivateSkill {
         this.skillHitRate = skillHitRate;
         this.weaponAbility = new FocusAction(this,20);
         this.addCapability(Status.EQUIPPED_WEAPON);
+        this.addCapability(Status.SELLABLE);
+        this.addCapability(Ability.USED_AS_WEAPON);
     }
 
     /**
@@ -110,5 +125,25 @@ public class Broadsword extends WeaponItem implements AbleToActivateSkill {
         ActionList actions = super.allowableActions(actor);
         actions.add(this.weaponAbility);
         return actions;
+    }
+
+    @Override
+    public int getBuyPrice(){
+        return BUY_PRICING.getPrice(BUY_PRICE);
+    }
+
+    @Override
+    public int getBuyScamChance(){
+        return BUY_SCAM_CHANCE;
+    }
+
+    @Override
+    public int getSellPrice(){
+        return SELL_PRICING.getPrice(SELL_PRICE);
+    }
+
+    @Override
+    public int getSellScamChance(){
+        return SELL_SCAM_CHANCE;
     }
 }

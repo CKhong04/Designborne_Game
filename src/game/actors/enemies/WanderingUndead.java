@@ -14,13 +14,13 @@ import game.utilities.Utility;
  * Class representing the Wandering Undead.
  * Created by:
  * @author
- * Modified by: Laura Zhakupova
+ * Modified by: Laura Zhakupova, Ishita Gupta
  */
 public class WanderingUndead extends Enemy {
     // Private attributes
-    private final int chanceDropKey = 25;
-    private final int chanceDropHealingVial = 20;
-    private final int chanceDropRune = 100;
+    private static final int chanceDropKey = 25;
+    private static final int chanceDropHealingVial = 20;
+    private static final int chanceDropRune = 100;
 
     /**
      * A constructor.

@@ -13,6 +13,8 @@ import game.actions.UnlockGateAction;
  * Class representing a gate.
  * Created by:
  * @author Laura Zhakupova
+ * Modified by:
+ * Carissa Khong
  */
 public class Gate extends Ground {
     // Private attributes
@@ -54,9 +56,10 @@ public class Gate extends Ground {
     @Override
     public ActionList allowableActions(Actor actor, Location location, String direction){
         ActionList actions = new ActionList();
-        if (this.hasCapability(Status.LOCKED_GATE) && actor.hasCapability(Status.HAS_KEY)){
+        //Only add an unlocking action if the gate is locked, the actor has a key and is hostile to enemies.
+        if (this.hasCapability(Status.LOCKED_GATE) && actor.hasCapability(Status.HAS_KEY) && actor.hasCapability(Status.HOSTILE_TO_ENEMY)){
             actions.add(new UnlockGateAction(this));
-        } else if (this.hasCapability(Status.LOCKED_GATE)){
+        } else if (this.hasCapability(Status.LOCKED_GATE) && actor.hasCapability(Status.HOSTILE_TO_ENEMY)){
             display.println("The gate is locked. " + actor + " must have an Old Key to unlock it.");
         } else {
             actions.add(this.moveAction);
