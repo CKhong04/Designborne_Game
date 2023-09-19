@@ -17,19 +17,19 @@ import game.utilities.Utility;
  */
 public class HollowSoldier extends Enemy {
     // Private attributes
-    private static final int chanceDropHealingVial = 20;
-    private static final int chanceDropRefreshingFlask = 30;
-
-    private static final int chanceDropRune = 100;
+    private static final int CHANCE_DROP_HEALING_VIAL = 20;
+    private static final int CHANCE_DROP_REFRESHING_FLASK = 30;
+    private static final int HIT_POINTS = 200;
+    private static final int CHANCE_DROP_RUNE = 100;
     /**
      * A constructor.
      * Adds an item that is dropped after death by chance.
      */
     public HollowSoldier() {
-        super("Hollow Soldier", '&', 200);
-        Utility.addItemByChance(this,chanceDropRune, new Rune(100));
-        Utility.addItemByChance(this, chanceDropHealingVial, new HealingVial());
-        Utility.addItemByChance(this, chanceDropRefreshingFlask, new RefreshingFlask());
+        super("Hollow Soldier", '&', HIT_POINTS);
+        Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(100));
+        Utility.addItemByChance(this, CHANCE_DROP_HEALING_VIAL, new HealingVial());
+        Utility.addItemByChance(this, CHANCE_DROP_REFRESHING_FLASK, new RefreshingFlask());
     }
 
     /**
@@ -52,7 +52,9 @@ public class HollowSoldier extends Enemy {
      */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(50, "whacks");
+        int damage = 50;
+        String verb = "whacks";
+        return new IntrinsicWeapon(damage, verb);
     }
 
 

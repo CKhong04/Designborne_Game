@@ -19,9 +19,11 @@ import game.utilities.Utility;
 public class RedWolf extends Enemy {
 
     //Private attributes
-    private static final int dropVialChance = 10;
+    private static final int DROP_VIAL_CHANCE = 10;
 
-    private static final int chanceDropRune = 100;
+    private static final int CHANCE_DROP_RUNE = 100;
+
+    private static final int HIT_POINTS = 25;
 
     /**
      * The constructor of the Actor class.
@@ -32,9 +34,9 @@ public class RedWolf extends Enemy {
      * </p>
      */
     public RedWolf() {
-        super("Red Wolf", 'r', 25);
-        Utility.addItemByChance(this, chanceDropRune, new Rune(25));
-        Utility.addItemByChance(this, dropVialChance, new HealingVial());
+        super("Red Wolf", 'r', HIT_POINTS);
+        Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(25));
+        Utility.addItemByChance(this, DROP_VIAL_CHANCE, new HealingVial());
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
     }
 
@@ -56,8 +58,11 @@ public class RedWolf extends Enemy {
      * @return The Intrinsic Weapon which belongs to the Red Wolf class.
      */
     @Override
-    public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(15, "bites", 80);
+    public IntrinsicWeapon getIntrinsicWeapon(){
+    int damage = 15;
+    int hitRate = 80;
+    String verb = "bites";
+    return new IntrinsicWeapon(damage, verb, hitRate);
     }
 
 

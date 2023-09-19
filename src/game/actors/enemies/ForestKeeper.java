@@ -20,8 +20,10 @@ import game.utilities.Utility;
 public class ForestKeeper extends Enemy{
 
     //Private attributes
-    private static final int dropVialChance = 20;
-    private final int chanceDropRune = 100;
+    private static final int DROP_VIAL_CHANCE = 20;
+
+    private static final int HIT_POINTS = 125;
+    private final int CHANCE_DROP_RUNE = 100;
 
     /**
      * A constructor which accepts name, display character and hit points.
@@ -30,9 +32,9 @@ public class ForestKeeper extends Enemy{
      * The Forest Keeper can also drop a Healing Vial when killed by the player, which has a 20% chance of occurring.
      */
     public ForestKeeper() {
-        super("The Forest Keeper", '8', 125);
-        Utility.addItemByChance(this, dropVialChance, new HealingVial());
-        Utility.addItemByChance(this,chanceDropRune, new Rune(50));
+        super("The Forest Keeper", '8', HIT_POINTS);
+        Utility.addItemByChance(this, DROP_VIAL_CHANCE, new HealingVial());
+        Utility.addItemByChance(this,CHANCE_DROP_RUNE, new Rune(50));
 
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
     }
@@ -55,7 +57,10 @@ public class ForestKeeper extends Enemy{
      */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(25, "hits", 75);
+        int damage = 25;
+        int hitRate = 75;
+        String verb = "hits";
+        return new IntrinsicWeapon(damage, verb, hitRate);
     }
 
 

@@ -18,9 +18,9 @@ import game.utilities.Utility;
  */
 public class WanderingUndead extends Enemy {
     // Private attributes
-    private static final int chanceDropKey = 25;
-    private static final int chanceDropHealingVial = 20;
-    private static final int chanceDropRune = 100;
+    private static final int CHANCE_DROP_KEY = 25;
+    private static final int CHANCE_DROP_HEALING_VIAL = 20;
+    private static final int CHANCE_DROP_RUNE = 100;
 
     /**
      * A constructor.
@@ -28,9 +28,9 @@ public class WanderingUndead extends Enemy {
      */
     public WanderingUndead() {
         super("Wandering Undead", 't', 100);
-        Utility.addItemByChance(this, chanceDropKey, new GateKey("Old Key"));
-        Utility.addItemByChance(this, chanceDropHealingVial, new HealingVial());
-        Utility.addItemByChance(this,chanceDropRune, new Rune(50));
+        Utility.addItemByChance(this, CHANCE_DROP_KEY, new GateKey("Old Key"));
+        Utility.addItemByChance(this, CHANCE_DROP_HEALING_VIAL, new HealingVial());
+        Utility.addItemByChance(this,CHANCE_DROP_RUNE, new Rune(50));
     }
 
     /**
@@ -54,7 +54,9 @@ public class WanderingUndead extends Enemy {
      */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(30, "whacks");
+        int damage = 30;
+        String verb = "whacks";
+        return new IntrinsicWeapon(damage, verb);
     }
 
 

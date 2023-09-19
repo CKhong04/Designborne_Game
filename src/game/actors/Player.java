@@ -70,7 +70,10 @@ public class Player extends Actor {
      */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(15, "bonks",80);
+        int damage = 15;
+        int hitRate = 80;
+        String verb = "bonks";
+        return new IntrinsicWeapon(damage, verb, hitRate);
     }
 
     /**

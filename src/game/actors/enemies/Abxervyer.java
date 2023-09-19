@@ -10,6 +10,8 @@ import game.enums.Status;
 
 public class Abxervyer extends Enemy{
 
+    private static final int HIT_POINTS = 2000;
+
     /**
      * The constructor is taken from the Enemy abstract class. For Abxervyer, this gives the name of the enemy, which is
      * Abxervyer, the Forest Watcher, its display character, 'Y' and its initial HP, 2000.
@@ -18,7 +20,7 @@ public class Abxervyer extends Enemy{
      * @author Ishita Gupta, Carissa Khong, Khoi Nguyen, Laura Zhakupova
      */
     public Abxervyer() {
-        super("Abxervyer, the Forest Watcher", 'Y', 2000);
+        super("Abxervyer, the Forest Watcher", 'Y', HIT_POINTS);
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
         this.addCapability(Ability.NOT_HURT_BY_VOID); //Abxervyer will not be hurt if it steps on a void.
     }
@@ -35,6 +37,9 @@ public class Abxervyer extends Enemy{
      */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
-        return new IntrinsicWeapon(80, "smashes", 25);
+        int damage = 80;
+        int hitRate = 25;
+        String verb = "smashes";
+        return new IntrinsicWeapon(damage, verb, hitRate);
     }
 }

@@ -126,7 +126,7 @@ public class Application {
         ancientWoodsGameMap.at(46,9).setGround(new Hut());
         ancientWoodsGameMap.at(8, 7).setGround(new Hut());
 
-        ancientWoodsGameMap.at(47,3).addItem(new BloodBerry());
+        ancientWoodsGameMap.at(47,1).addItem(new BloodBerry());
 
         //Add the gates to and from this place
         Gate burialGroundToWoodsGate = new Gate();
