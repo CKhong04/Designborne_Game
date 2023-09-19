@@ -52,6 +52,7 @@ public class StabAndStepAction extends Action {
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " activates the skills of the " + this.weaponItem;
+        return actor + " stabs " + otherActor +
+                " with " + this.weaponItem + " and steps away!";
     }
 }
