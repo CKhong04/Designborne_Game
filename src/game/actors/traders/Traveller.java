@@ -41,11 +41,14 @@ public class Traveller extends Trader {
         list.add(new BuyAction(this, new RefreshingFlask()));
         list.add(new BuyAction(this, new Broadsword()));
 
+        /*
         for (Item item : otherActor.getItemInventory()){
             if (item.hasCapability(Status.SELLABLE)){
                 list.add(new SellAction(this, (Sellable) item));
             }
         }
+
+         */
         return list;
     }
 }

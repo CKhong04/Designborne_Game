@@ -5,6 +5,8 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.items.Item;
+import edu.monash.fit2099.engine.positions.Location;
+import game.actions.AttackAction;
 import game.actions.ConsumeAction;
 import game.actors.traders.pricings.Pricing;
 import game.enums.Status;
@@ -69,6 +71,13 @@ public abstract class ConsumableItem extends Item implements Buyable, Sellable{
     public ActionList allowableActions(Actor actor) {
         ActionList actions = super.allowableActions(actor);
         actions.add(new ConsumeAction(this, this.actorAttributeOperation, this.baseActorAttributes, this.percentageValue, this.isDiscount));
+        return actions;
+    }
+
+    @Override
+    public ActionList allowableActions(Actor otherActor, Location location) {
+        ActionList actions = super.allowableActions(otherActor, location);
+        //actions.add();
         return actions;
     }
 

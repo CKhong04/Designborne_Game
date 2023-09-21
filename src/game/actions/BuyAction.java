@@ -14,17 +14,17 @@ import game.utilities.Utility;
  */
 public class BuyAction extends Action {
     // Private attributes
-    private Actor seller;
+    private Actor trader;
     private Buyable item;
 
     /**
      * A constructor which accepts a seller and an item.
      *
-     * @param seller actor who sells the item.
+     * @param trader actor who sells the item.
      * @param item which is sold.
      */
-    public BuyAction(Actor seller, Buyable item){
-        this.seller = seller;
+    public BuyAction(Actor trader, Buyable item){
+        this.trader = trader;
         this.item = item;
     }
 
@@ -42,7 +42,7 @@ public class BuyAction extends Action {
             return "You are unable to buy " + this.item;
         } else {
             if (!Utility.getChance(this.item.getBuyScamChance())){
-                seller.removeItemFromInventory((Item) this.item);
+                trader.removeItemFromInventory((Item) this.item);
                 actor.addItemToInventory((Item) this.item);
             }
             actor.deductBalance(this.item.getBuyPrice());
