@@ -2,6 +2,7 @@ package game.grounds.spawners;
 
 import edu.monash.fit2099.engine.positions.Location;
 import game.actors.enemies.ForestKeeper;
+import game.weathers.AncientWoodEntity;
 
 /**
  *The Hut class extends from the abstract class SpawningGround and has the chance of spawning a Forest Keeper on each
@@ -9,7 +10,7 @@ import game.actors.enemies.ForestKeeper;
  * Created by:
  * @author Carissa Khong
  */
-public class Hut extends SpawningGround {
+public class Hut extends SpawningGround implements AncientWoodEntity {
 
     //Private attributes
     private static final int CHANCE_TO_SPAWN = 15;
@@ -33,5 +34,8 @@ public class Hut extends SpawningGround {
         this.updateChancetoSpawn(2);
     }
 
+    @Override
+    public void update(int newChanceToSpawnMultiplier, int newDamageMultiplier, int newHealingRate) {
 
+    }
 }

@@ -9,6 +9,7 @@ import game.enums.Status;
 import game.items.Rune;
 import game.items.consumableitems.HealingVial;
 import game.utilities.Utility;
+import game.weathers.AncientWoodEntity;
 
 /**
  * The class RedWolf is a child class of the abstract class Enemy. It is encountered in the Ancient Woods.
@@ -16,7 +17,7 @@ import game.utilities.Utility;
  * @author Carissa Khong
  * Modified by: Ishita Gupta
  */
-public class RedWolf extends Enemy {
+public class RedWolf extends Enemy implements AncientWoodEntity {
 
     //Private attributes
     private static final int DROP_VIAL_CHANCE = 10;
@@ -59,11 +60,15 @@ public class RedWolf extends Enemy {
      */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon(){
-    int damage = 15;
-    int hitRate = 80;
-    String verb = "bites";
-    return new IntrinsicWeapon(damage, verb, hitRate);
+        int damage = 15;
+        int hitRate = 80;
+        String verb = "bites";
+
+        return new IntrinsicWeapon(damage, verb, hitRate);
     }
 
+    @Override
+    public void update(int newChanceToSpawnMultiplier, int newDamageMultiplier, int newHealingRate) {
 
+    }
 }

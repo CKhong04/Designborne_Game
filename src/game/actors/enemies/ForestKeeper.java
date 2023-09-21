@@ -9,6 +9,7 @@ import game.enums.Status;
 import game.items.Rune;
 import game.items.consumableitems.HealingVial;
 import game.utilities.Utility;
+import game.weathers.AncientWoodEntity;
 
 /**
  * The ForestKeeper class is a child class of the Enemy class. Forest Keepers are encountered in the Ancient Woods.
@@ -17,13 +18,13 @@ import game.utilities.Utility;
  * Modified by: Ishita Gupta
  *
  */
-public class ForestKeeper extends Enemy{
+public class ForestKeeper extends Enemy implements AncientWoodEntity {
 
     //Private attributes
     private static final int DROP_VIAL_CHANCE = 20;
 
     private static final int HIT_POINTS = 125;
-    private final int CHANCE_DROP_RUNE = 100;
+    private static final int CHANCE_DROP_RUNE = 100;
 
     /**
      * A constructor which accepts name, display character and hit points.
@@ -63,5 +64,8 @@ public class ForestKeeper extends Enemy{
         return new IntrinsicWeapon(damage, verb, hitRate);
     }
 
+    @Override
+    public void update(int newChanceToSpawnMultiplier, int newDamageMultiplier, int newHealingRate) {
 
+    }
 }
