@@ -191,7 +191,7 @@ public class Application {
 
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
-        world.addPlayer(player, roomGameMap.at(29, 5));
+        world.addPlayer(player, gameMap.at(29, 5));
 
         world.run();
     }
