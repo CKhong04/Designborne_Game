@@ -39,7 +39,7 @@ public class Traveller extends Trader {
 
         list.add(new BuyAction(this, new HealingVial()));
         list.add(new BuyAction(this, new RefreshingFlask()));
-        list.add(new BuyAction(this, new Broadsword(110,80,5,10,90)));
+        list.add(new BuyAction(this, new Broadsword()));
 
         for (Item item : otherActor.getItemInventory()){
             if (item.hasCapability(Status.SELLABLE)){

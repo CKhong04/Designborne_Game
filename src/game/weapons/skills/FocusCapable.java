@@ -5,9 +5,10 @@ package game.weapons.skills;
  * Created by:
  * @author Laura Zhakupova
  */
-public interface AbleToActivateSkill {
+public interface FocusCapable {
+    FocusAction getFocusAction();
     /**
      * This method checks if the skill is activated, if it is activated, method manages its effects.
      */
-    void activatedSkill();
+    void activateSkill();
 }
