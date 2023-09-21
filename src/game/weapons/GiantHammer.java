@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
+import game.actions.AttackAction;
 import game.actors.traders.pricings.Pricing;
 import game.actors.traders.pricings.RegularPricing;
 import game.enums.Ability;
@@ -98,6 +99,7 @@ public class GiantHammer extends WeaponItem implements Buyable, Sellable, GreatS
     @Override
     public ActionList allowableActions(Actor otherActor, Location location) {
         ActionList actions = super.allowableActions(otherActor, location);
+        actions.add(new AttackAction(otherActor,location.toString(),this));
         actions.add(getGreatSlamAction(otherActor));
         return actions;
     }
