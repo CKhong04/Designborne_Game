@@ -9,10 +9,14 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.enums.Status;
 
+import java.util.concurrent.ExecutionException;
+
 /**
  * An ability of a weapon to increase damage multiplier and hit rate.
  * Created by:
  * @author Laura Zhakupova
+ * Modified by:
+ * Carissa Khong
  */
 public class FocusAction extends Action {
     /**
@@ -40,17 +44,22 @@ public class FocusAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        // Calculating how much stamina needed
-        int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
-        int decreasePercentage = maxStamina * this.decreaseStaminaPercentage / 100;
+        try {
+            // Calculating how much stamina needed
+            int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
+            int decreasePercentage = maxStamina * this.decreaseStaminaPercentage / 100;
 
-        if (actor.getAttribute(BaseActorAttributes.STAMINA)>=decreasePercentage){
-            actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE,decreasePercentage);
-            this.weaponItem.addCapability(Status.SKILL_ACTIVATED);
-            this.weaponItem.addCapability(Status.FOCUS_SKILL);
-            return actor + " takes a deep breath and focuses all their might!";
-        } else {
-            return actor + " does not have enough stamina!";
+            if (actor.getAttribute(BaseActorAttributes.STAMINA) < decreasePercentage){
+                throw new Exception();
+            }
+            else{
+                actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, decreasePercentage);
+                this.weaponItem.addCapability(Status.SKILL_ACTIVATED);
+                this.weaponItem.addCapability(Status.FOCUS_SKILL);
+                return actor + " takes a deep breath and focuses with all their might!";
+            }
+        } catch (Exception e){
+            return actor + " does not have enough stamina to complete the Focus Skill!";
         }
     }
 

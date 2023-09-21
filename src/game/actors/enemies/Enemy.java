@@ -8,7 +8,6 @@ import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
-import edu.monash.fit2099.engine.weapons.Weapon;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.DeathAction;
 import game.behaviours.*;
@@ -21,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class representing an enemy abstract class.
+ * An abstract class representing an enemy.
  * Created by:
  * @author Laura Zhakupova
  * Modified by:

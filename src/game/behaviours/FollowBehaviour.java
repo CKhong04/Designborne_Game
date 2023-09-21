@@ -19,7 +19,7 @@ import game.enums.Status;
 public class FollowBehaviour implements Behaviour {
     //Private attributes
     private final Display display = new Display();
-    private static Actor target;
+    private static Actor TARGET;
 
     /**
      * The getAction method first checks whether the actor is able to start following the target, by calling the
@@ -61,9 +61,9 @@ public class FollowBehaviour implements Behaviour {
             for (Exit exit : map.locationOf(actor).getExits()) {
                 Location destination = exit.getDestination();
                 if (destination.containsAnActor() && destination.getActor().hasCapability(Status.HOSTILE_TO_ENEMY)){
-                    target = destination.getActor();
+                    TARGET = destination.getActor();
                     actor.addCapability(Status.FOLLOWING_ACTOR); //Make sure the actor has this status, allowing it to follow in future
-                    display.println(actor + " is now following " + target);
+                    display.println(actor + " is now following " + TARGET);
                     return true;
                 }
             }
@@ -82,7 +82,7 @@ public class FollowBehaviour implements Behaviour {
     private boolean targetWithinSurroundings(Actor actor, GameMap map){
         for (Exit exit : map.locationOf(actor).getExits()) {
             Location destination = exit.getDestination();
-            if (destination.containsAnActor() && destination.getActor() == target) {
+            if (destination.containsAnActor() && destination.getActor() == TARGET) {
                 return true; //This means the other actor has not moved and/or is still within the surroundings of the actor.
                 //The following actor does not need to return a MoveAction in this case and can perform a different action.
             }
@@ -107,12 +107,12 @@ public class FollowBehaviour implements Behaviour {
         for (Exit exit : map.locationOf(actor).getExits()){
             Location destination = exit.getDestination();
             if (destination.canActorEnter(actor) && !destination.containsAnActor()) {
-                if (!map.contains(actor) && !map.contains(target)){
+                if (!map.contains(actor) && !map.contains(TARGET)){
                     return null; //Make sure both actors are still on the map, otherwise, they will not follow.
                 }
                 //Get the distance between the actor and other actor currently, and what this would change to if a movement were to occur.
-                int currentDistance = distance(map.locationOf(actor), map.locationOf(target));
-                int newDistance = distance(destination, map.locationOf(target));
+                int currentDistance = distance(map.locationOf(actor), map.locationOf(TARGET));
+                int newDistance = distance(destination, map.locationOf(TARGET));
                 if (newDistance < currentDistance) {
                     return new MoveActorAction(destination, exit.getName());
                 }

@@ -11,6 +11,12 @@ import edu.monash.fit2099.engine.weapons.WeaponItem;
 
 import java.util.List;
 
+/**
+ * Created by:
+ * @author Khoi Nguyen
+ * Modified by:
+ * Carissa Khong
+ */
 public class StabAndStepAction extends Action {
     private final WeaponItem weaponItem;
     private final Actor otherActor;
@@ -28,26 +34,32 @@ public class StabAndStepAction extends Action {
         int consumedAmount = this.staminaDecreasePercentage * maxStamina / 100;
         
         boolean isStaminaEnough = actor.getAttribute(BaseActorAttributes.STAMINA) >= consumedAmount;
-        
-        if (isStaminaEnough) {
-            actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
-
-            Location currentLocation = map.locationOf(actor);
-            List<Exit> availableExits = currentLocation.getExits();
-
-            for (Exit availableExit: availableExits) {
-                Location destination = availableExit.getDestination();
-
-                if (destination.getGround().canActorEnter(actor)) {
-                    map.moveActor(actor, destination);
-                    otherActor.hurt(weaponItem.damage());
-
-                    return actor + " stabs and steps away!";
-                }
+        try {
+            if (!(isStaminaEnough)) {
+                throw new Exception();
             }
-        }
+            else{
+                actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
 
-        return actor + " does not have enough stamina!";
+                Location currentLocation = map.locationOf(actor);
+                List<Exit> availableExits = currentLocation.getExits();
+
+                for (Exit availableExit : availableExits) {
+                    Location destination = availableExit.getDestination();
+
+                    if (destination.getGround().canActorEnter(actor) && !(destination.containsAnActor())){
+                        map.moveActor(actor, destination);
+                        otherActor.hurt(weaponItem.damage());
+
+                        return actor + " stabs and steps away!";
+                    }
+                }
+                //There are no possible places for the actor to move to
+                return actor + " stabs but fails to step away.";
+            }
+        } catch (Exception e){
+            return actor + " does not have enough stamina to complete the Stab and Step Skill";
+        }
     }
 
     @Override
