@@ -30,5 +30,8 @@ public class Hut extends SpawningGround {
     @Override
     public void tick(Location location) {
         super.spawnEnemy(new ForestKeeper(),location);
+        this.updateChancetoSpawn(2);
     }
+
+
 }

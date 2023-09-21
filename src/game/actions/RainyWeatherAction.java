@@ -8,7 +8,6 @@ public class RainyWeatherAction extends Action {
 
     @Override
     public String execute(Actor actor, GameMap map) {
-
         return actor + " changes the weather to Rainy";
     }
 
