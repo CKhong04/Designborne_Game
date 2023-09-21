@@ -11,7 +11,7 @@ import game.enums.Ability;
 import game.enums.Status;
 import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
-import game.weapons.skills.AbleToActivateSkill;
+import game.weapons.skills.FocusCapable;
 import game.weapons.skills.FocusAction;
 
 /**
@@ -19,15 +19,37 @@ import game.weapons.skills.FocusAction;
  * Created by:
  * @author Laura Zhakupova
  */
-public class Broadsword extends WeaponItem implements AbleToActivateSkill, Buyable, Sellable {
-    // Private attributes
+public class Broadsword extends WeaponItem implements FocusCapable, Buyable, Sellable {
+    /**
+     * Name of this weapon.
+     */
+    private static final String NAME = "Broadsword";
+    /**
+     * Display character of this weapon.
+     */
+    private static final char DISPLAY_CHAR = '1';
+    /**
+     * The damage to this weapon.
+     */
+    private static final int DAMAGE = 110;
+    /**
+     * The hit rate of this weapon.
+     */
+    private static final int HIT_RATE = 80;
+    /**
+     * The verb of this weapon.
+     */
+    private static final String VERB = "slashes";
+    /**
+     * The default damage multiplier of this weapon.
+     */
     private static final float DEFAULT_DAMAGE_MULTIPLIER = 1.0f;
+
     private int turnCounter = 0;
     private int normalHitRate;
     private int skillTurnCounter;
     private int skillDamageMultiplier;
-    private int skillHitRate;
-    private Action weaponAbility;
+    private static final int NEW_HIT_RATE = 90;
 
     // Buyable/Sellable attributes
     private static final int BUY_PRICE = 250;
@@ -38,23 +60,11 @@ public class Broadsword extends WeaponItem implements AbleToActivateSkill, Buyab
     private static final int SELL_SCAM_CHANCE = 0;
 
     /**
-     * A constructor which accepts values of damage, hit rate, number of turns for the skill to ba activated,
-     * increase in damage multiplier after the skill was activated and hit rate after the skill was activated.
-     *
-     * @param damage amount of damage this weapon does.
-     * @param hitRate the probability/chance to hit the target.
-     * @param skillTurnCounter number of turns for the skill to ba activated.
-     * @param skillDamageMultiplier increase in damage multiplier after the skill was activated.
-     * @param skillHitRate hit rate after the skill was activated.
+     * Constructor.
      */
-    public Broadsword(int damage, int hitRate, int skillTurnCounter, int skillDamageMultiplier, int skillHitRate) {
-        super("Broadsword", '1', damage, "slashes", hitRate);
-        this.normalHitRate = hitRate;
-        this.skillTurnCounter = skillTurnCounter;
-        this.skillDamageMultiplier = skillDamageMultiplier;
-        this.skillHitRate = skillHitRate;
-        this.weaponAbility = new FocusAction(this,20);
-        this.addCapability(Status.EQUIPPED_WEAPON);
+    public Broadsword() {
+        super(NAME, DISPLAY_CHAR, DAMAGE, VERB, HIT_RATE);
+
         this.addCapability(Status.SELLABLE);
         this.addCapability(Ability.USED_AS_WEAPON);
     }
@@ -67,8 +77,7 @@ public class Broadsword extends WeaponItem implements AbleToActivateSkill, Buyab
      * - If the turn counter is equal to 0, it resets the character's hit rate and damage
      *   multiplier to their default values and removes the "FOCUS_SKILL" capability.
      */
-    @Override
-    public void activatedSkill(){
+    public void activateSkill(){
         if (this.hasCapability(Status.SKILL_ACTIVATED)){
             this.turnCounter = this.skillTurnCounter;
             this.removeCapability(Status.SKILL_ACTIVATED);
@@ -77,15 +86,21 @@ public class Broadsword extends WeaponItem implements AbleToActivateSkill, Buyab
         if (this.hasCapability(Status.FOCUS_SKILL)){
             if (this.turnCounter > 0){
                 float newDamageMultiplier = DEFAULT_DAMAGE_MULTIPLIER * this.skillDamageMultiplier / 100;
+
                 this.increaseDamageMultiplier(newDamageMultiplier);
-                this.updateHitRate(this.skillHitRate);
+                this.updateHitRate(NEW_HIT_RATE);
                 this.turnCounter -=1;
             } else if (this.turnCounter == 0) {
                 super.updateHitRate(this.normalHitRate);
                 super.updateDamageMultiplier(DEFAULT_DAMAGE_MULTIPLIER);
+
                 this.removeCapability(Status.FOCUS_SKILL);
             }
         }
+    }
+
+    public FocusAction getFocusAction() {
+        return new FocusAction(this, 20);
     }
 
     /**
@@ -98,7 +113,7 @@ public class Broadsword extends WeaponItem implements AbleToActivateSkill, Buyab
      */
     @Override
     public void tick(Location currentLocation, Actor actor) {
-        activatedSkill();
+        activateSkill();
     }
 
     /**
@@ -123,7 +138,7 @@ public class Broadsword extends WeaponItem implements AbleToActivateSkill, Buyab
     @Override
     public ActionList allowableActions(Actor actor) {
         ActionList actions = super.allowableActions(actor);
-        actions.add(this.weaponAbility);
+        actions.add(getFocusAction());
         return actions;
     }
 

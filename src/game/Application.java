@@ -57,7 +57,7 @@ public class Application {
         GameMap gameMap = new GameMap(groundFactory, map);
         world.addGameMap(gameMap);
 
-        Item broadsword = new Broadsword(110,80,5,10,90);
+        Item broadsword = new Broadsword();
         gameMap.at(27, 5).addItem(broadsword);
         gameMap.at(28, 5).addItem(new GreatKnife());
         gameMap.at(31, 5).addItem(new GiantHammer());
