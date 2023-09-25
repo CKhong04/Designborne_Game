@@ -11,6 +11,7 @@ import edu.monash.fit2099.engine.positions.FancyGroundFactory;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.World;
 import game.actors.Player;
+import game.actors.enemies.Abxervyer;
 import game.actors.traders.Traveller;
 import game.grounds.*;
 import game.grounds.spawners.Bush;
@@ -175,9 +176,11 @@ public class Application {
 
         //Adding gates for access to the room
         Gate woodsToRoomGate = new Gate();
-        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the Room."));
+        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room containing Abxervyer, the Forest Watcher."));
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
+        //Add the boss to the woods map
+        roomGameMap.at(35,1).addActor(new Abxervyer(ancientWoodsGameMap));
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
@@ -192,7 +195,6 @@ public class Application {
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
         world.addPlayer(player, gameMap.at(29, 5));
-
         world.run();
     }
 }

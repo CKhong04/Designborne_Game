@@ -48,6 +48,6 @@ public class UnlockGateAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " unlocks Gate";
+        return actor + " unlocks the Gate";
     }
 }
