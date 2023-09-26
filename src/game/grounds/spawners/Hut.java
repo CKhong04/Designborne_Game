@@ -3,6 +3,7 @@ package game.grounds.spawners;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actors.enemies.ForestKeeper;
 import game.weathers.AncientWoodEntity;
+import game.weathers.Weather;
 
 /**
  *The Hut class extends from the abstract class SpawningGround and has the chance of spawning a Forest Keeper on each
@@ -16,6 +17,7 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
     private static final int CHANCE_TO_SPAWN = 15;
     private static final double SUNNY_SPAWNING_CHANCE = 2;
 
+    private Weather weather = new Weather();
 
     /**
      * Constructor.
@@ -23,6 +25,7 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
      */
     public Hut() {
         super(CHANCE_TO_SPAWN, 'h');
+        weather.registerSubject(this);
     }
 
     /**
@@ -32,8 +35,13 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
      */
     @Override
     public void tick(Location location) {
-        super.spawnEnemy(new ForestKeeper(),location);
+        ForestKeeper forestKeeper = new ForestKeeper();
+        weather.registerSubject(forestKeeper);
+        super.spawnEnemy(forestKeeper,location);
         this.updateChancetoSpawn(2);
+        if(!location.map().contains(forestKeeper)){
+            weather.unregisterSubject(forestKeeper);
+        }
     }
 
     @Override

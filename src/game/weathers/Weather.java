@@ -1,7 +1,7 @@
 package game.weathers;
 import java.util.ArrayList;
 
-public abstract class Weather implements Subject{
+public class Weather implements Subject{
 
     public ArrayList<AncientWoodEntity> getAncientWoodEntities() {
         return ancientWoodEntities;
