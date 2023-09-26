@@ -14,7 +14,7 @@ public class Abxervyer extends Enemy{
 
     private static final int HIT_POINTS = 2000;
 
-    private int count = 1;
+    private int count = 0;
 
 
     /**
