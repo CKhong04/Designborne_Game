@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
+import game.items.consumableitems.ConsumableItem;
 
 /**
  * Class representing the consume action.
@@ -14,7 +15,7 @@ import edu.monash.fit2099.engine.positions.GameMap;
  */
 public class ConsumeAction extends Action {
     // Private attributes
-    private Item item;
+    private ConsumableItem item;
     private ActorAttributeOperations actorAttributeOperation;
     private BaseActorAttributes baseActorAttributes;
     private int percentageValue;
@@ -30,7 +31,7 @@ public class ConsumeAction extends Action {
      * @param baseActorAttributes attribute which is modified.
      * @param percentageValue percentage by which attribute is modified.
      */
-    public ConsumeAction(Item item, ActorAttributeOperations actorAttributeOperation, BaseActorAttributes baseActorAttributes, int percentageValue, boolean isDiscount){
+    public ConsumeAction(ConsumableItem item, ActorAttributeOperations actorAttributeOperation, BaseActorAttributes baseActorAttributes, int percentageValue, boolean isDiscount){
         this.item = item;
         this.actorAttributeOperation = actorAttributeOperation;
         this.baseActorAttributes = baseActorAttributes;
