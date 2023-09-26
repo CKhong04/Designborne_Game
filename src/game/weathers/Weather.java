@@ -3,11 +3,9 @@ import java.util.ArrayList;
 
 public class Weather implements Subject{
 
-    public ArrayList<AncientWoodEntity> getAncientWoodEntities() {
-        return ancientWoodEntities;
-    }
 
-    ArrayList<AncientWoodEntity> ancientWoodEntities = new ArrayList<>();
+
+//    ArrayList<AncientWoodEntity> ancientWoodEntities = new ArrayList<>();
     @Override
     public void registerSubject(AncientWoodEntity object) {
         ancientWoodEntities.add(object);
@@ -20,7 +18,9 @@ public class Weather implements Subject{
 
     @Override
     public void notifyObservers() {
-
+    }
+    public ArrayList<AncientWoodEntity> getAncientWoodEntities() {
+        return ancientWoodEntities;
     }
 
 }
