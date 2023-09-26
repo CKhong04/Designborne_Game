@@ -14,6 +14,8 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
 
     //Private attributes
     private static final int CHANCE_TO_SPAWN = 15;
+    private static final double SUNNY_SPAWNING_CHANCE = 2;
+
 
     /**
      * Constructor.
@@ -35,7 +37,10 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
     }
 
     @Override
-    public void update(int newChanceToSpawnMultiplier, int newDamageMultiplier, int newHealingRate) {
+    public void sunnyUpdate() {
+        this.updateChancetoSpawn(SUNNY_SPAWNING_CHANCE);
+    }
+    public void rainyUpdate() {
 
     }
 }
