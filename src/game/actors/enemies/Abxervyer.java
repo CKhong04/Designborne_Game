@@ -14,7 +14,7 @@ public class Abxervyer extends Enemy{
 
     private static final int HIT_POINTS = 2000;
 
-    private int count = 0;
+    private int count = 1;
 
 
     /**
@@ -34,10 +34,10 @@ public class Abxervyer extends Enemy{
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         if (count % 3 == 0 && count % 2 == 0){
-            display.println("Abxervyer changes the weather to Sunny...")
+            display.println("Abxervyer changes the weather to Sunny...");
             new SunnyWeather().notifyObservers();
         }else if(count % 3 == 0){
-            display.println("Abxervyer changes the weather to Rainy...")
+            display.println("Abxervyer changes the weather to Rainy...");
             new RainyWeather().notifyObservers();
         }
         count ++; //Increment the count
