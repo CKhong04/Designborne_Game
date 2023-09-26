@@ -28,6 +28,8 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
 
     private static final int DAMAGE = 15;
 
+    private Display display = new Display();
+
     /**
      * The constructor of the Actor class.
      * <p>
@@ -72,6 +74,7 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
     @Override
     public void sunnyUpdate() {
         this.updateDamageMultiplier(3*DAMAGE);
+        display.println("The Red Wolf is getting more aggressive.");
     }
 
 
