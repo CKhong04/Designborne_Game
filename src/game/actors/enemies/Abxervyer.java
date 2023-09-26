@@ -33,12 +33,14 @@ public class Abxervyer extends Enemy{
     //To be implemented.
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        count ++;
         if (count % 3 == 0 && count % 2 == 0){
+            display.println("Abxervyer changes the weather to Sunny...")
             new SunnyWeather().notifyObservers();
         }else if(count % 3 == 0){
+            display.println("Abxervyer changes the weather to Rainy...")
             new RainyWeather().notifyObservers();
         }
+        count ++; //Increment the count
         return super.findAction(map);
     }
 
