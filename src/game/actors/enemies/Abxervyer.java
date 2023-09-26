@@ -7,10 +7,15 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.enums.Ability;
 import game.enums.Status;
+import game.weathers.RainyWeather;
+import game.weathers.SunnyWeather;
 
 public class Abxervyer extends Enemy{
 
     private static final int HIT_POINTS = 2000;
+
+    private int count = 0;
+
 
     /**
      * The constructor is taken from the Enemy abstract class. For Abxervyer, this gives the name of the enemy, which is
@@ -28,7 +33,13 @@ public class Abxervyer extends Enemy{
     //To be implemented.
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        return null;
+        count ++;
+        if (count % 3 == 0 && count % 2 == 0){
+            new SunnyWeather().notifyObservers();
+        }else if(count % 3 == 0){
+            new RainyWeather().notifyObservers();
+        }
+        return super.findAction(map);
     }
 
     /**
