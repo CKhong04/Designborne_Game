@@ -9,6 +9,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import game.actions.SellAction;
 import game.actors.traders.pricings.IncreasedPricing;
 import game.actors.traders.pricings.Pricing;
+import game.enums.Ability;
 import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
 
@@ -19,16 +20,10 @@ import game.items.tradableitems.Sellable;
  */
 public class HealingVial extends ConsumableItem implements Sellable, Buyable {
     //Private attributes
-    //Consumable attributes
     private static final int INCREASE_HEALTH_VALUE = 10;
     private static final boolean IS_DISCOUNT = true;
-
-
-    //Sellable attributes
     private static final int SELL_PRICE = 35;
-    private static final int SELL_INCREASE_CHANCE = 10;
-    private static final int SELL_INCREASE_PERCENTAGE = 100;
-    private static final Pricing SELL_PRICING = new IncreasedPricing(SELL_INCREASE_CHANCE, SELL_INCREASE_PERCENTAGE);
+    private static final Pricing SELL_PRICING = new IncreasedPricing(10, 100);
     /***
      * Constructor.
      */
@@ -36,10 +31,20 @@ public class HealingVial extends ConsumableItem implements Sellable, Buyable {
         super("the Healing Vial", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, INCREASE_HEALTH_VALUE, IS_DISCOUNT);
     }
 
+    /**
+     * List of allowable actions that the item allows its owner do to other actor.
+     * Allowing the actor to sell this item to the traders.
+     *
+     * @param otherActor the other actor.
+     * @param location the location of the other actor.
+     * @return the allowable actions of this weapon.
+     */
     @Override
     public ActionList allowableActions(Actor otherActor, Location location) {
         ActionList actions = super.allowableActions(otherActor, location);
-        actions.add(new SellAction(otherActor, this, SELL_PRICE, SELL_PRICING));
+        if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
+            actions.add(new SellAction(otherActor, this, SELL_PRICE, SELL_PRICING));
+        }
         return actions;
     }
 

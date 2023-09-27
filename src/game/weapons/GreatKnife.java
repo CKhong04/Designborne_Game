@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
 import game.actions.SellAction;
+import game.enums.Ability;
 import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
 import game.utilities.Utility;
@@ -55,7 +56,10 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
 
     /**
      * Gets the allowable actions of this weapon.
-     * @param otherActor the actor to stab and step.
+     * Allowing this weapon to attack another player with and without a skill
+     * Allowing the actor to sell this weapon to the traders.
+     *
+     * @param otherActor the other actor.
      * @param location the location of the actor.
      * @return the allowable actions of this weapon.
      */
@@ -64,7 +68,9 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         ActionList actions =  super.allowableActions(otherActor, location);
         actions.add(new AttackAction(otherActor,location.toString(),this));
         actions.add(this.getStabAndStepAction(otherActor));
-        actions.add(new SellAction(otherActor, this, SELL_PRICE));
+        if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
+            actions.add(new SellAction(otherActor, this, SELL_PRICE));
+        }
         return actions;
     }
 

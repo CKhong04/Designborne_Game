@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.SellAction;
+import game.enums.Ability;
 import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
 import game.utilities.Utility;
@@ -17,11 +18,8 @@ import game.utilities.Utility;
  */
 public class RefreshingFlask extends ConsumableItem implements Sellable, Buyable {
     //Private attributes
-    //Consumable attributes
     private static final int INCREASE_STAMINA_VALUE = 20;
     private static final boolean IS_DISCOUNT = true;
-
-    //Sellable attributes
     private static final int SELL_PRICE = 25;
     private static final int SELL_SCAM_CHANCE = 50;
     /***
@@ -31,10 +29,20 @@ public class RefreshingFlask extends ConsumableItem implements Sellable, Buyable
         super("the Refreshing Flask", 'u', ActorAttributeOperations.INCREASE, BaseActorAttributes.STAMINA, INCREASE_STAMINA_VALUE,IS_DISCOUNT);
     }
 
+    /**
+     * List of allowable actions that the item allows its owner do to other actor.
+     * Allowing the actor to sell this item to the traders.
+     *
+     * @param otherActor the other actor.
+     * @param location the location of the other actor.
+     * @return the allowable actions of this weapon.
+     */
     @Override
     public ActionList allowableActions(Actor otherActor, Location location) {
         ActionList actions = super.allowableActions(otherActor, location);
-        actions.add(new SellAction(otherActor, this, SELL_PRICE));
+        if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
+            actions.add(new SellAction(otherActor, this, SELL_PRICE));
+        }
         return actions;
     }
 
