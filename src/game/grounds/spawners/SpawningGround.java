@@ -18,7 +18,7 @@ public abstract class SpawningGround extends Ground {
      * Random number generator
      */
     private Random rand = new Random();
-    private final int chanceToSpawn;
+    private int chanceToSpawn;
 
     /**
      * A constructor which takes chance to spawn as a parameter.
@@ -43,5 +43,9 @@ public abstract class SpawningGround extends Ground {
                 location.addActor(enemy);
             }
         }
+    }
+
+    public void updateChanceToSpawn(double newChanceToSpawnMultiplier){
+        chanceToSpawn = (int) (chanceToSpawn * newChanceToSpawnMultiplier);
     }
 }
