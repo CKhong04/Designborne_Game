@@ -40,6 +40,7 @@ public abstract class Enemy extends Actor {
     public Enemy(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.addCapability(Ability.CANNOT_ACCESS_FLOOR);
+        this.addCapability(Status.HOSTILE_TO_PLAYER);
     }
 
     /**

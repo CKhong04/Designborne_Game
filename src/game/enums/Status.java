@@ -15,4 +15,5 @@ public enum Status {
     RESIDENT_ANCIENT_WOODS,
     FOLLOWING_ACTOR,
     DRINK_WATER,
+    HOSTILE_TO_PLAYER
 }

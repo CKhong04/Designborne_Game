@@ -7,6 +7,7 @@ import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
 import game.actions.SellAction;
 import game.enums.Ability;
+import game.enums.Status;
 import game.items.tradableitems.Sellable;
 import game.weapons.skills.GreatSlamAction;
 import game.weapons.skills.GreatSlamCapable;
@@ -63,8 +64,10 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
     @Override
     public ActionList allowableActions(Actor otherActor, Location location) {
         ActionList actions = super.allowableActions(otherActor, location);
-        actions.add(new AttackAction(otherActor,location.toString(),this));
-        actions.add(getGreatSlamAction(otherActor));
+        if (otherActor.hasCapability(Status.HOSTILE_TO_PLAYER)){
+            actions.add(new AttackAction(otherActor,location.toString(),this));
+            actions.add(getGreatSlamAction(otherActor));
+        }
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
             actions.add(new SellAction(otherActor, this, SELL_PRICE));
         }

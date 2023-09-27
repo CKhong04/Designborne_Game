@@ -23,6 +23,7 @@ public class Trader extends Actor {
     public Trader(String name, char displayChar) {
         super(name, displayChar, 100);
         this.addCapability(Ability.CAN_BE_SOLD_TO);
+
     }
 
     /**
