@@ -1,5 +1,6 @@
 package game.grounds.spawners;
 
+import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actors.enemies.RedWolf;
 import game.weathers.AncientWoodEntity;
@@ -13,22 +14,18 @@ import java.security.PrivilegedAction;
  * @author Carissa Khong
  */
 public class Bush extends SpawningGround implements AncientWoodEntity {
-
-    //Private attributes
-    private static final int CHANCE_TO_SPAWN = 30;
-
-    private static final double SUNNY_SPAWNING_CHANCE = 0.67;
-
-    private Weather weather = new Weather();
+    private static final int NORMAL_CHANCE_TO_SPAWN = 30;
+    private static final double RAINY_SPAWNING_CHANCE = NORMAL_CHANCE_TO_SPAWN * 1.5;
+    private final Weather weather = new Weather();
+    private final Display display = new Display();
 
 
     /**
      * This is the constructor for the Bush class.
-     *
      * Bushes have a 30% chance of spawning an enemy each turn and are displayed with the character 'm' on the map.
      */
     public Bush() {
-        super(CHANCE_TO_SPAWN,'m');
+        super(NORMAL_CHANCE_TO_SPAWN,'m');
         weather.registerSubject(this);
 
     }
@@ -42,20 +39,30 @@ public class Bush extends SpawningGround implements AncientWoodEntity {
 
     public void tick(Location location) {
         RedWolf redWolf = new RedWolf();
+
         weather.registerSubject(redWolf);
         super.spawnEnemy(redWolf, location);
+
         if(!location.map().contains(redWolf)){
             weather.unregisterSubject(redWolf);
         }
     }
 
+    /**
+     * This method is called when the weather is sunny. It will decrease the chance of spawning a Red Wolf from the Bush.
+     */
     @Override
     public void sunnyUpdate() {
-        this.updateChancetoSpawn(SUNNY_SPAWNING_CHANCE);
-
+        this.updateChanceToSpawn(NORMAL_CHANCE_TO_SPAWN);
+        display.println("Bushes are less likely to spawn Red Wolves in sunny weather.");
     }
 
+    /**
+     * This method is called when the weather is rainy. It will increase the chance of spawning a Red Wolf from the Bush.
+     */
     @Override
     public void rainyUpdate(){
+        this.updateChanceToSpawn(RAINY_SPAWNING_CHANCE);
+        display.println("Bushes are more likely to spawn Red Wolves in rainy weather.");
     }
 }

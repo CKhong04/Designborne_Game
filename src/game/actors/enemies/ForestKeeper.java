@@ -34,7 +34,7 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
      * The Forest Keeper can also drop a Healing Vial when killed by the player, which has a 20% chance of occurring.
      */
     public ForestKeeper() {
-        super("The Forest Keeper", '8', HIT_POINTS);
+        super("Forest Keeper", '8', HIT_POINTS);
         Utility.addItemByChance(this, DROP_VIAL_CHANCE, new HealingVial());
         Utility.addItemByChance(this,CHANCE_DROP_RUNE, new Rune(50));
 

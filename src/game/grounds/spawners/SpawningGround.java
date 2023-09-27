@@ -19,9 +19,8 @@ public abstract class SpawningGround extends Ground {
     /**
      * Random number generator
      */
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
-    private Weather weather = new Weather();
     private int chanceToSpawn;
 
     /**
@@ -49,9 +48,7 @@ public abstract class SpawningGround extends Ground {
         }
     }
 
-    public void updateChancetoSpawn(double updateValue){
-        chanceToSpawn *= updateValue;
+    public void updateChanceToSpawn(double newChanceToSpawn){
+        chanceToSpawn = (int) newChanceToSpawn;
     }
-
-
 }
