@@ -45,25 +45,9 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
      */
     private static final int STAMINA_DECREASE_PERCENTAGE = 25;
     /**
-     * The buy price of this weapon.
-     */
-    private static final int BUY_PRICE = 300;
-    /**
-     * The buy pricing of this weapon.
-     */
-    private static final Pricing BUY_PRICING = new RegularPricing();
-    /**
      * The sell price of this weapon.
      */
     private static final int SELL_PRICE = 175;
-    /**
-     * The sell pricing of this weapon.
-     */
-    private static final Pricing SELL_PRICING = new RegularPricing();
-    /**
-     * The buy scam chance of this weapon.
-     */
-    private static final int BUY_SCAM_CHANCE =  5;
     /**
      * The sell scam chance of this weapon.
      */
@@ -101,22 +85,6 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         return actions;
     }
 
-    /**
-     * Gets the buy price of this weapon.
-     * @return the buy price of this weapon.
-     */
-    public int getBuyPrice() {
-        return BUY_PRICING.getPrice(BUY_PRICE);
-    }
-
-    /**
-     * Gets the buy scam chance of this weapon.
-     * @return the buy scam chance of this weapon.
-     */
-    public int getBuyScamChance(){
-        return BUY_SCAM_CHANCE;
-    }
-
     public void sold(Actor actor, Actor trader, int sellPrice){
         if (Utility.getChance(SELL_SCAM_CHANCE)){
             actor.addBalance(sellPrice);
@@ -128,5 +96,11 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         }
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
+    }
+
+    public void bought(Actor actor, Actor trader, int buyPrice, int scamChance){
+        actor.deductBalance(buyPrice);
+        trader.removeItemFromInventory(this);
+        actor.addItemToInventory(this);
     }
 }

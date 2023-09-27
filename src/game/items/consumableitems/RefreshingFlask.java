@@ -9,6 +9,7 @@ import game.actions.SellAction;
 import game.actors.traders.pricings.Pricing;
 import game.actors.traders.pricings.ReducedPricing;
 import game.actors.traders.pricings.RegularPricing;
+import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
 import game.utilities.Utility;
 
@@ -17,18 +18,11 @@ import game.utilities.Utility;
  * Created by:
  * @author Laura Zhakupova
  */
-public class RefreshingFlask extends ConsumableItem implements Sellable {
+public class RefreshingFlask extends ConsumableItem implements Sellable, Buyable {
     //Private attributes
     //Consumable attributes
     private static final int INCREASE_STAMINA_VALUE = 20;
     private static final boolean IS_DISCOUNT = true;
-
-    //Buyable attributes
-    private static final int BUY_PRICE = 75;
-    private static final int BUY_REDUCE_CHANCE = 10;
-    private static final int BUY_REDUCE_PERCENTAGE = 20;
-    private static final Pricing BUY_PRICING = new ReducedPricing(BUY_REDUCE_CHANCE, BUY_REDUCE_PERCENTAGE);
-    private static final int BUY_SCAM_CHANCE = 0;
 
     //Sellable attributes
     private static final int SELL_PRICE = 25;
@@ -54,5 +48,11 @@ public class RefreshingFlask extends ConsumableItem implements Sellable {
         }
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
+    }
+
+    public void bought(Actor actor, Actor trader, int buyPrice, int scamChance) {
+        actor.deductBalance(buyPrice);
+        trader.removeItemFromInventory(this);
+        actor.addItemToInventory(this);
     }
 }

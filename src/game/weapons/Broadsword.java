@@ -13,6 +13,7 @@ import game.enums.Ability;
 import game.enums.Status;
 import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
+import game.utilities.Utility;
 import game.weapons.skills.FocusCapable;
 import game.weapons.skills.FocusAction;
 
@@ -21,7 +22,7 @@ import game.weapons.skills.FocusAction;
  * Created by:
  * @author Laura Zhakupova
  */
-public class Broadsword extends WeaponItem implements FocusCapable, Buyable, Sellable {
+public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable {
     /**
      * Name of this weapon.
      */
@@ -53,13 +54,8 @@ public class Broadsword extends WeaponItem implements FocusCapable, Buyable, Sel
     private int skillDamageMultiplier;
     private static final int NEW_HIT_RATE = 90;
 
-    // Buyable/Sellable attributes
-    private static final int BUY_PRICE = 250;
-    private static final Pricing BUY_PRICING = new RegularPricing();
+    // Sellable attributes
     private static final int SELL_PRICE = 100;
-    private static final Pricing SELL_PRICING = new RegularPricing();
-    private static final int BUY_SCAM_CHANCE = 5;
-    private static final int SELL_SCAM_CHANCE = 0;
 
     /**
      * Constructor.
@@ -158,19 +154,17 @@ public class Broadsword extends WeaponItem implements FocusCapable, Buyable, Sel
         return actions;
     }
 
-    @Override
-    public int getBuyPrice(){
-        return BUY_PRICING.getPrice(BUY_PRICE);
-    }
-
-    @Override
-    public int getBuyScamChance(){
-        return BUY_SCAM_CHANCE;
-    }
-
     public void sold(Actor actor, Actor trader, int sellPrice){
         actor.addBalance(sellPrice);
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
+    }
+
+    public void bought(Actor actor, Actor trader, int buyPrice, int scamChance){
+        if (!Utility.getChance(scamChance)) {
+            trader.removeItemFromInventory(this);
+            actor.addItemToInventory(this);
+        }
+        actor.deductBalance(buyPrice);
     }
 }
