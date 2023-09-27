@@ -165,7 +165,11 @@ public class Application {
         GameMap roomGameMap = new GameMap(groundFactory, roomMap);
         world.addGameMap(roomGameMap);
 
-        //Adding the bushes and huts to the Room
+        // Adding Abxervyer to the room
+        Abxervyer abxervyer = new Abxervyer();
+        roomGameMap.at(30, 15).addActor(abxervyer);
+
+        // Adding the bushes and huts to the Room
         roomGameMap.at(30, 2).setGround(new Bush());
 
         roomGameMap.at(19,10).setGround(new Hut());
@@ -179,7 +183,6 @@ public class Application {
         woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the Room."));
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
-
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
             new Display().println(line);
@@ -192,7 +195,7 @@ public class Application {
 
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
-        world.addPlayer(player, gameMap.at(29, 5));
+        world.addPlayer(player, roomGameMap.at(12, 12));
 
         world.run();
     }

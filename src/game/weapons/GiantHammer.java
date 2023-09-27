@@ -48,7 +48,7 @@ public class GiantHammer extends WeaponItem implements Buyable, Sellable, GreatS
      */
     private static final int BUY_PRICE = 0;
     /**
-     * The buy pricing of this weapon.
+     * The by pricing of this weapon.
      */
     private static final Pricing BUY_PRICING = new RegularPricing();
     /**

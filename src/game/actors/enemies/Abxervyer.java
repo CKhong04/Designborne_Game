@@ -11,11 +11,14 @@ import game.weathers.RainyWeather;
 import game.weathers.SunnyWeather;
 
 public class Abxervyer extends Enemy{
-
+    /**
+     * Hit points of Abxervyer.
+     */
     private static final int HIT_POINTS = 2000;
-
+    /**
+     * The count of turns.
+     */
     private int count = 0;
-
 
     /**
      * The constructor is taken from the Enemy abstract class. For Abxervyer, this gives the name of the enemy, which is
@@ -30,17 +33,25 @@ public class Abxervyer extends Enemy{
         this.addCapability(Ability.NOT_HURT_BY_VOID); //Abxervyer will not be hurt if it steps on a void.
     }
 
-    //To be implemented.
+    /**
+     * Executes the weather changing skills every 3 turns.
+     * @param actions    collection of possible Actions for this Actor
+     * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
+     * @param map        the map containing the Actor
+     * @param display    the I/O object to which messages may be written
+     * @return a valid action to be performed
+     */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         if (count % 3 == 0 && count % 2 == 0){
-            display.println("Abxervyer changes the weather to Sunny...");
+            display.println("Abxervyer changes the weather to sunny...");
             new SunnyWeather().notifyObservers();
-        }else if(count % 3 == 0){
-            display.println("Abxervyer changes the weather to Rainy...");
+        } else if(count % 3 == 0){
+            display.println("Abxervyer changes the weather to rainy...");
             new RainyWeather().notifyObservers();
         }
-        count ++; //Increment the count
+
+        count ++;
         return super.findAction(map);
     }
 
