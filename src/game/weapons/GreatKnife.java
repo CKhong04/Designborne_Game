@@ -5,12 +5,14 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
+import game.actions.SellAction;
 import game.actors.traders.pricings.Pricing;
 import game.actors.traders.pricings.RegularPricing;
 import game.enums.Ability;
 import game.enums.Status;
 import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
+import game.utilities.Utility;
 import game.weapons.skills.StabAndStepAction;
 import game.weapons.skills.StabAndStepCapable;
 
@@ -72,8 +74,6 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
      */
     public GreatKnife() {
         super(NAME, DISPLAY_CHAR, DAMAGE, VERB, HIT_RATE);
-
-        this.addCapability(Status.SELLABLE);
         this.addCapability(Ability.USED_AS_WEAPON);
     }
 
@@ -97,6 +97,7 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         ActionList actions =  super.allowableActions(otherActor, location);
         actions.add(new AttackAction(otherActor,location.toString(),this));
         actions.add(this.getStabAndStepAction(otherActor));
+        actions.add(new SellAction(otherActor, this, SELL_PRICE));
         return actions;
     }
 
@@ -116,19 +117,16 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         return BUY_SCAM_CHANCE;
     }
 
-    /**
-     * Gets the sell price of this weapon.
-     * @return the sell price of this weapon.
-     */
-    public int getSellPrice() {
-        return SELL_PRICING.getPrice(SELL_PRICE);
-    }
-
-    /**
-     * Gets the sell scam chance of this weapon.
-     * @return the sell scam chance of this weapon.
-     */
-    public int getSellScamChance(){
-        return SELL_SCAM_CHANCE;
+    public void sold(Actor actor, Actor trader, int sellPrice){
+        if (Utility.getChance(SELL_SCAM_CHANCE)){
+            actor.addBalance(sellPrice);
+        } else {
+            if (actor.getBalance() > sellPrice) {
+                actor.deductBalance(sellPrice);
+                trader.addBalance(sellPrice);
+            }
+        }
+        actor.removeItemFromInventory(this);
+        trader.addItemToInventory(this);
     }
 }

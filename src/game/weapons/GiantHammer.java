@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
+import game.actions.SellAction;
 import game.actors.traders.pricings.Pricing;
 import game.actors.traders.pricings.RegularPricing;
 import game.enums.Ability;
@@ -19,7 +20,7 @@ import game.weapons.skills.GreatSlamCapable;
  * Created by:
  * @author Minh Nguyen
  */
-public class GiantHammer extends WeaponItem implements Buyable, Sellable, GreatSlamCapable {
+public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapable {
     /**
      * Name of this weapon.
      */
@@ -56,18 +57,6 @@ public class GiantHammer extends WeaponItem implements Buyable, Sellable, GreatS
      * The sell price of this weapon.
      */
     private static final int SELL_PRICE = 250;
-    /**
-     * The sell pricing of this weapon.
-     */
-    private static final Pricing SELL_PRICING = new RegularPricing();
-    /**
-     * The buy scam chance of this weapon.
-     */
-    private static final int BUY_SCAM_CHANCE =  0;
-    /**
-     * The sell scam chance of this weapon.
-     */
-    private static final int SELL_SCAM_CHANCE = 0;
 
     /**
      * Constructor.
@@ -76,7 +65,6 @@ public class GiantHammer extends WeaponItem implements Buyable, Sellable, GreatS
         super(NAME, DISPLAY_CHAR, DAMAGE, VERB, HIT_RATE);
 
         this.addCapability(Ability.USED_AS_WEAPON);
-        this.addCapability(Status.SELLABLE);
     }
 
     /**
@@ -101,42 +89,13 @@ public class GiantHammer extends WeaponItem implements Buyable, Sellable, GreatS
         ActionList actions = super.allowableActions(otherActor, location);
         actions.add(new AttackAction(otherActor,location.toString(),this));
         actions.add(getGreatSlamAction(otherActor));
+        actions.add(new SellAction(otherActor, this, SELL_PRICE));
         return actions;
     }
 
-    /**
-     * Get the buy price of this weapon.
-     *
-     * @return the buy price of this weapon.
-     */
-    public int getBuyPrice() {
-        return BUY_PRICING.getPrice(BUY_PRICE);
-    }
-
-    /**
-     * Get the buy scam chance of this weapon.
-     *
-     * @return the buy scam chance of this weapon.
-     */
-    public int getBuyScamChance(){
-        return BUY_SCAM_CHANCE;
-    }
-
-    /**
-     * Get the sell price of this weapon.
-     *
-     * @return the sell price of this weapon.
-     */
-    public int getSellPrice() {
-        return SELL_PRICING.getPrice(SELL_PRICE);
-    }
-
-    /**
-     * Get the sell scam chance of this weapon.
-     *
-     * @return the sell scam chance of this weapon.
-     */
-    public int getSellScamChance(){
-        return SELL_SCAM_CHANCE;
+    public void sold(Actor actor, Actor trader, int sellPrice){
+        actor.addBalance(sellPrice);
+        actor.removeItemFromInventory(this);
+        trader.addItemToInventory(this);
     }
 }

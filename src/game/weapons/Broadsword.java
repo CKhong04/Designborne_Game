@@ -66,8 +66,6 @@ public class Broadsword extends WeaponItem implements FocusCapable, Buyable, Sel
      */
     public Broadsword() {
         super(NAME, DISPLAY_CHAR, DAMAGE, VERB, HIT_RATE);
-
-        this.addCapability(Status.SELLABLE);
         this.addCapability(Ability.USED_AS_WEAPON);
     }
 
