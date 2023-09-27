@@ -24,45 +24,43 @@ import game.weapons.skills.FocusAction;
  */
 public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable {
     /**
-     * Name of this weapon.
+     * The turn counter.
      */
-    private static final String NAME = "Broadsword";
+    private int turnCounter = 0;
     /**
-     * Display character of this weapon.
-     */
-    private static final char DISPLAY_CHAR = '1';
-    /**
-     * The damage to this weapon.
+     * Normal damage of this weapon.
      */
     private static final int DAMAGE = 110;
     /**
-     * The hit rate of this weapon.
+     * Normal hit rate of this weapon.
      */
     private static final int HIT_RATE = 80;
-    /**
-     * The verb of this weapon.
-     */
-    private static final String VERB = "slashes";
     /**
      * The default damage multiplier of this weapon.
      */
     private static final float DEFAULT_DAMAGE_MULTIPLIER = 1.0f;
-
-    private int turnCounter = 0;
-    private int normalHitRate;
-    private int skillTurnCounter;
-    private int skillDamageMultiplier;
+    /**
+     * Number of turns the skill is activated.
+     */
+    private static final int SKILL_TURN_COUNTER = 5;
+    /**
+     * Increase in damage multiplier when skill is activated.
+     */
+    private static final int SKILL_DAMAGE_MULTIPLIER = 10;
+    /**
+     * Hit rate when skill is activated.
+     */
     private static final int NEW_HIT_RATE = 90;
-
-    // Sellable attributes
+    /**
+     * The sell price of this weapon.
+     */
     private static final int SELL_PRICE = 100;
 
     /**
      * Constructor.
      */
     public Broadsword() {
-        super(NAME, DISPLAY_CHAR, DAMAGE, VERB, HIT_RATE);
-        this.addCapability(Ability.USED_AS_WEAPON);
+        super("Broadsword", '1', DAMAGE, "slashes", HIT_RATE);
     }
 
     /**
@@ -75,19 +73,19 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
      */
     public void activateSkill(){
         if (this.hasCapability(Status.SKILL_ACTIVATED)){
-            this.turnCounter = this.skillTurnCounter;
+            this.turnCounter = SKILL_TURN_COUNTER;
             this.removeCapability(Status.SKILL_ACTIVATED);
         }
 
         if (this.hasCapability(Status.FOCUS_SKILL)){
             if (this.turnCounter > 0){
-                float newDamageMultiplier = DEFAULT_DAMAGE_MULTIPLIER * this.skillDamageMultiplier / 100;
+                float newDamageMultiplier = DEFAULT_DAMAGE_MULTIPLIER * SKILL_DAMAGE_MULTIPLIER / 100;
 
                 this.increaseDamageMultiplier(newDamageMultiplier);
                 this.updateHitRate(NEW_HIT_RATE);
                 this.turnCounter -=1;
             } else if (this.turnCounter == 0) {
-                super.updateHitRate(this.normalHitRate);
+                super.updateHitRate(HIT_RATE);
                 super.updateDamageMultiplier(DEFAULT_DAMAGE_MULTIPLIER);
 
                 this.removeCapability(Status.FOCUS_SKILL);
