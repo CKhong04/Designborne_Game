@@ -6,9 +6,6 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.SellAction;
-import game.actors.traders.pricings.Pricing;
-import game.actors.traders.pricings.ReducedPricing;
-import game.actors.traders.pricings.RegularPricing;
 import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
 import game.utilities.Utility;
@@ -26,7 +23,6 @@ public class RefreshingFlask extends ConsumableItem implements Sellable, Buyable
 
     //Sellable attributes
     private static final int SELL_PRICE = 25;
-    private static final Pricing SELL_PRICING = new RegularPricing();
     private static final int SELL_SCAM_CHANCE = 50;
     /***
      * Constructor.
@@ -38,7 +34,7 @@ public class RefreshingFlask extends ConsumableItem implements Sellable, Buyable
     @Override
     public ActionList allowableActions(Actor otherActor, Location location) {
         ActionList actions = super.allowableActions(otherActor, location);
-        actions.add(new SellAction(otherActor, this, SELL_PRICE, SELL_PRICING));
+        actions.add(new SellAction(otherActor, this, SELL_PRICE));
         return actions;
     }
 

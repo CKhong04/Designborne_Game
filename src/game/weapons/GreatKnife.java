@@ -6,10 +6,6 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
 import game.actions.SellAction;
-import game.actors.traders.pricings.Pricing;
-import game.actors.traders.pricings.RegularPricing;
-import game.enums.Ability;
-import game.enums.Status;
 import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
 import game.utilities.Utility;
@@ -21,14 +17,6 @@ import game.weapons.skills.StabAndStepCapable;
  */
 public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable {
     /**
-     * Name of this weapon.
-     */
-    private static final String NAME = "Great Knife";
-    /**
-     * Display character of this weapon.
-     */
-    private static final char DISPLAY_CHAR = '>';
-    /**
      * The damage to this weapon.
      */
     private static final int DAMAGE = 75;
@@ -36,10 +24,6 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
      * The hit rate of this weapon.
      */
     private static final int HIT_RATE = 70;
-    /**
-     * The verb of this weapon.
-     */
-    private static final String VERB = "slashes";
     /**
      * The stamina decrease percentage of this weapon.
      */
@@ -57,8 +41,7 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
      * Constructor.
      */
     public GreatKnife() {
-        super(NAME, DISPLAY_CHAR, DAMAGE, VERB, HIT_RATE);
-        this.addCapability(Ability.USED_AS_WEAPON);
+        super("Great Knife", '>', DAMAGE, "slashes", HIT_RATE);
     }
 
     /**

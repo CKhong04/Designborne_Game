@@ -6,11 +6,6 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
 import game.actions.SellAction;
-import game.actors.traders.pricings.Pricing;
-import game.actors.traders.pricings.RegularPricing;
-import game.enums.Ability;
-import game.enums.Status;
-import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
 import game.weapons.skills.GreatSlamAction;
 import game.weapons.skills.GreatSlamCapable;
@@ -22,14 +17,6 @@ import game.weapons.skills.GreatSlamCapable;
  */
 public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapable {
     /**
-     * Name of this weapon.
-     */
-    private static final String NAME = "Giant Hammer";
-    /**
-     * Display character of this weapon.
-     */
-    private static final char DISPLAY_CHAR = 'P';
-    /**
      * The damage to this weapon.
      */
     private static final int DAMAGE = 160;
@@ -38,21 +25,9 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
      */
     private static final int HIT_RATE = 90;
     /**
-     * The verb of this weapon.
-     */
-    private static final String VERB = "smashes";
-    /**
      * The stamina decrease percentage of this weapon.
      */
     private static final int STAMINA_DECREASE_PERCENTAGE = 5;
-    /**
-     * The buy price of this weapon.
-     */
-    private static final int BUY_PRICE = 0;
-    /**
-     * The buy pricing of this weapon.
-     */
-    private static final Pricing BUY_PRICING = new RegularPricing();
     /**
      * The sell price of this weapon.
      */
@@ -62,9 +37,7 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
      * Constructor.
      */
     public GiantHammer() {
-        super(NAME, DISPLAY_CHAR, DAMAGE, VERB, HIT_RATE);
-
-        this.addCapability(Ability.USED_AS_WEAPON);
+        super("Giant Hammer", 'P', DAMAGE, "smashes", HIT_RATE);
     }
 
     /**

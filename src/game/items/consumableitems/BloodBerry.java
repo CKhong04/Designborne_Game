@@ -6,8 +6,6 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.SellAction;
-import game.actors.traders.pricings.Pricing;
-import game.actors.traders.pricings.RegularPricing;
 import game.items.tradableitems.Sellable;
 
 public class BloodBerry extends ConsumableItem implements Sellable {
@@ -15,11 +13,6 @@ public class BloodBerry extends ConsumableItem implements Sellable {
     //Consumable attributes
     private static final int INCREASE_HEALTH_VALUE = 5;
     private static final boolean IS_DISCOUNT = false;
-
-    //Buyable attributes
-    private static final int BUY_PRICE = 0;
-    private static final Pricing BUY_PRICING = new RegularPricing();
-    private static final int BUY_SCAM_CHANCE = 0;
 
     //Sellable attributes
     private static final int SELL_PRICE = 10;
