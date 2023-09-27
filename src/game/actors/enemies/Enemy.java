@@ -8,7 +8,6 @@ import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.DeathAction;
 import game.behaviours.*;
 import game.enums.Ability;
@@ -40,6 +39,7 @@ public abstract class Enemy extends Actor {
     public Enemy(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.addCapability(Ability.CANNOT_ACCESS_FLOOR);
+        this.addCapability(Status.HOSTILE_TO_PLAYER);
     }
 
     /**

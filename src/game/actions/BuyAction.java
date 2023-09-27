@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
+import game.actors.traders.pricings.Pricing;
 import game.items.tradableitems.Buyable;
 import game.utilities.Utility;
 
@@ -14,18 +15,34 @@ import game.utilities.Utility;
  */
 public class BuyAction extends Action {
     // Private attributes
-    private Actor seller;
+    private Actor trader;
     private Buyable item;
+    private final int buyPrice;
+    private int scamChance = 0;
 
     /**
      * A constructor which accepts a seller and an item.
      *
-     * @param seller actor who sells the item.
+     * @param trader actor who sells the item.
      * @param item which is sold.
      */
-    public BuyAction(Actor seller, Buyable item){
-        this.seller = seller;
+    public BuyAction(Actor trader, Buyable item, int buyPrice, Pricing sellPricingStrategy){
+        this.trader = trader;
         this.item = item;
+        this.buyPrice = sellPricingStrategy.getPrice(buyPrice);
+    }
+
+    public BuyAction(Actor trader, Buyable item, int buyPrice){
+        this.trader = trader;
+        this.item = item;
+        this.buyPrice = buyPrice;
+    }
+
+    public BuyAction(Actor trader, Buyable item, int buyPrice, int scamChance){
+        this.trader = trader;
+        this.item = item;
+        this.buyPrice = buyPrice;
+        this.scamChance = scamChance;
     }
 
     /**
@@ -38,14 +55,10 @@ public class BuyAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        if (actor.getBalance() < this.item.getBuyPrice()){
+        if (actor.getBalance() < this.buyPrice){
             return "You are unable to buy " + this.item;
         } else {
-            if (!Utility.getChance(this.item.getBuyScamChance())){
-                seller.removeItemFromInventory((Item) this.item);
-                actor.addItemToInventory((Item) this.item);
-            }
-            actor.deductBalance(this.item.getBuyPrice());
+            this.item.bought(actor, this.trader, this.buyPrice, this.scamChance);
             return menuDescription(actor);
         }
     }
@@ -58,6 +71,6 @@ public class BuyAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " buys " + this.item + " for " + this.item.getBuyPrice() + " runes";
+        return actor + " buys " + this.item + " for " + this.buyPrice + " runes";
     }
 }
