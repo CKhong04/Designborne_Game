@@ -3,6 +3,9 @@ package game.grounds.spawners;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actors.enemies.RedWolf;
 import game.weathers.AncientWoodEntity;
+import game.weathers.Weather;
+
+import java.security.PrivilegedAction;
 
 /**
  * The Bush class extends the SpawningGround class and has a chance of spawning Red Wolves from it each turn.
@@ -14,6 +17,11 @@ public class Bush extends SpawningGround implements AncientWoodEntity {
     //Private attributes
     private static final int CHANCE_TO_SPAWN = 30;
 
+    private static final double SUNNY_SPAWNING_CHANCE = 0.67;
+
+    private Weather weather = new Weather();
+
+
     /**
      * This is the constructor for the Bush class.
      *
@@ -21,6 +29,8 @@ public class Bush extends SpawningGround implements AncientWoodEntity {
      */
     public Bush() {
         super(CHANCE_TO_SPAWN,'m');
+        weather.registerSubject(this);
+
     }
 
     /**
@@ -29,12 +39,23 @@ public class Bush extends SpawningGround implements AncientWoodEntity {
      * @param location The location of the Bush.
      */
     @Override
+
     public void tick(Location location) {
-        super.spawnEnemy(new RedWolf(), location);
+        RedWolf redWolf = new RedWolf();
+        weather.registerSubject(redWolf);
+        super.spawnEnemy(redWolf, location);
+        if(!location.map().contains(redWolf)){
+            weather.unregisterSubject(redWolf);
+        }
     }
 
     @Override
-    public void update(int newChanceToSpawnMultiplier, int newDamageMultiplier, int newHealingRate) {
+    public void sunnyUpdate() {
+        this.updateChancetoSpawn(SUNNY_SPAWNING_CHANCE);
 
+    }
+
+    @Override
+    public void rainyUpdate(){
     }
 }

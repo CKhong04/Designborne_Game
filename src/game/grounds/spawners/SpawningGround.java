@@ -3,6 +3,8 @@ package game.grounds.spawners;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
+import game.enums.Status;
+import game.weathers.Weather;
 
 import java.util.Random;
 
@@ -18,6 +20,8 @@ public abstract class SpawningGround extends Ground {
      * Random number generator
      */
     private Random rand = new Random();
+
+    private Weather weather = new Weather();
     private int chanceToSpawn;
 
     /**

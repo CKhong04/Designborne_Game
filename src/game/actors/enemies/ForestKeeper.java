@@ -26,6 +26,7 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
     private static final int HIT_POINTS = 125;
     private static final int CHANCE_DROP_RUNE = 100;
 
+
     /**
      * A constructor which accepts name, display character and hit points.
      * The Forest Keeper is an enemy which the player can encounter in the Ancient Woods. They can spawn from the huts
@@ -65,7 +66,10 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
     }
 
     @Override
-    public void update(int newChanceToSpawnMultiplier, int newDamageMultiplier, int newHealingRate) {
+    public void sunnyUpdate() {
+    }
 
+    @Override
+    public void rainyUpdate(){
     }
 }

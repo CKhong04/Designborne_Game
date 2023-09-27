@@ -1,8 +1,11 @@
 package game.weathers;
 import java.util.ArrayList;
 
-public abstract class Weather implements Subject {
-    ArrayList<AncientWoodEntity> ancientWoodEntities = new ArrayList<>();
+public class Weather implements Subject{
+
+
+
+//    ArrayList<AncientWoodEntity> ancientWoodEntities = new ArrayList<>();
     @Override
     public void registerSubject(AncientWoodEntity object) {
         ancientWoodEntities.add(object);
@@ -15,6 +18,9 @@ public abstract class Weather implements Subject {
 
     @Override
     public void notifyObservers() {
-
     }
+    public ArrayList<AncientWoodEntity> getAncientWoodEntities() {
+        return ancientWoodEntities;
+    }
+
 }

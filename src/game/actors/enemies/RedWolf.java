@@ -26,6 +26,10 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
 
     private static final int HIT_POINTS = 25;
 
+    private static final int DAMAGE = 15;
+
+    private Display display = new Display();
+
     /**
      * The constructor of the Actor class.
      * <p>
@@ -60,15 +64,22 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
      */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon(){
-        int damage = 15;
+//        int damage = 15;
         int hitRate = 80;
         String verb = "bites";
 
-        return new IntrinsicWeapon(damage, verb, hitRate);
+        return new IntrinsicWeapon(DAMAGE, verb, hitRate);
     }
 
     @Override
     public void sunnyUpdate() {
+        this.updateDamageMultiplier(3*DAMAGE);
+        display.println("The Red Wolf is getting more aggressive.");
+    }
+
+
+    @Override
+    public void rainyUpdate(){
 
     }
 
