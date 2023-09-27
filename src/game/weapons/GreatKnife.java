@@ -90,8 +90,17 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         trader.addItemToInventory(this);
     }
 
+    /**
+     * Performs a buy action on the item.
+     *
+     * @param actor player who buys an item.
+     * @param trader who sells an item.
+     * @param buyPrice price of the item.
+     * @param scamChance chance of a trader to scam.
+     */
     public void bought(Actor actor, Actor trader, int buyPrice, int scamChance){
         actor.deductBalance(buyPrice);
+        trader.addBalance(buyPrice);
         trader.removeItemFromInventory(this);
         actor.addItemToInventory(this);
     }

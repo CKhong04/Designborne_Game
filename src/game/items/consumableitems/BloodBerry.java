@@ -39,6 +39,13 @@ public class BloodBerry extends ConsumableItem implements Sellable {
         return actions;
     }
 
+    /**
+     * Performs a sell action on the item.
+     *
+     * @param actor player who sell an item.
+     * @param trader who buys an item.
+     * @param sellPrice price of the item.
+     */
     public void sold(Actor actor, Actor trader, int sellPrice){
         actor.addBalance(sellPrice);
         actor.removeItemFromInventory(this);

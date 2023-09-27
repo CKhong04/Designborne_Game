@@ -1,14 +1,11 @@
 package game.weapons;
 
-import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
 import game.actions.SellAction;
-import game.actors.traders.pricings.Pricing;
-import game.actors.traders.pricings.RegularPricing;
 import game.enums.Ability;
 import game.enums.Status;
 import game.items.tradableitems.Buyable;
@@ -158,14 +155,32 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
         return actions;
     }
 
+    /**
+     * Performs a sell action on the item.
+     *
+     * @param actor player who sell an item.
+     * @param trader who buys an item.
+     * @param sellPrice price of the item.
+     */
     public void sold(Actor actor, Actor trader, int sellPrice){
         actor.addBalance(sellPrice);
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
     }
 
+    /**
+     * Performs a buy action on the item.
+     * There is a chance that the trader takes player's runes
+     * without giving the weapon.
+     *
+     * @param actor player who buys an item.
+     * @param trader who sells an item.
+     * @param buyPrice price of the item.
+     * @param scamChance chance of a trader to scam.
+     */
     public void bought(Actor actor, Actor trader, int buyPrice, int scamChance){
         if (!Utility.getChance(scamChance)) {
+            System.out.println(scamChance);
             trader.removeItemFromInventory(this);
             actor.addItemToInventory(this);
         }

@@ -46,16 +46,32 @@ public class RefreshingFlask extends ConsumableItem implements Sellable, Buyable
         return actions;
     }
 
+    /**
+     * Performs a sell action on the item.
+     *
+     * @param actor player who sell an item.
+     * @param trader who buys an item.
+     * @param sellPrice price of the item.
+     */
     public void sold(Actor actor, Actor trader, int sellPrice){
-        if (Utility.getChance(SELL_SCAM_CHANCE)){
+        if (!Utility.getChance(SELL_SCAM_CHANCE)){
             actor.addBalance(sellPrice);
         }
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
     }
 
+    /**
+     * Performs a buy action on the item.
+     *
+     * @param actor player who buys an item.
+     * @param trader who sells an item.
+     * @param buyPrice price of the item.
+     * @param scamChance chance of a trader to scam.
+     */
     public void bought(Actor actor, Actor trader, int buyPrice, int scamChance) {
         actor.deductBalance(buyPrice);
+        trader.addBalance(buyPrice);
         trader.removeItemFromInventory(this);
         actor.addItemToInventory(this);
     }

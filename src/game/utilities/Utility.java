@@ -12,6 +12,13 @@ import java.util.Random;
  * @author Laura Zhakupova
  */
 public class Utility {
+    /**
+     * Adds item to the actor's inventory by chance
+     *
+     * @param actor to which inventory the item is added
+     * @param chance to add the item
+     * @param item to add to the inventory
+     */
     public static void addItemByChance(Actor actor, int chance, Item item) {
         Random rand = new Random();
         if (rand.nextInt(100) <= chance) {
@@ -28,5 +35,23 @@ public class Utility {
     public static boolean getChance(int chance){
         Random rand = new Random();
         return rand.nextInt(100) <= chance;
+    }
+
+    public int increasePrice(int originalPrice, int chanceToIncrease, int percentageIncrease){
+        Random rand = new Random();
+        if (rand.nextInt(100) <= chanceToIncrease) {
+            return (int)(originalPrice * (1+(percentageIncrease/100.0)));
+        } else {
+            return originalPrice;
+        }
+    }
+
+    public int reducePrice(int originalPrice, int chanceToDecrease, int percentageDecrease){
+        Random rand = new Random();
+        if (rand.nextInt(100) <= chanceToDecrease) {
+            return (int)(originalPrice * (1-(percentageDecrease/100.0)));
+        } else {
+            return originalPrice;
+        }
     }
 }

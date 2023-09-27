@@ -4,7 +4,6 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
-import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.SellAction;
 import game.actors.traders.pricings.IncreasedPricing;
@@ -48,14 +47,30 @@ public class HealingVial extends ConsumableItem implements Sellable, Buyable {
         return actions;
     }
 
+    /**
+     * Performs a sell action on the item.
+     *
+     * @param actor player who sell an item.
+     * @param trader who buys an item.
+     * @param sellPrice price of the item.
+     */
     public void sold(Actor actor, Actor trader, int sellPrice){
         actor.addBalance(sellPrice);
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
     }
 
+    /**
+     * Performs a buy action on the item.
+     *
+     * @param actor player who buys an item.
+     * @param trader who sells an item.
+     * @param buyPrice price of the item.
+     * @param scamChance chance of a trader to scam.
+     */
     public void bought(Actor actor, Actor trader, int buyPrice, int scamChance){
         actor.deductBalance(buyPrice);
+        trader.addBalance(buyPrice);
         trader.removeItemFromInventory(this);
         actor.addItemToInventory(this);
     }
