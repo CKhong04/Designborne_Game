@@ -79,9 +79,9 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
 
         if (this.hasCapability(Status.FOCUS_SKILL)){
             if (this.turnCounter > 0){
-                float newDamageMultiplier = DEFAULT_DAMAGE_MULTIPLIER * SKILL_DAMAGE_MULTIPLIER / 100;
+                float newDamageMultiplier = DEFAULT_DAMAGE_MULTIPLIER + DEFAULT_DAMAGE_MULTIPLIER * SKILL_DAMAGE_MULTIPLIER / 100;
 
-                this.increaseDamageMultiplier(newDamageMultiplier);
+                this.updateDamageMultiplier(newDamageMultiplier);
                 this.updateHitRate(NEW_HIT_RATE);
                 this.turnCounter -=1;
             } else if (this.turnCounter == 0) {
@@ -91,6 +91,7 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
                 this.removeCapability(Status.FOCUS_SKILL);
             }
         }
+        System.out.println(turnCounter);
     }
 
     public FocusAction getFocusAction() {
@@ -139,16 +140,19 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     /**
      * List of allowable actions that the item allows its owner do to other actor.
      * Allowing this weapon to attack another actor.
+     * Allowing the actor to sell this weapon to the traders.
      *
-     * @param otherActor the other actor
-     * @param location the location of the other actor
-     * @return
+     * @param otherActor the other actor.
+     * @param location the location of the other actor.
+     * @return the allowable actions of this weapon.
      */
     @Override
     public ActionList allowableActions(Actor otherActor, Location location){
         ActionList actions = new ActionList();
         actions.add(new AttackAction(otherActor,location.toString(),this));
-        actions.add(new SellAction(otherActor, this, SELL_PRICE));
+        if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
+            actions.add(new SellAction(otherActor, this, SELL_PRICE));
+        }
         return actions;
     }
 
