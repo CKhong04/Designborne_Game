@@ -1,4 +1,5 @@
 package game.weathers;
 
-public class RainyWeather extends Weather{
+public class RainyWeather extends Weather {
+
 }
