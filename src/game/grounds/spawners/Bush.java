@@ -2,16 +2,18 @@ package game.grounds.spawners;
 
 import edu.monash.fit2099.engine.positions.Location;
 import game.actors.enemies.RedWolf;
+import game.weathers.AncientWoodEntity;
 
 /**
  * The Bush class extends the SpawningGround class and has a chance of spawning Red Wolves from it each turn.
  * Created by:
  * @author Carissa Khong
  */
-public class Bush extends SpawningGround{
+public class Bush extends SpawningGround implements AncientWoodEntity {
 
     //Private attributes
     private static final int CHANCE_TO_SPAWN = 30;
+    private static final double RAINY_SPAWNING_CHANCE_MULTIPLIER = 1.5;
 
     /**
      * This is the constructor for the Bush class.
@@ -30,5 +32,15 @@ public class Bush extends SpawningGround{
     @Override
     public void tick(Location location) {
         super.spawnEnemy(new RedWolf(), location);
+    }
+
+    @Override
+    public void sunnyUpdate() {
+
+    }
+
+    @Override
+    public void rainyUpdate() {
+        this.updateChanceToSpawn(RAINY_SPAWNING_CHANCE_MULTIPLIER);
     }
 }
