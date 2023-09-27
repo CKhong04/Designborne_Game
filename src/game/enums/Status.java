@@ -8,7 +8,6 @@ package game.enums;
  */
 public enum Status {
     HOSTILE_TO_ENEMY,
-    EQUIPPED_WEAPON,
     HAS_KEY,
     LOCKED_GATE,
     SKILL_ACTIVATED,
@@ -16,5 +15,4 @@ public enum Status {
     RESIDENT_ANCIENT_WOODS,
     FOLLOWING_ACTOR,
     DRINK_WATER,
-    SELLABLE
 }

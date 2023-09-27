@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
+import game.actions.SellAction;
 import game.actors.traders.pricings.Pricing;
 import game.actors.traders.pricings.RegularPricing;
 import game.enums.Ability;
@@ -155,6 +156,7 @@ public class Broadsword extends WeaponItem implements FocusCapable, Buyable, Sel
     public ActionList allowableActions(Actor otherActor, Location location){
         ActionList actions = new ActionList();
         actions.add(new AttackAction(otherActor,location.toString(),this));
+        actions.add(new SellAction(otherActor, this, SELL_PRICE));
         return actions;
     }
 
@@ -168,13 +170,9 @@ public class Broadsword extends WeaponItem implements FocusCapable, Buyable, Sel
         return BUY_SCAM_CHANCE;
     }
 
-    @Override
-    public int getSellPrice(){
-        return SELL_PRICING.getPrice(SELL_PRICE);
-    }
-
-    @Override
-    public int getSellScamChance(){
-        return SELL_SCAM_CHANCE;
+    public void sold(Actor actor, Actor trader, int sellPrice){
+        actor.addBalance(sellPrice);
+        actor.removeItemFromInventory(this);
+        trader.addItemToInventory(this);
     }
 }

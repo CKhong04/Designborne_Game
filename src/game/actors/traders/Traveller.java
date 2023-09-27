@@ -18,12 +18,17 @@ import game.weapons.Broadsword;
  * @author Laura Zhakupova
  */
 public class Traveller extends Trader {
+
+
     /**
      * The constructor of the Traveller class.
      */
     public Traveller() {
         super("Traveller", 'ඞ');
     }
+
+
+
 
     /**
      * The Traveller gives the player a choice to buy or to sell items.
