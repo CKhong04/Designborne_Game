@@ -68,7 +68,12 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
     }
 
     @Override
-    public void update(int newChanceToSpawnMultiplier, int newDamageMultiplier, int newHealingRate) {
+    public void sunnyUpdate() {
+
+    }
+
+    @Override
+    public void rainyUpdate() {
 
     }
 }
