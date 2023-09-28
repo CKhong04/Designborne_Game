@@ -6,6 +6,8 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
 import game.actions.SellAction;
+import game.actors.traders.pricings.Pricing;
+import game.actors.traders.pricings.RegularPricing;
 import game.enums.Ability;
 import game.enums.Status;
 import game.items.tradableitems.Sellable;

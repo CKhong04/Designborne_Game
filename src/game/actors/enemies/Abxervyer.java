@@ -22,6 +22,7 @@ public class Abxervyer extends Enemy {
      * Hit points of Abxervyer.
      */
     private static final int HIT_POINTS = 2000;
+    private static final int CHANCE_DROP_RUNE = 100;
     /**
      * The count of turns.
      */
@@ -79,11 +80,6 @@ public class Abxervyer extends Enemy {
 
     public void setWeather(Weather weather) {
         this.weather = weather;
-    }
-    
-    @Override
-    public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        return super.findAction(map);
     }
 
     /**
