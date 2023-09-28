@@ -1,7 +1,10 @@
 package game.weathers;
 
 /**
- * AncientWoodEntity is the observer interface of the observer pattern.
+ * Interface representing an Ancient Wood Entity.
+ * Created by:
+ * @author Laura Zhakupova
+ * Modified by:
  */
 public interface AncientWoodEntity {
     /**

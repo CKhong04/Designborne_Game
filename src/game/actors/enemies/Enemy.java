@@ -8,8 +8,6 @@ import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
-import edu.monash.fit2099.engine.weapons.Weapon;
-import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.DeathAction;
 import game.behaviours.*;
 import game.enums.Ability;
@@ -21,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class representing an enemy abstract class.
+ * An abstract class representing an enemy.
  * Created by:
  * @author Laura Zhakupova
  * Modified by:
@@ -41,6 +39,7 @@ public abstract class Enemy extends Actor {
     public Enemy(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
         this.addCapability(Ability.CANNOT_ACCESS_FLOOR);
+        this.addCapability(Status.HOSTILE_TO_PLAYER);
     }
 
     /**
@@ -80,14 +79,7 @@ public abstract class Enemy extends Actor {
         ActionList actions = new ActionList();
         if(otherActor.hasCapability(Status.HOSTILE_TO_ENEMY)){
             actions.add(new AttackAction(this, direction));
-
-            for (Item item: otherActor.getItemInventory()) {
-                if (item.hasCapability(Ability.USED_AS_WEAPON)) { //Only weapons should be able to give new Attack Actions.
-                    actions.add(new AttackAction(this, direction, (WeaponItem) item));
-                }
-            }
         }
-
         return actions;
     }
 

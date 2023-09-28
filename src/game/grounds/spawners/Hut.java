@@ -15,11 +15,9 @@ import game.weathers.Weather;
  * @author Carissa Khong
  */
 public class Hut extends SpawningGround implements AncientWoodEntity {
-
     //Private attributes
     private static final int NORMAL_CHANCE_TO_SPAWN = 15;
     private static final double SUNNY_SPAWNING_CHANCE = NORMAL_CHANCE_TO_SPAWN * 2;
-
     private final Display display = new Display();
     private final Weather weather;
 

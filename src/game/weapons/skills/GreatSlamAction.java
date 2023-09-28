@@ -12,6 +12,12 @@ import edu.monash.fit2099.engine.weapons.WeaponItem;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Created by:
+ * @author Khoi Nguyen
+ * Modified by:
+ * Carissa Khong
+ */
 public class GreatSlamAction extends Action {
     private final WeaponItem weaponItem;
     private final Actor target;
@@ -33,38 +39,42 @@ public class GreatSlamAction extends Action {
 
         boolean isStaminaEnough = actor.getAttribute(BaseActorAttributes.STAMINA) >= consumedAmount;
 
-        if (isStaminaEnough) {
-            actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
+        try {
+            if (!(isStaminaEnough)) {
+                throw new Exception();
+            } else {
+                actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
 
-            if (!(rand.nextInt(100) <= weaponItem.chanceToHit())) {
-                return actor + " slams the ground but misses " + target + ".";
-            }
-
-            // Hurt the targeted actor at full damage
-            target.hurt(weaponItem.damage());
-
-            // Hurt all surrounding actors, including the user at half damage
-            Location currentLocation = map.locationOf(actor);
-            List<Exit> availableExits = currentLocation.getExits();
-
-            weaponItem.updateDamageMultiplier(NEW_DAMAGE_MULTIPLIER);
-            actor.hurt(weaponItem.damage());
-
-            for (Exit availableExit: availableExits) {
-                Location destination = availableExit.getDestination();
-
-                if (destination.containsAnActor()) {
-                    Actor otherActor = destination.getActor();
-                    otherActor.hurt(weaponItem.damage());
+                if (!(rand.nextInt(100) <= weaponItem.chanceToHit())) {
+                    return actor + " slams the ground but misses " + target + ".";
                 }
+
+                // Hurt the targeted actor at full damage
+                target.hurt(weaponItem.damage());
+
+                // Hurt all surrounding actors, including the user at half damage
+                Location currentLocation = map.locationOf(actor);
+                List<Exit> availableExits = currentLocation.getExits();
+
+                weaponItem.updateDamageMultiplier(NEW_DAMAGE_MULTIPLIER);
+                actor.hurt(weaponItem.damage());
+
+                for (Exit availableExit : availableExits) {
+                    Location destination = availableExit.getDestination();
+
+                    if (destination.containsAnActor()) {
+                        Actor otherActor = destination.getActor();
+                        otherActor.hurt(weaponItem.damage());
+                    }
+                }
+
+                weaponItem.updateDamageMultiplier(DEFAULT_DAMAGE_MULTIPLIER);
+
+                return actor + " slams the ground with the " + this.weaponItem + "!";
             }
-
-            weaponItem.updateDamageMultiplier(DEFAULT_DAMAGE_MULTIPLIER);
-
-            return actor + " slams the ground with the " + this.weaponItem + "!";
+        } catch (Exception e){
+            return actor + " does not have enough stamina to complete the Great Slam Skill!";
         }
-
-        return actor + " does not have enough stamina!";
     }
 
     @Override

@@ -1,16 +1,16 @@
 package game.weapons;
 
-import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
-import game.actors.traders.pricings.Pricing;
-import game.actors.traders.pricings.RegularPricing;
+import game.actions.AttackAction;
+import game.actions.SellAction;
 import game.enums.Ability;
 import game.enums.Status;
 import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
+import game.utilities.Utility;
 import game.weapons.skills.FocusCapable;
 import game.weapons.skills.FocusAction;
 
@@ -19,54 +19,45 @@ import game.weapons.skills.FocusAction;
  * Created by:
  * @author Laura Zhakupova
  */
-public class Broadsword extends WeaponItem implements FocusCapable, Buyable, Sellable {
+public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable {
     /**
-     * Name of this weapon.
+     * The turn counter.
      */
-    private static final String NAME = "Broadsword";
+    private int turnCounter = 0;
     /**
-     * Display character of this weapon.
-     */
-    private static final char DISPLAY_CHAR = '1';
-    /**
-     * The damage to this weapon.
+     * Normal damage of this weapon.
      */
     private static final int DAMAGE = 110;
     /**
-     * The hit rate of this weapon.
+     * Normal hit rate of this weapon.
      */
     private static final int HIT_RATE = 80;
-    /**
-     * The verb of this weapon.
-     */
-    private static final String VERB = "slashes";
     /**
      * The default damage multiplier of this weapon.
      */
     private static final float DEFAULT_DAMAGE_MULTIPLIER = 1.0f;
-
-    private int turnCounter = 0;
-    private int normalHitRate;
-    private int skillTurnCounter;
-    private int skillDamageMultiplier;
+    /**
+     * Number of turns the skill is activated.
+     */
+    private static final int SKILL_TURN_COUNTER = 5;
+    /**
+     * Increase in damage multiplier when skill is activated.
+     */
+    private static final int SKILL_DAMAGE_MULTIPLIER = 10;
+    /**
+     * Hit rate when skill is activated.
+     */
     private static final int NEW_HIT_RATE = 90;
-
-    // Buyable/Sellable attributes
-    private static final int BUY_PRICE = 250;
-    private static final Pricing BUY_PRICING = new RegularPricing();
+    /**
+     * The sell price of this weapon.
+     */
     private static final int SELL_PRICE = 100;
-    private static final Pricing SELL_PRICING = new RegularPricing();
-    private static final int BUY_SCAM_CHANCE = 5;
-    private static final int SELL_SCAM_CHANCE = 0;
 
     /**
      * Constructor.
      */
     public Broadsword() {
-        super(NAME, DISPLAY_CHAR, DAMAGE, VERB, HIT_RATE);
-
-        this.addCapability(Status.SELLABLE);
-        this.addCapability(Ability.USED_AS_WEAPON);
+        super("Broadsword", '1', DAMAGE, "slashes", HIT_RATE);
     }
 
     /**
@@ -79,24 +70,25 @@ public class Broadsword extends WeaponItem implements FocusCapable, Buyable, Sel
      */
     public void activateSkill(){
         if (this.hasCapability(Status.SKILL_ACTIVATED)){
-            this.turnCounter = this.skillTurnCounter;
+            this.turnCounter = SKILL_TURN_COUNTER;
             this.removeCapability(Status.SKILL_ACTIVATED);
         }
 
         if (this.hasCapability(Status.FOCUS_SKILL)){
             if (this.turnCounter > 0){
-                float newDamageMultiplier = DEFAULT_DAMAGE_MULTIPLIER * this.skillDamageMultiplier / 100;
+                float newDamageMultiplier = DEFAULT_DAMAGE_MULTIPLIER + DEFAULT_DAMAGE_MULTIPLIER * SKILL_DAMAGE_MULTIPLIER / 100;
 
-                this.increaseDamageMultiplier(newDamageMultiplier);
+                this.updateDamageMultiplier(newDamageMultiplier);
                 this.updateHitRate(NEW_HIT_RATE);
                 this.turnCounter -=1;
             } else if (this.turnCounter == 0) {
-                super.updateHitRate(this.normalHitRate);
+                super.updateHitRate(HIT_RATE);
                 super.updateDamageMultiplier(DEFAULT_DAMAGE_MULTIPLIER);
 
                 this.removeCapability(Status.FOCUS_SKILL);
             }
         }
+        System.out.println(turnCounter);
     }
 
     public FocusAction getFocusAction() {
@@ -142,23 +134,56 @@ public class Broadsword extends WeaponItem implements FocusCapable, Buyable, Sel
         return actions;
     }
 
+    /**
+     * List of allowable actions that the item allows its owner do to other actor.
+     * Allowing this weapon to attack another actor.
+     * Allowing the actor to sell this weapon to the traders.
+     *
+     * @param otherActor the other actor.
+     * @param location the location of the other actor.
+     * @return the allowable actions of this weapon.
+     */
     @Override
-    public int getBuyPrice(){
-        return BUY_PRICING.getPrice(BUY_PRICE);
+    public ActionList allowableActions(Actor otherActor, Location location){
+        ActionList actions = new ActionList();
+        if (otherActor.hasCapability(Status.HOSTILE_TO_PLAYER)){
+            actions.add(new AttackAction(otherActor,location.toString(),this));
+        }
+        if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
+            actions.add(new SellAction(otherActor, this, SELL_PRICE));
+        }
+        return actions;
     }
 
-    @Override
-    public int getBuyScamChance(){
-        return BUY_SCAM_CHANCE;
+    /**
+     * Performs a sell action on the item.
+     *
+     * @param actor player who sell an item.
+     * @param trader who buys an item.
+     * @param sellPrice price of the item.
+     */
+    public void sold(Actor actor, Actor trader, int sellPrice){
+        actor.addBalance(sellPrice);
+        actor.removeItemFromInventory(this);
+        trader.addItemToInventory(this);
     }
 
-    @Override
-    public int getSellPrice(){
-        return SELL_PRICING.getPrice(SELL_PRICE);
-    }
-
-    @Override
-    public int getSellScamChance(){
-        return SELL_SCAM_CHANCE;
+    /**
+     * Performs a buy action on the item.
+     * There is a chance that the trader takes player's runes
+     * without giving the weapon.
+     *
+     * @param actor player who buys an item.
+     * @param trader who sells an item.
+     * @param buyPrice price of the item.
+     * @param scamChance chance of a trader to scam.
+     */
+    public void bought(Actor actor, Actor trader, int buyPrice, int scamChance){
+        if (!Utility.getChance(scamChance)) {
+            System.out.println(scamChance);
+            trader.removeItemFromInventory(this);
+            actor.addItemToInventory(this);
+        }
+        actor.deductBalance(buyPrice);
     }
 }

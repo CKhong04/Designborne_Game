@@ -18,7 +18,6 @@ public abstract class SpawningGround extends Ground {
      * Random number generator
      */
     private final Random rand = new Random();
-
     private int chanceToSpawn;
 
     /**

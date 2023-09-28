@@ -172,10 +172,6 @@ public class Application {
 
         SunnyWeather sunnyWeather = new SunnyWeather();
 
-        // Adding Abxervyer to the room
-        Abxervyer abxervyer = new Abxervyer(sunnyWeather);
-        roomGameMap.at(30, 15).addActor(abxervyer);
-
         // Adding the bushes and huts to the Room
         roomGameMap.at(30, 2).setGround(new Bush(sunnyWeather));
 
@@ -187,8 +183,11 @@ public class Application {
 
         //Adding gates for access to the room
         Gate woodsToRoomGate = new Gate();
-        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the Room."));
+        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room containing Abxervyer, the Forest Watcher."));
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
+
+        // Add the boss to the room
+        roomGameMap.at(35,1).addActor(new Abxervyer(ancientWoodsGameMap, sunnyWeather));
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
@@ -202,8 +201,7 @@ public class Application {
 
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
-        world.addPlayer(player, gameMap.at(12, 12));
-
+        world.addPlayer(player, gameMap.at(29, 5));
         world.run();
     }
 }

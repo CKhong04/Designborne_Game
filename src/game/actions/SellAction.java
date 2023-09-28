@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
+import game.actors.traders.pricings.Pricing;
 import game.items.tradableitems.Sellable;
 import game.utilities.Utility;
 
@@ -16,16 +17,24 @@ public class SellAction extends Action {
     // Private attributes
     private final Actor trader;
     private final Sellable item;
+    private final int sellPrice;
 
     /**
      * A constructor which accepts a trader and an item.
      *
-     * @param seller actor who buys the item.
+     * @param trader actor who buys the item.
      * @param item which is sold.
      */
-    public SellAction(Actor seller, Sellable item){
-        this.trader = seller;
+    public SellAction(Actor trader, Sellable item, int sellPrice, Pricing sellPricingStrategy){
+        this.trader = trader;
         this.item = item;
+        this.sellPrice = sellPricingStrategy.getPrice(sellPrice);
+    }
+
+    public SellAction(Actor trader, Sellable item, int sellPrice){
+        this.trader = trader;
+        this.item = item;
+        this.sellPrice = sellPrice;
     }
 
     /**
@@ -37,11 +46,7 @@ public class SellAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        if (!(Utility.getChance(this.item.getSellScamChance()))){
-            actor.addBalance(this.item.getSellPrice());
-        }
-        actor.removeItemFromInventory((Item) this.item);
-
+        this.item.sold(actor, this.trader, this.sellPrice);
         return menuDescription(actor);
     }
 
@@ -53,6 +58,6 @@ public class SellAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " sells " + this.item + " for " + this.item.getSellPrice() + " runes";
+        return actor + " sells " + this.item + " for " + this.sellPrice + " runes";
     }
 }

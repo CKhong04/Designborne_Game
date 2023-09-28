@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import game.enums.Ability;
 
 /**
  * Class representing a trader abstract class.
@@ -21,6 +22,8 @@ public class Trader extends Actor {
      */
     public Trader(String name, char displayChar) {
         super(name, displayChar, 100);
+        this.addCapability(Ability.CAN_BE_SOLD_TO);
+
     }
 
     /**
