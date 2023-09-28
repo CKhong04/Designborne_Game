@@ -1,6 +1,5 @@
 package game.weathers;
 
-import java.util.List;
 
 /**
  * RainyWeather is the concrete subject of the observer pattern.
@@ -17,7 +16,7 @@ public class RainyWeather implements Weather {
     }
 
     /**
-     * Update the ancient wood's entities when the weather is sunny.
+     * Update the ancient wood's entities when the weather is rainy.
      */
     @Override
     public void notifyEntities() {
