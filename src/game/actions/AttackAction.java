@@ -32,7 +32,7 @@ public class AttackAction extends Action {
     /**
      * Random number generator
      */
-    private Random rand = new Random();
+    private final Random rand = new Random();
 
     /**
      * Weapon used for the attack

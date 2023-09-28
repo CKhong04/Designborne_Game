@@ -9,6 +9,10 @@ import game.enums.Status;
 import game.items.Rune;
 import game.items.consumableitems.HealingVial;
 import game.utilities.Utility;
+import game.weathers.AncientWoodEntity;
+import game.weathers.RainyWeather;
+import game.weathers.SunnyWeather;
+import game.weathers.Weather;
 
 /**
  * The ForestKeeper class is a child class of the Enemy class. Forest Keepers are encountered in the Ancient Woods.
@@ -17,13 +21,15 @@ import game.utilities.Utility;
  * Modified by: Ishita Gupta
  *
  */
-public class ForestKeeper extends Enemy{
+public class ForestKeeper extends Enemy implements AncientWoodEntity {
 
     //Private attributes
     private static final int DROP_VIAL_CHANCE = 20;
 
     private static final int HIT_POINTS = 125;
-    private final int CHANCE_DROP_RUNE = 100;
+    private static final int CHANCE_DROP_RUNE = 100;
+    private final Weather weather;
+    private final Display display = new Display();
 
     /**
      * A constructor which accepts name, display character and hit points.
@@ -31,12 +37,14 @@ public class ForestKeeper extends Enemy{
      * in the map. The Forest Keeper has the display character '8' and 125 hit points to start.
      * The Forest Keeper can also drop a Healing Vial when killed by the player, which has a 20% chance of occurring.
      */
-    public ForestKeeper() {
-        super("The Forest Keeper", '8', HIT_POINTS);
+    public ForestKeeper(Weather weather) {
+        super("Forest Keeper", '8', HIT_POINTS);
         Utility.addItemByChance(this, DROP_VIAL_CHANCE, new HealingVial());
         Utility.addItemByChance(this,CHANCE_DROP_RUNE, new Rune(50));
-
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
+
+        this.weather = weather;
+        this.weather.registerEntity(this);
     }
 
     /**
@@ -49,6 +57,10 @@ public class ForestKeeper extends Enemy{
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+        if (!this.isConscious()) {
+            weather.unregisterEntity(this);
+        }
+
         return super.findAction(map);
     }
 
@@ -63,5 +75,13 @@ public class ForestKeeper extends Enemy{
         return new IntrinsicWeapon(damage, verb, hitRate);
     }
 
+    @Override
+    public void sunnyUpdate() {}
 
+    @Override
+    public void rainyUpdate() {
+        int healPoints = 10;
+        this.heal(healPoints);
+        display.println(this + " feels rejuvenated by the rain.");
+    }
 }

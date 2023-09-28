@@ -31,6 +31,14 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
      */
     private static final int STAMINA_DECREASE_PERCENTAGE = 5;
     /**
+     * The buy price of this weapon.
+     */
+    private static final int BUY_PRICE = 0;
+    /**
+     * The by pricing of this weapon.
+     */
+    private static final Pricing BUY_PRICING = new RegularPricing();
+    /**
      * The sell price of this weapon.
      */
     private static final int SELL_PRICE = 250;

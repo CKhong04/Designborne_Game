@@ -21,12 +21,13 @@ public class DrinkAction extends Action {
         int currentStamina = actor.getAttribute(BaseActorAttributes.STAMINA);
         int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
         int currentHP = actor.getAttribute(BaseActorAttributes.HEALTH);
+
         if (currentStamina < maxStamina){
-            int recoverPercentage = 1 * maxStamina / 100;
+            int recoverPercentage = maxStamina / 100;
             actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.INCREASE,recoverPercentage);
         }
         actor.modifyAttribute(BaseActorAttributes.HEALTH,ActorAttributeOperations.UPDATE,1+currentHP);
-        return actor + "drank water!";
+        return actor + " drank water!";
     }
 
     @Override

@@ -9,6 +9,10 @@ import game.enums.Status;
 import game.items.Rune;
 import game.items.consumableitems.HealingVial;
 import game.utilities.Utility;
+import game.weathers.AncientWoodEntity;
+import game.weathers.RainyWeather;
+import game.weathers.SunnyWeather;
+import game.weathers.Weather;
 
 /**
  * The class RedWolf is a child class of the abstract class Enemy. It is encountered in the Ancient Woods.
@@ -16,7 +20,7 @@ import game.utilities.Utility;
  * @author Carissa Khong
  * Modified by: Ishita Gupta
  */
-public class RedWolf extends Enemy {
+public class RedWolf extends Enemy implements AncientWoodEntity {
 
     //Private attributes
     private static final int DROP_VIAL_CHANCE = 10;
@@ -24,6 +28,11 @@ public class RedWolf extends Enemy {
     private static final int CHANCE_DROP_RUNE = 100;
 
     private static final int HIT_POINTS = 25;
+
+    private static final int DAMAGE = 15;
+
+    private final Display display = new Display();
+    private final Weather weather;
 
     /**
      * The constructor of the Actor class.
@@ -33,11 +42,14 @@ public class RedWolf extends Enemy {
      * The Red Wolf can also drop a Healing Vial when they are killed by the player. The chance of this occurring is 10%.
      * </p>
      */
-    public RedWolf() {
+    public RedWolf(Weather weather) {
         super("Red Wolf", 'r', HIT_POINTS);
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(25));
         Utility.addItemByChance(this, DROP_VIAL_CHANCE, new HealingVial());
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
+
+        this.weather = weather;
+        this.weather.registerEntity(this);
     }
 
     /**
@@ -51,6 +63,10 @@ public class RedWolf extends Enemy {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+        if (!this.isConscious()) {
+            weather.unregisterEntity(this);
+        }
+
         return super.findAction(map);
     }
 
@@ -59,11 +75,22 @@ public class RedWolf extends Enemy {
      */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon(){
-    int damage = 15;
-    int hitRate = 80;
-    String verb = "bites";
-    return new IntrinsicWeapon(damage, verb, hitRate);
+        int hitRate = 80;
+        String verb = "bites";
+
+        return new IntrinsicWeapon(DAMAGE, verb, hitRate);
+    }
+
+    @Override
+    public void sunnyUpdate() {
+        this.updateDamageMultiplier(3 * DAMAGE);
+        display.println("The Red Wolf is getting more aggressive.");
     }
 
 
+    @Override
+    public void rainyUpdate(){
+        this.updateDamageMultiplier(DAMAGE);
+        display.println("The Red Wolf returns to its normal state.");
+    }
 }

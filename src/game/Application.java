@@ -23,6 +23,9 @@ import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 import game.weapons.GiantHammer;
 import game.weapons.GreatKnife;
+import game.weathers.DefaultWeather;
+import game.weathers.RainyWeather;
+import game.weathers.SunnyWeather;
 
 /**
  * The main class to start the game.
@@ -117,11 +120,13 @@ public class Application {
         GameMap ancientWoodsGameMap = new GameMap(groundFactory, ancientWoodsMap);
         world.addGameMap(ancientWoodsGameMap);
 
-        //Add the bushes and huts to the Ancient Woods map
-        ancientWoodsGameMap.at(11, 3).setGround(new Bush());
+        DefaultWeather defaultWeather = new DefaultWeather();
 
-        ancientWoodsGameMap.at(46,9).setGround(new Hut());
-        ancientWoodsGameMap.at(8, 7).setGround(new Hut());
+        //Add the bushes and huts to the Ancient Woods map
+        ancientWoodsGameMap.at(11, 3).setGround(new Bush(defaultWeather));
+
+        ancientWoodsGameMap.at(46,9).setGround(new Hut(defaultWeather));
+        ancientWoodsGameMap.at(8, 7).setGround(new Hut(defaultWeather));
 
         ancientWoodsGameMap.at(47,1).addItem(new BloodBerry());
 
@@ -165,11 +170,13 @@ public class Application {
         GameMap roomGameMap = new GameMap(groundFactory, roomMap);
         world.addGameMap(roomGameMap);
 
-        //Adding the bushes and huts to the Room
-        roomGameMap.at(30, 2).setGround(new Bush());
+        SunnyWeather sunnyWeather = new SunnyWeather();
 
-        roomGameMap.at(19,10).setGround(new Hut());
-        roomGameMap.at(2, 11).setGround(new Hut());
+        // Adding the bushes and huts to the Room
+        roomGameMap.at(30, 2).setGround(new Bush(sunnyWeather));
+
+        roomGameMap.at(19,10).setGround(new Hut(sunnyWeather));
+        roomGameMap.at(2, 11).setGround(new Hut(sunnyWeather));
 
         Item giantHammer = new GiantHammer();
         roomGameMap.at(27, 6).addItem(giantHammer);
@@ -179,8 +186,8 @@ public class Application {
         woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room containing Abxervyer, the Forest Watcher."));
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
-        //Add the boss to the woods map
-        roomGameMap.at(35,1).addActor(new Abxervyer(ancientWoodsGameMap));
+        // Add the boss to the room
+        roomGameMap.at(35,1).addActor(new Abxervyer(ancientWoodsGameMap, sunnyWeather));
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {

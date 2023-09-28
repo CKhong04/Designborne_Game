@@ -13,11 +13,20 @@ import game.enums.Status;
 import game.grounds.Gate;
 import game.items.Rune;
 import game.utilities.Utility;
+import game.weathers.RainyWeather;
+import game.weathers.SunnyWeather;
+import game.weathers.Weather;
 
-public class Abxervyer extends Enemy{
-
-    private static final int HIT_POINTS = 2000;//
-    private static final int CHANCE_DROP_RUNE = 100;
+public class Abxervyer extends Enemy {
+    /**
+     * Hit points of Abxervyer.
+     */
+    private static final int HIT_POINTS = 2000;
+    /**
+     * The count of turns.
+     */
+    private int count = 0;
+    private Weather weather;
     private GameMap ancientWoodsMap;
     private Display display = new Display();
 
@@ -30,8 +39,11 @@ public class Abxervyer extends Enemy{
      * @author Ishita Gupta, Carissa Khong, Khoi Nguyen, Laura Zhakupova
      * @param map The map which the player can be transported to upon the death of Abxervyer.
      */
-    public Abxervyer(GameMap map) {
+    public Abxervyer(GameMap map, Weather sunnyWeather) {
         super("Abxervyer, the Forest Watcher", 'Y', HIT_POINTS);
+
+        this.weather = sunnyWeather;
+
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
         this.addCapability(Ability.NOT_HURT_BY_VOID); //Abxervyer will not be hurt if it steps on a void.
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(5000));
@@ -39,13 +51,36 @@ public class Abxervyer extends Enemy{
     }
 
     /**
+     * Executes the weather changing skills every 3 turns.
      * Returns an action which can occur when Abxervyer is alive, occurs once per turn.
      * @param actions    collection of possible Actions for this Actor
      * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
      * @param map        the map containing the Actor
      * @param display    the I/O object to which messages may be written
-     * @return An action which can be taken by Abxervyer for any particular turn.
+     * @return a valid action to be performed
      */
+    @Override
+    public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+        if (count % 3 == 0 && count % 2 == 0){
+            display.println("Abxervyer changes the weather to sunny...");
+
+            setWeather(new SunnyWeather());
+            weather.notifyEntities();
+        } else if(count % 3 == 0){
+            display.println("Abxervyer changes the weather to rainy...");
+
+            setWeather(new RainyWeather());
+            weather.notifyEntities();
+        }
+
+        count ++;
+        return super.findAction(map);
+    }
+
+    public void setWeather(Weather weather) {
+        this.weather = weather;
+    }
+    
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         return super.findAction(map);
