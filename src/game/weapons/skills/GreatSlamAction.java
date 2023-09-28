@@ -10,6 +10,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by:
@@ -23,6 +24,7 @@ public class GreatSlamAction extends Action {
     private final int staminaDecreasePercentage;
     private final static float DEFAULT_DAMAGE_MULTIPLIER = 1.0f;
     private final static float NEW_DAMAGE_MULTIPLIER = 0.5f;
+    private final Random rand = new Random();
 
     public GreatSlamAction(WeaponItem weaponItem, Actor target, int staminaDecreasePercentage) {
         this.weaponItem = weaponItem;
@@ -40,9 +42,12 @@ public class GreatSlamAction extends Action {
         try {
             if (!(isStaminaEnough)) {
                 throw new Exception();
-            }
-            else{
+            } else {
                 actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
+
+                if (!(rand.nextInt(100) <= weaponItem.chanceToHit())) {
+                    return actor + " slams the ground but misses " + target + ".";
+                }
 
                 // Hurt the targeted actor at full damage
                 target.hurt(weaponItem.damage());
