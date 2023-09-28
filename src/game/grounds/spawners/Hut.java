@@ -4,6 +4,8 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actors.enemies.ForestKeeper;
 import game.weathers.AncientWoodEntity;
+import game.weathers.RainyWeather;
+import game.weathers.SunnyWeather;
 import game.weathers.Weather;
 
 /**
@@ -19,15 +21,17 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
     private static final double SUNNY_SPAWNING_CHANCE = NORMAL_CHANCE_TO_SPAWN * 2;
 
     private final Display display = new Display();
-    private final Weather weather = new Weather();
+    private final Weather weather;
 
     /**
      * Constructor.
      * An instance of the Hut class may spawn an enemy, with a chance of 15% each turn. The display symbol of a hut is 'h'.
      */
-    public Hut() {
+    public Hut(Weather weather) {
         super(NORMAL_CHANCE_TO_SPAWN, 'h');
-        weather.registerSubject(this);
+
+        this.weather = weather;
+        this.weather.registerEntity(this);
     }
 
     /**
@@ -37,13 +41,12 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
      */
     @Override
     public void tick(Location location) {
-        ForestKeeper forestKeeper = new ForestKeeper();
+        ForestKeeper forestKeeper = new ForestKeeper(weather);
 
-        weather.registerSubject(forestKeeper);
         super.spawnEnemy(forestKeeper, location);
 
-        if(!location.map().contains(forestKeeper)) {
-            weather.unregisterSubject(forestKeeper);
+        if (location.containsAnActor()) {
+            weather.registerEntity(forestKeeper);
         }
     }
 
@@ -56,6 +59,6 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
     @Override
     public void rainyUpdate() {
         this.updateChanceToSpawn(NORMAL_CHANCE_TO_SPAWN);
-        display.println("Huts are less likely to spawn Forest Keepers in sunny weather.");
+        display.println("Huts are less likely to spawn Forest Keepers in rainy weather.");
     }
 }

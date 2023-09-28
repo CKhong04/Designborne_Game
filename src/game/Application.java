@@ -23,6 +23,9 @@ import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 import game.weapons.GiantHammer;
 import game.weapons.GreatKnife;
+import game.weathers.DefaultWeather;
+import game.weathers.RainyWeather;
+import game.weathers.SunnyWeather;
 
 /**
  * The main class to start the game.
@@ -117,11 +120,13 @@ public class Application {
         GameMap ancientWoodsGameMap = new GameMap(groundFactory, ancientWoodsMap);
         world.addGameMap(ancientWoodsGameMap);
 
-        //Add the bushes and huts to the Ancient Woods map
-        ancientWoodsGameMap.at(11, 3).setGround(new Bush());
+        DefaultWeather defaultWeather = new DefaultWeather();
 
-        ancientWoodsGameMap.at(46,9).setGround(new Hut());
-        ancientWoodsGameMap.at(8, 7).setGround(new Hut());
+        //Add the bushes and huts to the Ancient Woods map
+        ancientWoodsGameMap.at(11, 3).setGround(new Bush(defaultWeather));
+
+        ancientWoodsGameMap.at(46,9).setGround(new Hut(defaultWeather));
+        ancientWoodsGameMap.at(8, 7).setGround(new Hut(defaultWeather));
 
         ancientWoodsGameMap.at(47,1).addItem(new BloodBerry());
 
@@ -165,15 +170,17 @@ public class Application {
         GameMap roomGameMap = new GameMap(groundFactory, roomMap);
         world.addGameMap(roomGameMap);
 
+        SunnyWeather sunnyWeather = new SunnyWeather();
+
         // Adding Abxervyer to the room
-        Abxervyer abxervyer = new Abxervyer();
+        Abxervyer abxervyer = new Abxervyer(sunnyWeather);
         roomGameMap.at(30, 15).addActor(abxervyer);
 
         // Adding the bushes and huts to the Room
-        roomGameMap.at(30, 2).setGround(new Bush());
+        roomGameMap.at(30, 2).setGround(new Bush(sunnyWeather));
 
-        roomGameMap.at(19,10).setGround(new Hut());
-        roomGameMap.at(2, 11).setGround(new Hut());
+        roomGameMap.at(19,10).setGround(new Hut(sunnyWeather));
+        roomGameMap.at(2, 11).setGround(new Hut(sunnyWeather));
 
         Item giantHammer = new GiantHammer();
         roomGameMap.at(27, 6).addItem(giantHammer);
@@ -195,7 +202,7 @@ public class Application {
 
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
-        world.addPlayer(player, roomGameMap.at(12, 12));
+        world.addPlayer(player, gameMap.at(12, 12));
 
         world.run();
     }

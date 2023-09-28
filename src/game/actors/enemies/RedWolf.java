@@ -10,6 +10,8 @@ import game.items.Rune;
 import game.items.consumableitems.HealingVial;
 import game.utilities.Utility;
 import game.weathers.AncientWoodEntity;
+import game.weathers.RainyWeather;
+import game.weathers.SunnyWeather;
 import game.weathers.Weather;
 
 /**
@@ -30,6 +32,7 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
     private static final int DAMAGE = 15;
 
     private final Display display = new Display();
+    private final Weather weather;
 
     /**
      * The constructor of the Actor class.
@@ -39,11 +42,14 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
      * The Red Wolf can also drop a Healing Vial when they are killed by the player. The chance of this occurring is 10%.
      * </p>
      */
-    public RedWolf() {
+    public RedWolf(Weather weather) {
         super("Red Wolf", 'r', HIT_POINTS);
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(25));
         Utility.addItemByChance(this, DROP_VIAL_CHANCE, new HealingVial());
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
+
+        this.weather = weather;
+        this.weather.registerEntity(this);
     }
 
     /**
@@ -57,6 +63,10 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+        if (!this.isConscious()) {
+            weather.unregisterEntity(this);
+        }
+
         return super.findAction(map);
     }
 

@@ -1,18 +1,29 @@
 package game.weathers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * SunnyWeather is the concrete subject of the observer pattern.
  */
-public class SunnyWeather extends Weather {
+public class SunnyWeather implements Weather {
+    @Override
+    public void registerEntity(AncientWoodEntity object) {
+        ancientWoodEntities.add(object);
+    }
+
+    @Override
+    public void unregisterEntity(AncientWoodEntity object) {
+        ancientWoodEntities.remove(object);
+    }
+
     /**
      * Update the ancient wood's entities when the weather is sunny.
      */
-    public void notifyObservers(){
-        ArrayList<AncientWoodEntity> observers = super.getAncientWoodEntities();
-        for (AncientWoodEntity observer : observers){
-            observer.sunnyUpdate();
+    @Override
+    public void notifyEntities() {
+        for (AncientWoodEntity entity : ancientWoodEntities) {
+            entity.sunnyUpdate();
         }
     }
 }

@@ -9,6 +9,7 @@ import game.enums.Ability;
 import game.enums.Status;
 import game.weathers.RainyWeather;
 import game.weathers.SunnyWeather;
+import game.weathers.Weather;
 
 public class Abxervyer extends Enemy{
     /**
@@ -19,6 +20,7 @@ public class Abxervyer extends Enemy{
      * The count of turns.
      */
     private int count = 0;
+    private Weather weather;
 
     /**
      * The constructor is taken from the Enemy abstract class. For Abxervyer, this gives the name of the enemy, which is
@@ -27,8 +29,11 @@ public class Abxervyer extends Enemy{
      * Created by:
      * @author Ishita Gupta, Carissa Khong, Khoi Nguyen, Laura Zhakupova
      */
-    public Abxervyer() {
+    public Abxervyer(Weather sunnyWeather) {
         super("Abxervyer, the Forest Watcher", 'Y', HIT_POINTS);
+
+        this.weather = sunnyWeather;
+
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
         this.addCapability(Ability.NOT_HURT_BY_VOID); //Abxervyer will not be hurt if it steps on a void.
     }
@@ -45,14 +50,22 @@ public class Abxervyer extends Enemy{
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         if (count % 3 == 0 && count % 2 == 0){
             display.println("Abxervyer changes the weather to sunny...");
-            new SunnyWeather().notifyObservers();
+
+            setWeather(new SunnyWeather());
+            weather.notifyEntities();
         } else if(count % 3 == 0){
             display.println("Abxervyer changes the weather to rainy...");
-            new RainyWeather().notifyObservers();
+
+            setWeather(new RainyWeather());
+            weather.notifyEntities();
         }
 
         count ++;
         return super.findAction(map);
+    }
+
+    public void setWeather(Weather weather) {
+        this.weather = weather;
     }
 
     /**

@@ -3,8 +3,6 @@ package game.grounds.spawners;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
-import game.enums.Status;
-import game.weathers.Weather;
 
 import java.util.Random;
 
