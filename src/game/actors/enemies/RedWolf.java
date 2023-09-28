@@ -28,7 +28,6 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
     private static final int HIT_POINTS = 25;
 
     private static final int DAMAGE = 15;
-    private final Weather weather = new Weather();
 
     private final Display display = new Display();
 
@@ -45,7 +44,6 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(25));
         Utility.addItemByChance(this, DROP_VIAL_CHANCE, new HealingVial());
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
-        weather.registerSubject(this);
     }
 
     /**

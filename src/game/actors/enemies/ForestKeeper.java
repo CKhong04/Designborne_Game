@@ -10,6 +10,7 @@ import game.items.Rune;
 import game.items.consumableitems.HealingVial;
 import game.utilities.Utility;
 import game.weathers.AncientWoodEntity;
+import game.weathers.Weather;
 
 /**
  * The ForestKeeper class is a child class of the Enemy class. Forest Keepers are encountered in the Ancient Woods.
@@ -25,7 +26,7 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
 
     private static final int HIT_POINTS = 125;
     private static final int CHANCE_DROP_RUNE = 100;
-
+    private final Display display = new Display();
 
     /**
      * A constructor which accepts name, display character and hit points.
@@ -37,7 +38,6 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
         super("Forest Keeper", '8', HIT_POINTS);
         Utility.addItemByChance(this, DROP_VIAL_CHANCE, new HealingVial());
         Utility.addItemByChance(this,CHANCE_DROP_RUNE, new Rune(50));
-
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
     }
 
@@ -66,10 +66,12 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
     }
 
     @Override
-    public void sunnyUpdate() {
-    }
+    public void sunnyUpdate() {}
 
     @Override
-    public void rainyUpdate(){
+    public void rainyUpdate() {
+        int healPoints = 10;
+        this.heal(healPoints);
+        display.println("Forest Keepers heal 10 hit points in rainy weather.");
     }
 }

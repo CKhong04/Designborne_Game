@@ -27,7 +27,6 @@ public class Bush extends SpawningGround implements AncientWoodEntity {
     public Bush() {
         super(NORMAL_CHANCE_TO_SPAWN,'m');
         weather.registerSubject(this);
-
     }
 
     /**

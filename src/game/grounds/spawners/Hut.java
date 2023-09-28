@@ -40,9 +40,9 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
         ForestKeeper forestKeeper = new ForestKeeper();
 
         weather.registerSubject(forestKeeper);
-        super.spawnEnemy(forestKeeper,location);
+        super.spawnEnemy(forestKeeper, location);
 
-        if(!location.map().contains(forestKeeper)){
+        if(!location.map().contains(forestKeeper)) {
             weather.unregisterSubject(forestKeeper);
         }
     }
