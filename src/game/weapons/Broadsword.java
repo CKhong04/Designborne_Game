@@ -2,6 +2,7 @@ package game.weapons;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
@@ -18,6 +19,8 @@ import game.weapons.skills.FocusAction;
  * Class representing a Broadsword.
  * Created by:
  * @author Laura Zhakupova
+ * Modified by:
+ * Khoi Nguyen, Carissa Khong
  */
 public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable {
     /**
@@ -25,7 +28,7 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
      */
     private int turnCounter = 0;
     /**
-     * Normal damage of this weapon.
+     * Normal damage for this weapon.
      */
     private static final int DAMAGE = 110;
     /**
@@ -52,6 +55,7 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
      * The sell price of this weapon.
      */
     private static final int SELL_PRICE = 100;
+    private final Display display = new Display();
 
     /**
      * Constructor.
@@ -80,15 +84,16 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
 
                 this.updateDamageMultiplier(newDamageMultiplier);
                 this.updateHitRate(NEW_HIT_RATE);
+                display.println("Focus skill turns left: " + turnCounter);
                 this.turnCounter -=1;
             } else if (this.turnCounter == 0) {
                 super.updateHitRate(HIT_RATE);
                 super.updateDamageMultiplier(DEFAULT_DAMAGE_MULTIPLIER);
 
                 this.removeCapability(Status.FOCUS_SKILL);
+                display.println("The Broadsword's focus skill has been deactivated");
             }
         }
-        System.out.println(turnCounter);
     }
 
     public FocusAction getFocusAction() {

@@ -27,11 +27,11 @@ public class DrinkAction extends Action {
             actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.INCREASE,recoverPercentage);
         }
         actor.modifyAttribute(BaseActorAttributes.HEALTH,ActorAttributeOperations.UPDATE,1+currentHP);
-        return actor + " drank water!";
+        return actor + " drinks water!";
     }
 
     @Override
     public String menuDescription(Actor actor) {
-        return "Drink water from the Puddle";
+        return actor + " drinks water from the Puddle";
     }
 }
