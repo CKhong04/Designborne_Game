@@ -10,15 +10,17 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 
 import java.util.List;
+import java.util.Random;
 
 public class StabAndStepAction extends Action {
     private final WeaponItem weaponItem;
-    private final Actor otherActor;
+    private final Actor target;
     private final int staminaDecreasePercentage;
+    private final Random rand = new Random();
 
-    public StabAndStepAction(WeaponItem weaponItem, Actor otherActor, int staminaDecreasePercentage) {
+    public StabAndStepAction(WeaponItem weaponItem, Actor target, int staminaDecreasePercentage) {
         this.weaponItem = weaponItem;
-        this.otherActor = otherActor;
+        this.target = target;
         this.staminaDecreasePercentage = staminaDecreasePercentage;
     }
 
@@ -40,7 +42,12 @@ public class StabAndStepAction extends Action {
 
                 if (destination.getGround().canActorEnter(actor)) {
                     map.moveActor(actor, destination);
-                    otherActor.hurt(weaponItem.damage());
+
+                    if (!(rand.nextInt(100) <= weaponItem.chanceToHit())) {
+                        return actor + " steps away but misses " + target + ".";
+                    }
+
+                    target.hurt(weaponItem.damage());
 
                     return actor + " stabs and steps away!";
                 }
@@ -52,7 +59,7 @@ public class StabAndStepAction extends Action {
 
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " stabs " + otherActor +
+        return actor + " stabs " + target +
                 " with " + this.weaponItem + " and steps away!";
     }
 }

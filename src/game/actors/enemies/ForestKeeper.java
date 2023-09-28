@@ -72,6 +72,6 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
     public void rainyUpdate() {
         int healPoints = 10;
         this.heal(healPoints);
-        display.println("Forest Keepers heal 10 hit points in rainy weather.");
+        display.println(this + " feels rejuvenated by the rain.");
     }
 }
