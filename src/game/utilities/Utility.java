@@ -37,7 +37,7 @@ public class Utility {
         return rand.nextInt(100) <= chance;
     }
 
-    public int increasePrice(int originalPrice, int chanceToIncrease, int percentageIncrease){
+    public static int increasePrice(int originalPrice, int chanceToIncrease, int percentageIncrease){
         Random rand = new Random();
         if (rand.nextInt(100) <= chanceToIncrease) {
             return (int)(originalPrice * (1+(percentageIncrease/100.0)));
@@ -46,7 +46,7 @@ public class Utility {
         }
     }
 
-    public int reducePrice(int originalPrice, int chanceToDecrease, int percentageDecrease){
+    public static int reducePrice(int originalPrice, int chanceToDecrease, int percentageDecrease){
         Random rand = new Random();
         if (rand.nextInt(100) <= chanceToDecrease) {
             return (int)(originalPrice * (1-(percentageDecrease/100.0)));

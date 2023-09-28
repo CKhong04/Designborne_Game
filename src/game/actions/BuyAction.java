@@ -2,11 +2,8 @@ package game.actions;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.actors.traders.pricings.Pricing;
 import game.items.tradableitems.Buyable;
-import game.utilities.Utility;
 
 /**
  * Class representing the buy action.
@@ -26,11 +23,6 @@ public class BuyAction extends Action {
      * @param trader actor who sells the item.
      * @param item which is sold.
      */
-    public BuyAction(Actor trader, Buyable item, int buyPrice, Pricing sellPricingStrategy){
-        this.trader = trader;
-        this.item = item;
-        this.buyPrice = sellPricingStrategy.getPrice(buyPrice);
-    }
 
     public BuyAction(Actor trader, Buyable item, int buyPrice){
         this.trader = trader;
@@ -56,7 +48,7 @@ public class BuyAction extends Action {
     @Override
     public String execute(Actor actor, GameMap map) {
         if (actor.getBalance() < this.buyPrice){
-            return "You are unable to buy " + this.item;
+            return actor + " cannot buy " + this.item + ", not enough runes";
         } else {
             this.item.bought(actor, this.trader, this.buyPrice, this.scamChance);
             return menuDescription(actor);

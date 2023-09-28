@@ -77,13 +77,13 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         return actions;
     }
 
-    public void sold(Actor actor, Actor trader, int sellPrice){
+    public void sold(Actor actor, Actor trader){
         if (Utility.getChance(SELL_SCAM_CHANCE)){
-            actor.addBalance(sellPrice);
+            actor.addBalance(SELL_PRICE);
         } else {
-            if (actor.getBalance() > sellPrice) {
-                actor.deductBalance(sellPrice);
-                trader.addBalance(sellPrice);
+            if (actor.getBalance() > SELL_PRICE) {
+                actor.deductBalance(SELL_PRICE);
+                trader.addBalance(SELL_PRICE);
             }
         }
         actor.removeItemFromInventory(this);
@@ -99,8 +99,9 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
      * @param scamChance chance of a trader to scam.
      */
     public void bought(Actor actor, Actor trader, int buyPrice, int scamChance){
-        actor.deductBalance(buyPrice);
-        trader.addBalance(buyPrice);
+        int newPrice = Utility.increasePrice(buyPrice, 5, 200);
+        actor.deductBalance(newPrice);
+        trader.addBalance(newPrice);
         trader.removeItemFromInventory(this);
         actor.addItemToInventory(this);
     }
