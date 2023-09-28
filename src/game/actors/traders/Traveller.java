@@ -2,18 +2,13 @@ package game.actors.traders;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.BuyAction;
-import game.actions.SellAction;
 import game.actors.traders.pricings.IncreasedPricing;
 import game.actors.traders.pricings.Pricing;
 import game.actors.traders.pricings.ReducedPricing;
-import game.actors.traders.pricings.RegularPricing;
-import game.enums.Status;
 import game.items.consumableitems.HealingVial;
 import game.items.consumableitems.RefreshingFlask;
-import game.items.tradableitems.Sellable;
 import game.weapons.Broadsword;
 import game.weapons.GreatKnife;
 
