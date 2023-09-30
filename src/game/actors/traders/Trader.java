@@ -13,7 +13,7 @@ import game.enums.Ability;
  * Created by:
  * @author Laura Zhakupova
  */
-public class Trader extends Actor {
+public abstract class Trader extends Actor {
     /**
      * A constructor which accepts name and a display character.
      *

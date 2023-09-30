@@ -2,11 +2,8 @@ package game.actions;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.actors.traders.pricings.Pricing;
 import game.items.tradableitems.Sellable;
-import game.utilities.Utility;
 
 /**
  * Class representing the sell action.
@@ -25,12 +22,6 @@ public class SellAction extends Action {
      * @param trader actor who buys the item.
      * @param item which is sold.
      */
-    public SellAction(Actor trader, Sellable item, int sellPrice, Pricing sellPricingStrategy){
-        this.trader = trader;
-        this.item = item;
-        this.sellPrice = sellPricingStrategy.getPrice(sellPrice);
-    }
-
     public SellAction(Actor trader, Sellable item, int sellPrice){
         this.trader = trader;
         this.item = item;
@@ -46,8 +37,8 @@ public class SellAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        this.item.sold(actor, this.trader, this.sellPrice);
-        return menuDescription(actor);
+        int price = this.item.sold(actor, this.trader);
+        return menuDescription(actor) + " for " + price + " runes";
     }
 
     /**
@@ -58,6 +49,6 @@ public class SellAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " sells " + this.item + " for " + this.sellPrice + " runes";
+        return actor + " sells " + this.item;
     }
 }

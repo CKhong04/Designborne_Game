@@ -84,9 +84,16 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
         return actions;
     }
 
-    public void sold(Actor actor, Actor trader, int sellPrice){
-        actor.addBalance(sellPrice);
+    /**
+     * Performs a sell action on the item.
+     *
+     * @param actor player who sell an item.
+     * @param trader who buys an item.
+     */
+    public int sold(Actor actor, Actor trader){
+        actor.addBalance(SELL_PRICE);
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
+        return SELL_PRICE;
     }
 }

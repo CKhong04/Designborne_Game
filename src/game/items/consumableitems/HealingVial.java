@@ -6,11 +6,10 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.SellAction;
-import game.actors.traders.pricings.IncreasedPricing;
-import game.actors.traders.pricings.Pricing;
 import game.enums.Ability;
 import game.items.tradableitems.Buyable;
 import game.items.tradableitems.Sellable;
+import game.utilities.Utility;
 
 /**
  * Class representing a healing vial.
@@ -22,7 +21,6 @@ public class HealingVial extends ConsumableItem implements Sellable, Buyable {
     private static final int INCREASE_HEALTH_VALUE = 10;
     private static final boolean IS_DISCOUNT = true;
     private static final int SELL_PRICE = 35;
-    private static final Pricing SELL_PRICING = new IncreasedPricing(10, 100);
     /***
      * Constructor.
      */
@@ -42,7 +40,7 @@ public class HealingVial extends ConsumableItem implements Sellable, Buyable {
     public ActionList allowableActions(Actor otherActor, Location location) {
         ActionList actions = super.allowableActions(otherActor, location);
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
-            actions.add(new SellAction(otherActor, this, SELL_PRICE, SELL_PRICING));
+            actions.add(new SellAction(otherActor, this, SELL_PRICE));
         }
         return actions;
     }
@@ -52,12 +50,13 @@ public class HealingVial extends ConsumableItem implements Sellable, Buyable {
      *
      * @param actor player who sell an item.
      * @param trader who buys an item.
-     * @param sellPrice price of the item.
      */
-    public void sold(Actor actor, Actor trader, int sellPrice){
-        actor.addBalance(sellPrice);
+    public int sold(Actor actor, Actor trader){
+        int newPrice = Utility.increasePrice(SELL_PRICE, 10, 100);
+        actor.addBalance(newPrice);
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
+        return newPrice;
     }
 
     /**
@@ -68,10 +67,11 @@ public class HealingVial extends ConsumableItem implements Sellable, Buyable {
      * @param buyPrice price of the item.
      * @param scamChance chance of a trader to scam.
      */
-    public void bought(Actor actor, Actor trader, int buyPrice, int scamChance){
-        actor.deductBalance(buyPrice);
-        trader.addBalance(buyPrice);
-        trader.removeItemFromInventory(this);
+    public int bought(Actor actor, Actor trader, int buyPrice, int scamChance){
+        int newPrice = Utility.increasePrice(buyPrice, 25, 50);
+        actor.deductBalance(newPrice);
+        trader.addBalance(newPrice);
         actor.addItemToInventory(this);
+        return newPrice;
     }
 }
