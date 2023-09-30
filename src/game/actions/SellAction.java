@@ -37,8 +37,8 @@ public class SellAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        this.item.sold(actor, this.trader);
-        return menuDescription(actor);
+        int price = this.item.sold(actor, this.trader);
+        return menuDescription(actor) + " for " + price + " runes";
     }
 
     /**
@@ -49,6 +49,6 @@ public class SellAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " sells " + this.item + " for " + this.sellPrice + " runes";
+        return actor + " sells " + this.item;
     }
 }

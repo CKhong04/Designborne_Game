@@ -16,5 +16,5 @@ public interface Buyable {
      * @param buyPrice price of the item.
      * @param scamChance chance of a trader to scam.
      */
-    void bought(Actor actor, Actor trader, int buyPrice, int scamChance);
+    int bought(Actor actor, Actor trader, int buyPrice, int scamChance);
 }

@@ -14,5 +14,5 @@ public interface Sellable {
      * @param actor player who sell an item.
      * @param trader who buys an item.
      */
-    void sold(Actor actor, Actor trader);
+    int sold(Actor actor, Actor trader);
 }

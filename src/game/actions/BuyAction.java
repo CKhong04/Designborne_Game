@@ -50,8 +50,8 @@ public class BuyAction extends Action {
         if (actor.getBalance() < this.buyPrice){
             return actor + " cannot buy " + this.item + ", not enough runes";
         } else {
-            this.item.bought(actor, this.trader, this.buyPrice, this.scamChance);
-            return menuDescription(actor);
+            int price = this.item.bought(actor, this.trader, this.buyPrice, this.scamChance);
+            return menuDescription(actor) + " for " + price + " runes";
         }
     }
 
@@ -63,6 +63,6 @@ public class BuyAction extends Action {
      */
     @Override
     public String menuDescription(Actor actor) {
-        return actor + " buys " + this.item + " for " + this.buyPrice + " runes";
+        return actor + " buys " + this.item;
     }
 }
