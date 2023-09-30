@@ -77,8 +77,17 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         return actions;
     }
 
-    public void sold(Actor actor, Actor trader){
-        if (Utility.getChance(SELL_SCAM_CHANCE)){
+    /**
+     * Performs a sell action on the item.
+     * If scam is unsuccessful player gets money, trader gets a weapon.
+     * Else trader gets money and a weapon.
+     * Trader gets money only if player has enough runes.
+     *
+     * @param actor player who sell an item.
+     * @param trader who buys an item.
+     */
+    public int sold(Actor actor, Actor trader){
+        if (!Utility.getChance(SELL_SCAM_CHANCE)){
             actor.addBalance(SELL_PRICE);
         } else {
             if (actor.getBalance() > SELL_PRICE) {
@@ -88,6 +97,7 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         }
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
+        return SELL_PRICE;
     }
 
     /**
@@ -98,11 +108,11 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
      * @param buyPrice price of the item.
      * @param scamChance chance of a trader to scam.
      */
-    public void bought(Actor actor, Actor trader, int buyPrice, int scamChance){
+    public int bought(Actor actor, Actor trader, int buyPrice, int scamChance){
         int newPrice = Utility.increasePrice(buyPrice, 5, 200);
         actor.deductBalance(newPrice);
         trader.addBalance(newPrice);
-        trader.removeItemFromInventory(this);
         actor.addItemToInventory(this);
+        return newPrice;
     }
 }

@@ -161,10 +161,11 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
      * @param actor player who sell an item.
      * @param trader who buys an item.
      */
-    public void sold(Actor actor, Actor trader){
+    public int sold(Actor actor, Actor trader){
         actor.addBalance(SELL_PRICE);
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
+        return SELL_PRICE;
     }
 
     /**
@@ -177,12 +178,11 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
      * @param buyPrice price of the item.
      * @param scamChance chance of a trader to scam.
      */
-    public void bought(Actor actor, Actor trader, int buyPrice, int scamChance){
+    public int bought(Actor actor, Actor trader, int buyPrice, int scamChance){
         if (!Utility.getChance(scamChance)) {
-            System.out.println(scamChance);
-            trader.removeItemFromInventory(this);
             actor.addItemToInventory(this);
         }
         actor.deductBalance(buyPrice);
+        return buyPrice;
     }
 }
