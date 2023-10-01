@@ -2,18 +2,10 @@ package game.actors.traders;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.BuyAction;
-import game.actions.SellAction;
-import game.actors.traders.pricings.IncreasedPricing;
-import game.actors.traders.pricings.Pricing;
-import game.actors.traders.pricings.ReducedPricing;
-import game.actors.traders.pricings.RegularPricing;
-import game.enums.Status;
 import game.items.consumableitems.HealingVial;
 import game.items.consumableitems.RefreshingFlask;
-import game.items.tradableitems.Sellable;
 import game.weapons.Broadsword;
 import game.weapons.GreatKnife;
 
@@ -26,11 +18,9 @@ public class Traveller extends Trader {
 
     // Healing Vial price
     private static final int HEALING_VIAL_BUY_PRICE = 100;
-    private static final Pricing HEALING_VIAL_BUY_PRICING = new IncreasedPricing(25, 50);
 
     // Refreshing Flask price
     private static final int REFRESHING_FLASK_BUY_PRICE = 75;
-    private static final Pricing REFRESHING_FLASK_BUY_PRICING = new ReducedPricing(10, 20);
 
     // Broadsword price
     private static final int BROADSWORD_BUY_PRICE = 250;
@@ -38,7 +28,6 @@ public class Traveller extends Trader {
 
     // Great Knife price
     private static final int GREAT_KNIFE_BUY_PRICE = 300;
-    private static final Pricing GREAT_KNIFE_BUY_PRICING = new IncreasedPricing(5, 200);
 
 
     /**
@@ -60,10 +49,10 @@ public class Traveller extends Trader {
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList list = super.allowableActions(otherActor, direction, map);
 
-        list.add(new BuyAction(this, new HealingVial(),HEALING_VIAL_BUY_PRICE,HEALING_VIAL_BUY_PRICING));
-        list.add(new BuyAction(this, new RefreshingFlask(),REFRESHING_FLASK_BUY_PRICE,REFRESHING_FLASK_BUY_PRICING));
+        list.add(new BuyAction(this, new HealingVial(),HEALING_VIAL_BUY_PRICE));
+        list.add(new BuyAction(this, new RefreshingFlask(),REFRESHING_FLASK_BUY_PRICE));
         list.add(new BuyAction(this, new Broadsword(),BROADSWORD_BUY_PRICE,BROADSWORD_BUY_SCAM_CHANCE));
-        list.add(new BuyAction(this, new GreatKnife(),GREAT_KNIFE_BUY_PRICE,GREAT_KNIFE_BUY_PRICING));
+        list.add(new BuyAction(this, new GreatKnife(),GREAT_KNIFE_BUY_PRICE));
 
         return list;
     }

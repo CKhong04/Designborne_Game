@@ -4,7 +4,6 @@ import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
-import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.items.consumableitems.ConsumableItem;
 
@@ -51,8 +50,10 @@ public class ConsumeAction extends Action {
         int updateValue = this.percentageValue;
         if (isDiscount){
             updateValue = actor.getAttributeMaximum(this.baseActorAttributes) * this.percentageValue / 100;
+            actor.modifyAttribute(this.baseActorAttributes, this.actorAttributeOperation, updateValue);
+        } else{
+            actor.modifyAttributeMaximum(this.baseActorAttributes, this.actorAttributeOperation, updateValue);
         }
-        actor.modifyAttribute(this.baseActorAttributes, this.actorAttributeOperation, updateValue);
         actor.removeItemFromInventory(this.item);
         return menuDescription(actor);
     }
