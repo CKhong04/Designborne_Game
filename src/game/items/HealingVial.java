@@ -2,7 +2,6 @@ package game.items;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
@@ -86,9 +85,8 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable {
     @Override
     public void consumeItem(Actor actor) {
         BaseActorAttributes baseActorAttributes = BaseActorAttributes.HEALTH;
-        ActorAttributeOperations actorAttributeOperation = ActorAttributeOperations.INCREASE;
         int updateValue = actor.getAttributeMaximum(baseActorAttributes) * INCREASE_HEALTH_VALUE / 100;
-        actor.modifyAttribute(baseActorAttributes, actorAttributeOperation, updateValue);
+        actor.heal(updateValue);
         actor.removeItemFromInventory(this);
     }
 }
