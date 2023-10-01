@@ -4,8 +4,6 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actors.enemies.RedWolf;
 import game.weathers.AncientWoodEntity;
-import game.weathers.RainyWeather;
-import game.weathers.SunnyWeather;
 import game.weathers.Weather;
 
 /**

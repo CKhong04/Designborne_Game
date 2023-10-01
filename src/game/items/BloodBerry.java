@@ -1,31 +1,26 @@
-package game.items.consumableitems;
+package game.items;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
+import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.SellAction;
 import game.enums.Ability;
-import game.items.tradableitems.Buyable;
-import game.items.tradableitems.Sellable;
-import game.utilities.Utility;
+import game.items.itemproperties.Consumable;
+import game.items.itemproperties.Sellable;
 
-/**
- * Class representing a healing vial.
- * Created by:
- * @author Laura Zhakupova
- */
-public class HealingVial extends ConsumableItem implements Sellable, Buyable {
+public class BloodBerry extends Item implements Sellable, Consumable {
     //Private attributes
-    private static final int INCREASE_HEALTH_VALUE = 10;
-    private static final boolean IS_DISCOUNT = true;
-    private static final int SELL_PRICE = 35;
+    private static final int INCREASE_HEALTH_VALUE = 5;
+    private static final int SELL_PRICE = 10;
+
     /***
      * Constructor.
      */
-    public HealingVial() {
-        super("the Healing Vial", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, INCREASE_HEALTH_VALUE, IS_DISCOUNT);
+    public BloodBerry() {
+        super("BloodBerry", '*', true);
     }
 
     /**
@@ -52,26 +47,17 @@ public class HealingVial extends ConsumableItem implements Sellable, Buyable {
      * @param trader who buys an item.
      */
     public int sold(Actor actor, Actor trader){
-        int newPrice = Utility.increasePrice(SELL_PRICE, 10, 100);
-        actor.addBalance(newPrice);
+        actor.addBalance(SELL_PRICE);
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
-        return newPrice;
+        return SELL_PRICE;
     }
 
-    /**
-     * Performs a buy action on the item.
-     *
-     * @param actor player who buys an item.
-     * @param trader who sells an item.
-     * @param buyPrice price of the item.
-     * @param scamChance chance of a trader to scam.
-     */
-    public int bought(Actor actor, Actor trader, int buyPrice, int scamChance){
-        int newPrice = Utility.increasePrice(buyPrice, 25, 50);
-        actor.deductBalance(newPrice);
-        trader.addBalance(newPrice);
-        actor.addItemToInventory(this);
-        return newPrice;
+    @Override
+    public void consumeItem(Actor actor) {
+        BaseActorAttributes baseActorAttributes = BaseActorAttributes.HEALTH;
+        ActorAttributeOperations actorAttributeOperation = ActorAttributeOperations.INCREASE;
+        actor.modifyAttributeMaximum(baseActorAttributes, actorAttributeOperation, INCREASE_HEALTH_VALUE);
+        actor.removeItemFromInventory(this);
     }
 }

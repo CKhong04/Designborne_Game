@@ -1,11 +1,10 @@
 package game.items;
 
-import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
-import game.actions.WalletAction;
+import game.items.itemproperties.Consumable;
 
-public class Rune extends Item {
+public class Rune extends Item implements Consumable {
 
     private final int quantity;
 
@@ -19,17 +18,11 @@ public class Rune extends Item {
         super("Runes", '$', true);
         this.quantity = quantity;
     }
-    /**
-     * Add action to activate the weapon's skill into the allowable list of actions
-     * @param owner the actor that owns the item.
-     *
-     */
-    @Override
-    public ActionList allowableActions(Actor owner) {
-        ActionList actions =  super.allowableActions(owner);
-        actions.add(new WalletAction(this, this.quantity));
-        return actions;
-    }
 
+    @Override
+    public void consumeItem(Actor actor) {
+        actor.addBalance(this.quantity);
+        actor.removeItemFromInventory(this);
+    }
 }
 

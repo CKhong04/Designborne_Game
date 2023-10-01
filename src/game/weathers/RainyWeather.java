@@ -1,6 +1,5 @@
 package game.weathers;
 
-import java.util.List;
 
 /**
  * RainyWeather is the concrete subject of the observer pattern.

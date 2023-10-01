@@ -7,11 +7,9 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.enums.Status;
 import game.items.Rune;
-import game.items.consumableitems.HealingVial;
+import game.items.HealingVial;
 import game.utilities.Utility;
 import game.weathers.AncientWoodEntity;
-import game.weathers.RainyWeather;
-import game.weathers.SunnyWeather;
 import game.weathers.Weather;
 
 /**
