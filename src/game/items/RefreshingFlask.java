@@ -1,14 +1,16 @@
-package game.items.consumableitems;
+package game.items;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
+import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.SellAction;
 import game.enums.Ability;
-import game.items.tradableitems.Buyable;
-import game.items.tradableitems.Sellable;
+import game.items.itemproperties.Buyable;
+import game.items.itemproperties.Consumable;
+import game.items.itemproperties.Sellable;
 import game.utilities.Utility;
 
 /**
@@ -16,7 +18,7 @@ import game.utilities.Utility;
  * Created by:
  * @author Laura Zhakupova
  */
-public class RefreshingFlask  extends ConsumableItems implements Sellable, Buyable {
+public class RefreshingFlask extends Item implements Sellable, Buyable, Consumable {
     //Private attributes
     private static final int INCREASE_STAMINA_VALUE = 20;
     private static final int SELL_PRICE = 25;
@@ -25,7 +27,7 @@ public class RefreshingFlask  extends ConsumableItems implements Sellable, Buyab
      * Constructor.
      */
     public RefreshingFlask() {
-        super("the Refreshing Flask", 'u');
+        super("the Refreshing Flask", 'u', true);
     }
 
     /**

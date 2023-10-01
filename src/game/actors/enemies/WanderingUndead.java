@@ -6,8 +6,8 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.items.OldKey;
-import game.items.consumableitems.Rune;
-import game.items.consumableitems.HealingVial;
+import game.items.Rune;
+import game.items.HealingVial;
 import game.utilities.Utility;
 
 /**

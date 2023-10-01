@@ -11,7 +11,7 @@ import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.enums.Ability;
 import game.enums.Status;
 import game.grounds.Gate;
-import game.items.consumableitems.Rune;
+import game.items.Rune;
 import game.utilities.Utility;
 import game.weathers.RainyWeather;
 import game.weathers.SunnyWeather;

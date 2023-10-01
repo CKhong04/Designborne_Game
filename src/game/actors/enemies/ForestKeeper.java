@@ -6,8 +6,8 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.enums.Status;
-import game.items.consumableitems.Rune;
-import game.items.consumableitems.HealingVial;
+import game.items.Rune;
+import game.items.HealingVial;
 import game.utilities.Utility;
 import game.weathers.AncientWoodEntity;
 import game.weathers.Weather;
@@ -74,7 +74,8 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
     }
 
     @Override
-    public void sunnyUpdate() {}
+    public void sunnyUpdate() {
+    }
 
     @Override
     public void rainyUpdate() {

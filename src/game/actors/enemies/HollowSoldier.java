@@ -5,9 +5,9 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import game.items.consumableitems.Rune;
-import game.items.consumableitems.HealingVial;
-import game.items.consumableitems.RefreshingFlask;
+import game.items.Rune;
+import game.items.HealingVial;
+import game.items.RefreshingFlask;
 import game.utilities.Utility;
 
 /**

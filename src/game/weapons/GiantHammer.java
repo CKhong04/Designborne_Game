@@ -8,7 +8,7 @@ import game.actions.AttackAction;
 import game.actions.SellAction;
 import game.enums.Ability;
 import game.enums.Status;
-import game.items.tradableitems.Sellable;
+import game.items.itemproperties.Sellable;
 import game.weapons.skills.GreatSlamAction;
 import game.weapons.skills.GreatSlamCapable;
 

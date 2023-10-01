@@ -1,8 +1,8 @@
-package game.items.consumableitems;
+package game.items.itemproperties;
 
 import edu.monash.fit2099.engine.actors.Actor;
 
-public interface ConsumableItem  {
+public interface Consumable {
 
     void consumeItem(Actor actor);
 }

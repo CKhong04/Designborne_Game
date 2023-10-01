@@ -18,13 +18,12 @@ import game.grounds.spawners.Bush;
 import game.grounds.spawners.HollowSoldierGraveyard;
 import game.grounds.spawners.Hut;
 import game.grounds.spawners.WanderingUndeadGraveyard;
-import game.items.consumableitems.BloodBerry;
+import game.items.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 import game.weapons.GiantHammer;
 import game.weapons.GreatKnife;
 import game.weathers.DefaultWeather;
-import game.weathers.RainyWeather;
 import game.weathers.SunnyWeather;
 
 /**

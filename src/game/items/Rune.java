@@ -1,10 +1,10 @@
-package game.items.consumableitems;
+package game.items;
 
-import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
-import game.actions.ConsumeAction;
+import edu.monash.fit2099.engine.items.Item;
+import game.items.itemproperties.Consumable;
 
-public class Rune extends ConsumableItems {
+public class Rune extends Item implements Consumable {
 
     private final int quantity;
 
@@ -15,7 +15,7 @@ public class Rune extends ConsumableItems {
      * @author Ishita Gupta
      */
     public Rune(int quantity) {
-        super("Runes", '$');
+        super("Runes", '$', true);
         this.quantity = quantity;
     }
 
