@@ -6,8 +6,6 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
 import game.actions.SellAction;
-import game.actors.traders.pricings.Pricing;
-import game.actors.traders.pricings.RegularPricing;
 import game.enums.Ability;
 import game.enums.Status;
 import game.items.tradableitems.Sellable;
@@ -36,10 +34,7 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
      * The buy price of this weapon.
      */
     private static final int BUY_PRICE = 0;
-    /**
-     * The by pricing of this weapon.
-     */
-    private static final Pricing BUY_PRICING = new RegularPricing();
+
     /**
      * The sell price of this weapon.
      */

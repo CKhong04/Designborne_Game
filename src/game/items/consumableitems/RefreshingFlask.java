@@ -16,17 +16,16 @@ import game.utilities.Utility;
  * Created by:
  * @author Laura Zhakupova
  */
-public class RefreshingFlask extends ConsumableItem implements Sellable, Buyable {
+public class RefreshingFlask  extends ConsumableItems implements Sellable, Buyable {
     //Private attributes
     private static final int INCREASE_STAMINA_VALUE = 20;
-    private static final boolean IS_DISCOUNT = true;
     private static final int SELL_PRICE = 25;
     private static final int SELL_SCAM_CHANCE = 50;
     /***
      * Constructor.
      */
     public RefreshingFlask() {
-        super("the Refreshing Flask", 'u', ActorAttributeOperations.INCREASE, BaseActorAttributes.STAMINA, INCREASE_STAMINA_VALUE,IS_DISCOUNT);
+        super("the Refreshing Flask", 'u');
     }
 
     /**
@@ -75,5 +74,15 @@ public class RefreshingFlask extends ConsumableItem implements Sellable, Buyable
         trader.addBalance(newPrice);
         actor.addItemToInventory(this);
         return newPrice;
+    }
+
+    @Override
+    public void consumeItem(Actor actor) {
+
+        BaseActorAttributes baseActorAttributes = BaseActorAttributes.HEALTH;
+        ActorAttributeOperations actorAttributeOperation = ActorAttributeOperations.INCREASE;
+        int updateValue = actor.getAttributeMaximum(baseActorAttributes) * INCREASE_STAMINA_VALUE / 100;
+        actor.modifyAttribute(baseActorAttributes, actorAttributeOperation, updateValue);actor.removeItemFromInventory(this);
+        actor.removeItemFromInventory(this);
     }
 }

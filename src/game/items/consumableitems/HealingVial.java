@@ -4,7 +4,9 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
+import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
+import game.actions.ConsumeAction;
 import game.actions.SellAction;
 import game.enums.Ability;
 import game.items.tradableitems.Buyable;
@@ -16,16 +18,21 @@ import game.utilities.Utility;
  * Created by:
  * @author Laura Zhakupova
  */
-public class HealingVial extends ConsumableItem implements Sellable, Buyable {
+public class HealingVial extends ConsumableItems implements Sellable, Buyable {
     //Private attributes
     private static final int INCREASE_HEALTH_VALUE = 10;
-    private static final boolean IS_DISCOUNT = true;
     private static final int SELL_PRICE = 35;
     /***
      * Constructor.
      */
     public HealingVial() {
-        super("the Healing Vial", 'a', ActorAttributeOperations.INCREASE, BaseActorAttributes.HEALTH, INCREASE_HEALTH_VALUE, IS_DISCOUNT);
+        super("Healing Vial",'a');
+    }
+
+    public ActionList allowableActions(Actor actor) {
+        ActionList actions = super.allowableActions(actor);
+        actions.add(new ConsumeAction(this));
+        return actions;
     }
 
     /**
@@ -73,5 +80,14 @@ public class HealingVial extends ConsumableItem implements Sellable, Buyable {
         trader.addBalance(newPrice);
         actor.addItemToInventory(this);
         return newPrice;
+    }
+
+    @Override
+    public void consumeItem(Actor actor) {
+        BaseActorAttributes baseActorAttributes = BaseActorAttributes.HEALTH;
+        ActorAttributeOperations actorAttributeOperation = ActorAttributeOperations.INCREASE;
+        int updateValue = actor.getAttributeMaximum(baseActorAttributes) * INCREASE_HEALTH_VALUE / 100;
+        actor.modifyAttribute(baseActorAttributes, actorAttributeOperation, updateValue);
+        actor.removeItemFromInventory(this);
     }
 }

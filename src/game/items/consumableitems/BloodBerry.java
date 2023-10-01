@@ -9,17 +9,16 @@ import game.actions.SellAction;
 import game.enums.Ability;
 import game.items.tradableitems.Sellable;
 
-public class BloodBerry extends ConsumableItem implements Sellable {
+public class BloodBerry extends ConsumableItems implements Sellable {
     //Private attributes
     private static final int INCREASE_HEALTH_VALUE = 5;
-    private static final boolean IS_DISCOUNT = false;
     private static final int SELL_PRICE = 10;
 
     /***
      * Constructor.
      */
     public BloodBerry() {
-        super("BloodBerry", '*', ActorAttributeOperations.INCREASE,BaseActorAttributes.HEALTH, INCREASE_HEALTH_VALUE, IS_DISCOUNT);
+        super("BloodBerry", '*');
     }
 
     /**
@@ -50,5 +49,13 @@ public class BloodBerry extends ConsumableItem implements Sellable {
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
         return SELL_PRICE;
+    }
+
+    @Override
+    public void consumeItem(Actor actor) {
+        BaseActorAttributes baseActorAttributes = BaseActorAttributes.HEALTH;
+        ActorAttributeOperations actorAttributeOperation = ActorAttributeOperations.INCREASE;
+        actor.modifyAttributeMaximum(baseActorAttributes, actorAttributeOperation, INCREASE_HEALTH_VALUE);
+        actor.removeItemFromInventory(this);
     }
 }
