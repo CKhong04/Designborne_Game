@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
+import game.actions.ConsumeAction;
 import game.actions.SellAction;
 import game.enums.Ability;
 import game.items.itemproperties.Consumable;
@@ -59,5 +60,12 @@ public class BloodBerry extends Item implements Sellable, Consumable {
         ActorAttributeOperations actorAttributeOperation = ActorAttributeOperations.INCREASE;
         actor.modifyAttributeMaximum(baseActorAttributes, actorAttributeOperation, INCREASE_HEALTH_VALUE);
         actor.removeItemFromInventory(this);
+    }
+
+    @Override
+    public ActionList allowableActions(Actor actor) {
+        ActionList actions = super.allowableActions(actor);
+        actions.add(new ConsumeAction(this));
+        return actions;
     }
 }

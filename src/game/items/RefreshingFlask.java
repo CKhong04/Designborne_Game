@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
+import game.actions.ConsumeAction;
 import game.actions.SellAction;
 import game.enums.Ability;
 import game.items.itemproperties.Buyable;
@@ -86,5 +87,11 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
         int updateValue = actor.getAttributeMaximum(baseActorAttributes) * INCREASE_STAMINA_VALUE / 100;
         actor.modifyAttribute(baseActorAttributes, actorAttributeOperation, updateValue);actor.removeItemFromInventory(this);
         actor.removeItemFromInventory(this);
+    }
+    @Override
+    public ActionList allowableActions(Actor actor) {
+        ActionList actions = super.allowableActions(actor);
+        actions.add(new ConsumeAction(this));
+        return actions;
     }
 }
