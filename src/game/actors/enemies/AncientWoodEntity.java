@@ -1,4 +1,4 @@
-package game.weathers;
+package game.actors.enemies;
 
 /**
  * Interface representing an Ancient Wood Entity.

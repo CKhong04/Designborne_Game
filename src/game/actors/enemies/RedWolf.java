@@ -9,7 +9,6 @@ import game.enums.Status;
 import game.items.Rune;
 import game.items.HealingVial;
 import game.utilities.Utility;
-import game.weathers.AncientWoodEntity;
 import game.weathers.Weather;
 
 /**
@@ -47,7 +46,6 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
 
         this.weather = weather;
-        this.weather.registerEntity(this);
     }
 
     /**
