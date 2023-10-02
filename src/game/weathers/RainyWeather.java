@@ -1,8 +1,6 @@
 package game.weathers;
 
 
-import game.actors.enemies.AncientWoodEntity;
-
 /**
  * RainyWeather is the concrete subject of the observer pattern.
  */

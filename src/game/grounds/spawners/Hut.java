@@ -3,7 +3,7 @@ package game.grounds.spawners;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actors.enemies.ForestKeeper;
-import game.actors.enemies.AncientWoodEntity;
+import game.weathers.AncientWoodEntity;
 import game.weathers.Weather;
 
 /**

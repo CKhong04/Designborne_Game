@@ -1,7 +1,5 @@
 package game.weathers;
 
-import game.actors.enemies.AncientWoodEntity;
-
 import java.util.ArrayList;
 
 /**

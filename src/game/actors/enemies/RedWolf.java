@@ -9,6 +9,7 @@ import game.enums.Status;
 import game.items.Rune;
 import game.items.HealingVial;
 import game.utilities.Utility;
+import game.weathers.AncientWoodEntity;
 import game.weathers.Weather;
 
 /**
