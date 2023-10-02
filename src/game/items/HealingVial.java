@@ -29,6 +29,7 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable {
         super("Healing Vial",'a', true);
     }
 
+    @Override
     public ActionList allowableActions(Actor actor) {
         ActionList actions = super.allowableActions(actor);
         actions.add(new ConsumeAction(this));
