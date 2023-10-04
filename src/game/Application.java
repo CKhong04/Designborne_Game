@@ -22,7 +22,6 @@ import game.items.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 import game.weapons.GiantHammer;
-import game.weapons.GreatKnife;
 import game.weathers.SunnyWeather;
 
 /**
@@ -61,8 +60,6 @@ public class Application {
 
         Item broadsword = new Broadsword();
         gameMap.at(27, 5).addItem(broadsword);
-        gameMap.at(28, 5).addItem(new GreatKnife());
-        gameMap.at(31, 5).addItem(new GiantHammer());
 
         gameMap.at(55,2).setGround(new WanderingUndeadGraveyard());
         gameMap.at(34,10).setGround(new WanderingUndeadGraveyard());
