@@ -18,13 +18,11 @@ import game.grounds.spawners.Bush;
 import game.grounds.spawners.HollowSoldierGraveyard;
 import game.grounds.spawners.Hut;
 import game.grounds.spawners.WanderingUndeadGraveyard;
-import game.items.consumableitems.BloodBerry;
+import game.items.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 import game.weapons.GiantHammer;
 import game.weapons.GreatKnife;
-import game.weathers.DefaultWeather;
-import game.weathers.RainyWeather;
 import game.weathers.SunnyWeather;
 
 /**
@@ -120,13 +118,13 @@ public class Application {
         GameMap ancientWoodsGameMap = new GameMap(groundFactory, ancientWoodsMap);
         world.addGameMap(ancientWoodsGameMap);
 
-        DefaultWeather defaultWeather = new DefaultWeather();
+        SunnyWeather sunnyWeather = new SunnyWeather();
 
         //Add the bushes and huts to the Ancient Woods map
-        ancientWoodsGameMap.at(11, 3).setGround(new Bush(defaultWeather));
+        ancientWoodsGameMap.at(11, 3).setGround(new Bush(sunnyWeather));
 
-        ancientWoodsGameMap.at(46,9).setGround(new Hut(defaultWeather));
-        ancientWoodsGameMap.at(8, 7).setGround(new Hut(defaultWeather));
+        ancientWoodsGameMap.at(46,9).setGround(new Hut(sunnyWeather));
+        ancientWoodsGameMap.at(8, 7).setGround(new Hut(sunnyWeather));
 
         ancientWoodsGameMap.at(47,1).addItem(new BloodBerry());
 
@@ -169,8 +167,6 @@ public class Application {
         );
         GameMap roomGameMap = new GameMap(groundFactory, roomMap);
         world.addGameMap(roomGameMap);
-
-        SunnyWeather sunnyWeather = new SunnyWeather();
 
         // Adding the bushes and huts to the Room
         roomGameMap.at(30, 2).setGround(new Bush(sunnyWeather));

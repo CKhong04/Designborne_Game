@@ -1,32 +1,39 @@
-package game.items.consumableitems;
+package game.items;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
+import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
+import game.actions.ConsumeAction;
 import game.actions.SellAction;
 import game.enums.Ability;
-import game.items.tradableitems.Buyable;
-import game.items.tradableitems.Sellable;
+import game.items.itemproperties.Buyable;
+import game.items.itemproperties.Consumable;
+import game.items.itemproperties.Sellable;
 import game.utilities.Utility;
 
 /**
- * Class representing a refreshing flask.
+ * Class representing a healing vial.
  * Created by:
  * @author Laura Zhakupova
  */
-public class RefreshingFlask extends ConsumableItem implements Sellable, Buyable {
+public class HealingVial extends Item implements Sellable, Buyable, Consumable {
     //Private attributes
-    private static final int INCREASE_STAMINA_VALUE = 20;
-    private static final boolean IS_DISCOUNT = true;
-    private static final int SELL_PRICE = 25;
-    private static final int SELL_SCAM_CHANCE = 50;
+    private static final int INCREASE_HEALTH_VALUE = 10;
+    private static final int SELL_PRICE = 35;
     /***
      * Constructor.
      */
-    public RefreshingFlask() {
-        super("the Refreshing Flask", 'u', ActorAttributeOperations.INCREASE, BaseActorAttributes.STAMINA, INCREASE_STAMINA_VALUE,IS_DISCOUNT);
+    public HealingVial() {
+        super("Healing Vial",'a', true);
+    }
+
+    @Override
+    public ActionList allowableActions(Actor actor) {
+        ActionList actions = super.allowableActions(actor);
+        actions.add(new ConsumeAction(this));
+        return actions;
     }
 
     /**
@@ -53,12 +60,11 @@ public class RefreshingFlask extends ConsumableItem implements Sellable, Buyable
      * @param trader who buys an item.
      */
     public int sold(Actor actor, Actor trader){
-        if (!Utility.getChance(SELL_SCAM_CHANCE)){
-            actor.addBalance(SELL_PRICE);
-        }
+        int newPrice = Utility.increasePrice(SELL_PRICE, 10, 100);
+        actor.addBalance(newPrice);
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
-        return SELL_PRICE;
+        return newPrice;
     }
 
     /**
@@ -69,11 +75,19 @@ public class RefreshingFlask extends ConsumableItem implements Sellable, Buyable
      * @param buyPrice price of the item.
      * @param scamChance chance of a trader to scam.
      */
-    public int bought(Actor actor, Actor trader, int buyPrice, int scamChance) {
-        int newPrice = Utility.reducePrice(buyPrice, 10, 20);
+    public int bought(Actor actor, Actor trader, int buyPrice, int scamChance){
+        int newPrice = Utility.increasePrice(buyPrice, 25, 50);
         actor.deductBalance(newPrice);
         trader.addBalance(newPrice);
         actor.addItemToInventory(this);
         return newPrice;
+    }
+
+    @Override
+    public void consumeItem(Actor actor) {
+        BaseActorAttributes baseActorAttributes = BaseActorAttributes.HEALTH;
+        int updateValue = actor.getAttributeMaximum(baseActorAttributes) * INCREASE_HEALTH_VALUE / 100;
+        actor.heal(updateValue);
+        actor.removeItemFromInventory(this);
     }
 }

@@ -1,7 +1,5 @@
 package game.weathers;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * SunnyWeather is the concrete subject of the observer pattern.

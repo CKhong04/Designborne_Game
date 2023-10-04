@@ -4,8 +4,8 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.BuyAction;
-import game.items.consumableitems.HealingVial;
-import game.items.consumableitems.RefreshingFlask;
+import game.items.HealingVial;
+import game.items.RefreshingFlask;
 import game.weapons.Broadsword;
 import game.weapons.GreatKnife;
 
