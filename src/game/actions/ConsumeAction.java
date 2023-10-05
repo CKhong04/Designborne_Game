@@ -13,8 +13,7 @@ import game.items.itemproperties.Consumable;
  */
 public class ConsumeAction extends Action {
     // Private attributes
-    private Consumable item;
-
+    private final Consumable item;
 
     /**
      * A constructor which accepts an operation to be done on the attribute, attribute

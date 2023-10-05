@@ -29,7 +29,6 @@ public class Traveller extends Trader {
     // Great Knife price
     private static final int GREAT_KNIFE_BUY_PRICE = 300;
 
-
     /**
      * The constructor of the Traveller class.
      */
