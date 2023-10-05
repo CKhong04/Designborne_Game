@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
+import game.actions.AttackAction;
 
 import java.util.List;
 import java.util.Random;
@@ -23,73 +24,61 @@ public class StabAndStepAction extends Action {
     private final Actor target;
     private final int staminaDecreasePercentage;
     private final Random rand = new Random();
+    private final Location targetLocation;
 
-    public StabAndStepAction(WeaponItem weaponItem, Actor target, int staminaDecreasePercentage) {
+    public StabAndStepAction(WeaponItem weaponItem, Actor target, Location targetLocation, int staminaDecreasePercentage) {
         this.weaponItem = weaponItem;
         this.target = target;
+        this.targetLocation = targetLocation;
         this.staminaDecreasePercentage = staminaDecreasePercentage;
     }
 
     public String execute(Actor actor, GameMap map) {
-        if (!hasEnoughStamina(actor)) {
-            return actor + " does not have enough stamina to complete the Stab and Step Skill";
-        }
+        int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
+        int consumedAmount = this.staminaDecreasePercentage * maxStamina / 100;
 
-        decreaseStamina(actor);
+        boolean isStaminaEnough = actor.getAttribute(BaseActorAttributes.STAMINA) >= consumedAmount;
 
-        Location currentLocation = map.locationOf(actor);
-        Location destination = findStepDestination(actor, currentLocation, map);
-
-        if (destination != null) {
-            map.moveActor(actor, destination);
-        }
-
-        if (missedAttack()) {
-            if (destination == null) {
-                return actor + " stabs but misses " + target + " and fails to step away.";
+        try {
+            if (!(isStaminaEnough)) {
+                throw new Exception();
             }
-            return actor + " steps away but misses " + target + ".";
+
+            actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
+
+            StringBuilder result = new StringBuilder();
+
+            if (!(rand.nextInt(100) <= weaponItem.chanceToHit())) {
+                result.append(new AttackAction(target, targetLocation.toString(), weaponItem).execute(actor, map)).append("\n");
+            } else {
+                result.append(actor).append(" misses ").append(target).append("\n");
+            }
+
+            Location playerLocation = map.locationOf(actor);
+
+            for (Exit availableExit: playerLocation.getExits()) {
+                Location destination = availableExit.getDestination();
+
+                if (!destination.containsAnActor() && destination.getGround().canActorEnter(actor)) {
+                    map.moveActor(actor, destination);
+                    result.append(actor).append( " steps away");
+                    break;
+                }
+            }
+
+            if (playerLocation.getActor() == actor) {
+                result.append("\n").append(actor).append(" fails to step away");
+            }
+
+            return result.toString();
+        } catch (Exception e) {
+            return actor + " does not have enough stamina to complete the Great Slam Skill!";
         }
-
-        target.hurt(weaponItem.damage());
-
-        if (destination == null) {
-            return actor + " stabs " + target + " but fails to step away.";
-        }
-
-        return actor + " stabs and steps away!";
     }
 
     @Override
     public String menuDescription(Actor actor) {
         return actor + " stabs " + target +
                 " with " + this.weaponItem + " and steps away!";
-    }
-
-    private boolean hasEnoughStamina(Actor actor) {
-        int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
-        int consumedAmount = this.staminaDecreasePercentage * maxStamina / 100;
-        return actor.getAttribute(BaseActorAttributes.STAMINA) >= consumedAmount;
-    }
-
-    private void decreaseStamina(Actor actor) {
-        int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
-        int consumedAmount = this.staminaDecreasePercentage * maxStamina / 100;
-        actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
-    }
-
-    private Location findStepDestination(Actor actor, Location currentLocation, GameMap map) {
-        List<Exit> availableExits = currentLocation.getExits();
-        for (Exit availableExit : availableExits) {
-            Location destination = availableExit.getDestination();
-            if (destination.getGround().canActorEnter(actor) && !destination.containsAnActor()) {
-                return destination;
-            }
-        }
-        return null;  // No possible places to move to
-    }
-
-    private boolean missedAttack() {
-        return !(rand.nextInt(100) <= weaponItem.chanceToHit());
     }
 }

@@ -22,6 +22,7 @@ import game.items.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 import game.weapons.GiantHammer;
+import game.weapons.GreatKnife;
 import game.weathers.SunnyWeather;
 
 /**
