@@ -17,6 +17,8 @@ import game.utilities.Utility;
  * Class representing a healing vial.
  * Created by:
  * @author Laura Zhakupova
+ * Modified by:
+ * @author Ishita Gupta
  */
 public class HealingVial extends Item implements Sellable, Buyable, Consumable {
     //Private attributes
@@ -29,6 +31,12 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable {
         super("Healing Vial",'a', true);
     }
 
+    /**
+     * List of allowable actions that the item can perform to the current actor.
+     *
+     * @param actor the actor that owns the item
+     * @return an unmodifiable list of Actions
+     */
     @Override
     public ActionList allowableActions(Actor actor) {
         ActionList actions = super.allowableActions(actor);
@@ -83,6 +91,12 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable {
         return newPrice;
     }
 
+    /**
+     * Consumes the item and removes it from the actor's inventory.
+     * Make changes to the actor's required skill
+     *
+     * @param actor the actor who is consuming the item
+     */
     @Override
     public void consumeItem(Actor actor) {
         BaseActorAttributes baseActorAttributes = BaseActorAttributes.HEALTH;

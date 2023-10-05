@@ -9,6 +9,7 @@ import game.items.itemproperties.Consumable;
  * Class representing the consume action.
  * Created by:
  * @author Laura Zhakupova
+ * Modified by: Ishita Gupta
  */
 public class ConsumeAction extends Action {
     // Private attributes

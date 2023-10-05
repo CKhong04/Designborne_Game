@@ -18,6 +18,8 @@ import game.utilities.Utility;
  * Class representing a refreshing flask.
  * Created by:
  * @author Laura Zhakupova
+ * Modified by:
+ * @author Ishita Gupta
  */
 public class RefreshingFlask extends Item implements Sellable, Buyable, Consumable {
     //Private attributes
@@ -79,6 +81,12 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
         return newPrice;
     }
 
+    /**
+     * Consumes the item and removes it from the actor's inventory.
+     * Make changes to the actor's required skill
+     *
+     * @param actor the actor who is consuming the item
+     */
     @Override
     public void consumeItem(Actor actor) {
 
@@ -88,6 +96,13 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
         actor.modifyAttribute(baseActorAttributes, actorAttributeOperation, updateValue);actor.removeItemFromInventory(this);
         actor.removeItemFromInventory(this);
     }
+
+    /**
+     * List of allowable actions that the item can perform to the current actor.
+     *
+     * @param actor the actor that owns the item
+     * @return an unmodifiable list of Actions
+     */
     @Override
     public ActionList allowableActions(Actor actor) {
         ActionList actions = super.allowableActions(actor);

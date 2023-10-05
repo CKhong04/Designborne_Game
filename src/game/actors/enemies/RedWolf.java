@@ -77,14 +77,18 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
 
         return new IntrinsicWeapon(DAMAGE, verb, hitRate);
     }
-
+    /**
+     * Update the ancient wood's entities when the weather is sunny. Increases damage multiplier of the Red Wolf.
+     */
     @Override
     public void sunnyUpdate() {
         this.updateDamageMultiplier(3 * DAMAGE);
         display.println("The Red Wolf is getting more aggressive.");
     }
 
-
+    /**
+     * Update the ancient wood's entities when the weather is sunny. Returns to normal damage.
+     */
     @Override
     public void rainyUpdate(){
         this.updateDamageMultiplier(DAMAGE);

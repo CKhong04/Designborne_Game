@@ -12,6 +12,12 @@ import game.enums.Ability;
 import game.items.itemproperties.Consumable;
 import game.items.itemproperties.Sellable;
 
+/**
+ * Class representing a bloodberry.
+ * Created by:
+ * @author Ishita Gupta
+
+ */
 public class BloodBerry extends Item implements Sellable, Consumable {
     //Private attributes
     private static final int INCREASE_HEALTH_VALUE = 5;
@@ -54,6 +60,12 @@ public class BloodBerry extends Item implements Sellable, Consumable {
         return SELL_PRICE;
     }
 
+    /**
+     * Consumes the item and removes it from the actor's inventory.
+     * Make changes to the actor's required skill
+     *
+     * @param actor the actor who is consuming the item
+     */
     @Override
     public void consumeItem(Actor actor) {
         BaseActorAttributes baseActorAttributes = BaseActorAttributes.HEALTH;
@@ -61,7 +73,12 @@ public class BloodBerry extends Item implements Sellable, Consumable {
         actor.modifyAttributeMaximum(baseActorAttributes, actorAttributeOperation, INCREASE_HEALTH_VALUE);
         actor.removeItemFromInventory(this);
     }
-
+    /**
+     * List of allowable actions that the item can perform to the current actor.
+     *
+     * @param actor the actor that owns the item
+     * @return an unmodifiable list of Actions
+     */
     @Override
     public ActionList allowableActions(Actor actor) {
         ActionList actions = super.allowableActions(actor);

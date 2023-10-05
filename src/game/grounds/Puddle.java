@@ -21,6 +21,15 @@ public class Puddle extends Ground implements Consumable {
         super('~');
     }
 
+    /**
+     * Returns the list of items that can be done by the Actor
+     *
+     * @param actor the Actor acting
+     * @param location the current Location
+     * @param direction the direction of the Ground from the Actor
+     * @return a list of actions that can be done by thr actor
+     */
+
     public ActionList allowableActions(Actor actor, Location location, String direction) {
         ActionList actions = super.allowableActions(actor, location, direction);
         Actor currActor = location.getActor();
@@ -29,7 +38,12 @@ public class Puddle extends Ground implements Consumable {
         }
         return actions;
     }
-
+    /**
+     * Consumes the item and removes it from the actor's inventory.
+     * Make changes to the actor's required skill
+     *
+     * @param actor the actor who is consuming the item
+     */
     @Override
     public void consumeItem(Actor actor) {
         int currentStamina = actor.getAttribute(BaseActorAttributes.STAMINA);
@@ -43,6 +57,10 @@ public class Puddle extends Ground implements Consumable {
         actor.modifyAttribute(BaseActorAttributes.HEALTH,ActorAttributeOperations.UPDATE,1+currentHP);
     }
 
+    /**
+     * To String methods for the puddle class, returns the action done by the iterm
+     * @return String with the item name
+     */
     public String toString(){
         return "water from Puddle";
     }

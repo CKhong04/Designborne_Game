@@ -46,12 +46,17 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
         }
     }
 
+    /**
+     * Update the ancient wood's entities when the weather is sunny. It will increase the chance of spawning for Huts
+     */
     @Override
     public void sunnyUpdate() {
         this.updateChanceToSpawn(SUNNY_SPAWNING_CHANCE);
         display.println("Huts are more likely to spawn Forest Keepers in sunny weather.");
     }
-
+    /**
+     * Update the ancient wood's entities when the weather is rainy.It will decrease the chance of spawning for Huts
+     */
     @Override
     public void rainyUpdate() {
         this.updateChanceToSpawn(NORMAL_CHANCE_TO_SPAWN);

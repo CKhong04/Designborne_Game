@@ -71,11 +71,15 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
         String verb = "hits";
         return new IntrinsicWeapon(damage, verb, hitRate);
     }
-
+    /**
+     * Update the ancient wood's entities when the weather is sunny.
+     */
     @Override
     public void sunnyUpdate() {
     }
-
+    /**
+     * Update the ancient wood's entities when the weather is rainy. Heals the Forest Keeper by 10.
+     */
     @Override
     public void rainyUpdate() {
         int healPoints = 10;
