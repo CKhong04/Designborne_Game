@@ -38,6 +38,13 @@ public class Gate extends Ground {
         this.moveAction = moveAction;
     }
 
+    /**
+     * Checks whether an actor can enter
+     *
+     * @param actor the Actor to check
+     * @return Boolean, whether an actor can enter
+     */
+
     @Override
     public boolean canActorEnter(Actor actor) {
         return !this.hasCapability(Status.LOCKED_GATE);

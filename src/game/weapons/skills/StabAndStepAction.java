@@ -26,6 +26,13 @@ public class StabAndStepAction extends Action {
     private final Random rand = new Random();
     private final Location targetLocation;
 
+    /**
+     * The constructor for the StabAndStepAction
+     * @param weaponItem
+     * @param target
+     * @param targetLocation
+     * @param staminaDecreasePercentage
+     */
     public StabAndStepAction(WeaponItem weaponItem, Actor target, Location targetLocation, int staminaDecreasePercentage) {
         this.weaponItem = weaponItem;
         this.target = target;
@@ -33,6 +40,14 @@ public class StabAndStepAction extends Action {
         this.staminaDecreasePercentage = staminaDecreasePercentage;
     }
 
+    /**
+     * The execute method of the Action, checks whether there is enough stamina for the actor performing it
+     * Stabs the target and moves to another open spot
+     *
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return String decribing the action completed
+     */
     public String execute(Actor actor, GameMap map) {
         int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
         int consumedAmount = this.staminaDecreasePercentage * maxStamina / 100;
@@ -76,6 +91,12 @@ public class StabAndStepAction extends Action {
         }
     }
 
+    /**
+     * Menu Description for the action class
+     *
+     * @param actor The actor performing the action.
+     * @return String, saying the action that takes place
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor + " stabs " + target +

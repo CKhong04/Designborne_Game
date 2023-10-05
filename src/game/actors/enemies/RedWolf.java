@@ -16,7 +16,7 @@ import game.weathers.Weather;
  * The class RedWolf is a child class of the abstract class Enemy. It is encountered in the Ancient Woods.
  * Created by:
  * @author Carissa Khong
- * Modified by: Ishita Gupta
+ * Modified by: Ishita Gupta, Khoi Nguyen
  */
 public class RedWolf extends Enemy implements AncientWoodEntity {
 
