@@ -62,7 +62,7 @@ public class Puddle extends Ground implements Consumable {
      * @return String with the item name
      */
     public String toString(){
-        return "water from Puddle";
+        return "water from the Puddle";
     }
 }
 

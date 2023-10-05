@@ -16,6 +16,8 @@ import game.weapons.skills.GreatSlamCapable;
  * Class representing a Giant Hammer.
  * Created by:
  * @author Minh Nguyen
+ * Modified by:
+ * Carissa Khong, Laura Zhakupova
  */
 public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapable {
     /**

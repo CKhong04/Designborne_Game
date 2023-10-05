@@ -20,7 +20,7 @@ import game.weathers.Weather;
 /**
  * The class for the Abxervyer
  * Created By:
- * @author Ishita Gupta, Carissa Khong, Khoi Nguyen, Laura Zhakupova
+ * @author Ishita Gupta, Carissa Khong, Minh Nguyen, Laura Zhakupova
  */
 public class Abxervyer extends Enemy {
     /**
