@@ -5,6 +5,8 @@ import java.util.ArrayList;
 /**
  * Weather is the subject interface of the observer pattern.
  * It is responsible for registering, unregistering, and notifying the ancient wood's entities.
+ * Created by:
+ * @author Ishita Gupta, Khoi Nguyen
  */
 public interface Weather {
     /**

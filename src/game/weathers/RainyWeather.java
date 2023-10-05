@@ -3,6 +3,9 @@ package game.weathers;
 
 /**
  * RainyWeather is the concrete subject of the observer pattern.
+ *
+ * Created By:
+ * @author: Khoi Nguyen
  */
 public class RainyWeather implements Weather {
     /**
