@@ -85,7 +85,7 @@ public class Abxervyer extends Enemy {
 
     /**
      * This allows the weather to be set to exhibit different characteristics.
-     * @param newWeather
+     * @param newWeather The Weather being changed to
      */
     public void setWeather(Weather newWeather) {
         this.weather = newWeather;

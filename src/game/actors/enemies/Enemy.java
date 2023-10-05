@@ -45,7 +45,7 @@ public abstract class Enemy extends Actor {
     /**
      * At each turn, select a valid action to perform.
      *
-     * @param map        the map containing the Actor
+     * @param map the map containing the Actor
      * @return the valid action that can be performed in that iteration or null if no valid action is found
      */
     public Action findAction(GameMap map) {
@@ -71,7 +71,7 @@ public abstract class Enemy extends Actor {
      *
      * @param otherActor the Actor that might be performing attack
      * @param direction  String representing the direction of the other Actor
-     * @param map        current GameMap
+     * @param map current GameMap
      * @return list of actions that can be performed by the other actor on this enemy
      */
     @Override
