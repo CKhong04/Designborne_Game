@@ -28,6 +28,13 @@ public class GreatSlamAction extends Action {
     private final Random rand = new Random();
     private final Location targetLocation;
 
+    /**
+     * Constructor for GreatSlamAction
+     * @param weaponItem declares the weapon doing the actio
+     * @param target the target being attacked
+     * @param targetLocation the location of the attack
+     * @param staminaDecreasePercentage the stamina being reduced
+     */
     public GreatSlamAction(WeaponItem weaponItem, Actor target, Location targetLocation, int staminaDecreasePercentage) {
         this.weaponItem = weaponItem;
         this.target = target;
@@ -35,6 +42,14 @@ public class GreatSlamAction extends Action {
         this.staminaDecreasePercentage = staminaDecreasePercentage;
     }
 
+    /**
+     * Execute method for the Action. Performs a check to see whether the actor has enough stamina to execute the action.
+     * Hurts the target, the actor and all enemies in the vicinity.
+     *
+     * @param actor The actor performing the action.
+     * @param map The map the actor is on.
+     * @return String with the action that took place
+     */
     @Override
     public String execute(Actor actor, GameMap map) {
         int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
@@ -78,6 +93,11 @@ public class GreatSlamAction extends Action {
         }
     }
 
+    /**
+     * Menu Description of the Action
+     * @param actor The actor performing the action.
+     * @return String, with the description of the action
+     */
     @Override
     public String menuDescription(Actor actor) {
         return actor + " slams " + this.target + " with the " + this.weaponItem + "!";

@@ -17,9 +17,16 @@ import game.weathers.RainyWeather;
 import game.weathers.SunnyWeather;
 import game.weathers.Weather;
 
+/**
+ * The class for the Abxervyer
+ * Created By:
+ * @author Ishita Gupta, Carissa Khong, Khoi Nguyen, Laura Zhakupova
+ */
 public class Abxervyer extends Enemy {
     /**
      * Hit points of Abxervyer.
+     *
+
      */
     private static final int HIT_POINTS = 2000;
     private static final int CHANCE_DROP_RUNE = 100;
@@ -36,8 +43,6 @@ public class Abxervyer extends Enemy {
      * Abxervyer, the Forest Watcher, its display character, 'Y' and its initial HP, 2000.
      * Additionally, Abxervyer is a resident of the Ancient Woods and is unable to be hurt when walking on the void.
      * Abxervyer has 5000 runes in its inventory, which it will drop when killed.
-     * Created by:
-     * @author Ishita Gupta, Carissa Khong, Khoi Nguyen, Laura Zhakupova
      * @param map The map which the player can be transported to upon the death of Abxervyer.
      */
     public Abxervyer(GameMap map, Weather sunnyWeather) {

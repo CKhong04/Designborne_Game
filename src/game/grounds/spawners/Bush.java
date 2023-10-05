@@ -10,6 +10,8 @@ import game.weathers.Weather;
  * The Bush class extends the SpawningGround class and has a chance of spawning Red Wolves from it each turn.
  * Created by:
  * @author Carissa Khong
+ * Modified By:
+ * Ishita Gupta, Khoi Nguyen
  */
 public class Bush extends SpawningGround implements AncientWoodEntity {
     private static final int NORMAL_CHANCE_TO_SPAWN = 30;

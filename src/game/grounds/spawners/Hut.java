@@ -11,6 +11,7 @@ import game.weathers.Weather;
  * turn.
  * Created by:
  * @author Carissa Khong
+ * Modified By: Ishita Gupta, Khoi Nguyen
  */
 public class Hut extends SpawningGround implements AncientWoodEntity {
     //Private attributes
