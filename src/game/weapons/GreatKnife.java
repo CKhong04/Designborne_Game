@@ -51,8 +51,9 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
      * @param otherActor the actor to stab and step.
      * @return the StabAndStepAction of this weapon.
      */
-    public StabAndStepAction getStabAndStepAction(Actor otherActor){
-        return new StabAndStepAction(this, otherActor, STAMINA_DECREASE_PERCENTAGE);
+    @Override
+    public StabAndStepAction getStabAndStepAction(Actor otherActor, Location targetLocation) {
+        return new StabAndStepAction(this, otherActor, targetLocation, STAMINA_DECREASE_PERCENTAGE);
     }
 
     /**
@@ -69,7 +70,7 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         ActionList actions =  super.allowableActions(otherActor, location);
         if (otherActor.hasCapability(Status.HOSTILE_TO_PLAYER)){
             actions.add(new AttackAction(otherActor,location.toString(),this));
-            actions.add(this.getStabAndStepAction(otherActor));
+            actions.add(this.getStabAndStepAction(otherActor, location));
         }
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
             actions.add(new SellAction(otherActor, this, SELL_PRICE));

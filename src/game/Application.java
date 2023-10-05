@@ -22,6 +22,7 @@ import game.items.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 import game.weapons.GiantHammer;
+import game.weapons.GreatKnife;
 import game.weathers.SunnyWeather;
 
 /**
@@ -194,6 +195,7 @@ public class Application {
 
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
+        player.addItemToInventory(new GreatKnife());
         world.addPlayer(player, gameMap.at(29, 5));
         world.run();
     }

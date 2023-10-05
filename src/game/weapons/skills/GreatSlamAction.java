@@ -45,7 +45,7 @@ public class GreatSlamAction extends Action {
         try {
             if (!(isStaminaEnough)) {
                 throw new Exception();
-            } else {
+            }
                 actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
 
                 if (!(rand.nextInt(100) <= weaponItem.chanceToHit())) {
@@ -66,14 +66,13 @@ public class GreatSlamAction extends Action {
 
                     if (destination.containsAnActor()) {
                         Actor otherActor = destination.getActor();
-                        result.append(new AttackAction(otherActor, destination.toString(), weaponItem).execute(actor, map));
+                        result.append("\n").append(new AttackAction(otherActor, destination.toString(), weaponItem).execute(actor, map));
                     }
                 }
 
                 weaponItem.updateDamageMultiplier(DEFAULT_DAMAGE_MULTIPLIER);
 
                 return result.toString();
-            }
         } catch (Exception e){
             return actor + " does not have enough stamina to complete the Great Slam Skill!";
         }
