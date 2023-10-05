@@ -53,8 +53,9 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
      * @param otherActor the actor to be attacked.
      * @return the GreatSlamAction of this weapon.
      */
-    public GreatSlamAction getGreatSlamAction(Actor otherActor) {
-        return new GreatSlamAction(this, otherActor, STAMINA_DECREASE_PERCENTAGE);
+    @Override
+    public GreatSlamAction getGreatSlamAction(Actor otherActor, Location targetLocation) {
+        return new GreatSlamAction(this, otherActor, targetLocation, STAMINA_DECREASE_PERCENTAGE);
     }
 
     /**
@@ -71,7 +72,7 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
         ActionList actions = super.allowableActions(otherActor, location);
         if (otherActor.hasCapability(Status.HOSTILE_TO_PLAYER)){
             actions.add(new AttackAction(otherActor,location.toString(),this));
-            actions.add(getGreatSlamAction(otherActor));
+            actions.add(getGreatSlamAction(otherActor, location));
         }
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
             actions.add(new SellAction(otherActor, this, SELL_PRICE));

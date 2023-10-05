@@ -8,6 +8,7 @@ import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
+import game.actions.AttackAction;
 
 import java.util.List;
 import java.util.Random;
@@ -25,10 +26,12 @@ public class GreatSlamAction extends Action {
     private final static float DEFAULT_DAMAGE_MULTIPLIER = 1.0f;
     private final static float NEW_DAMAGE_MULTIPLIER = 0.5f;
     private final Random rand = new Random();
+    private final Location targetLocation;
 
-    public GreatSlamAction(WeaponItem weaponItem, Actor target, int staminaDecreasePercentage) {
+    public GreatSlamAction(WeaponItem weaponItem, Actor target, Location targetLocation, int staminaDecreasePercentage) {
         this.weaponItem = weaponItem;
         this.target = target;
+        this.targetLocation = targetLocation;
         this.staminaDecreasePercentage = staminaDecreasePercentage;
     }
 
@@ -49,8 +52,7 @@ public class GreatSlamAction extends Action {
                     return actor + " slams the ground but misses " + target + ".";
                 }
 
-                // Hurt the targeted actor at full damage
-                target.hurt(weaponItem.damage());
+                StringBuilder result = new StringBuilder(new AttackAction(target, targetLocation.toString(), weaponItem).execute(actor, map));
 
                 // Hurt all surrounding actors, including the user at half damage
                 Location currentLocation = map.locationOf(actor);
@@ -64,13 +66,13 @@ public class GreatSlamAction extends Action {
 
                     if (destination.containsAnActor()) {
                         Actor otherActor = destination.getActor();
-                        otherActor.hurt(weaponItem.damage());
+                        result.append(new AttackAction(otherActor, destination.toString(), weaponItem).execute(actor, map));
                     }
                 }
 
                 weaponItem.updateDamageMultiplier(DEFAULT_DAMAGE_MULTIPLIER);
 
-                return actor + " slams the ground with the " + this.weaponItem + "!";
+                return result.toString();
             }
         } catch (Exception e){
             return actor + " does not have enough stamina to complete the Great Slam Skill!";
