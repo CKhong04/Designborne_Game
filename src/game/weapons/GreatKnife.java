@@ -16,6 +16,8 @@ import game.weapons.skills.StabAndStepCapable;
 
 /**
  * Class representing a Great Knife.
+ * Created by:
+ * @author Minh Nguyen
  */
 public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable {
     /**

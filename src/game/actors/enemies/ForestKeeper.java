@@ -23,7 +23,6 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
 
     //Private attributes
     private static final int DROP_VIAL_CHANCE = 20;
-
     private static final int HIT_POINTS = 125;
     private static final int CHANCE_DROP_RUNE = 100;
     private final Weather weather;

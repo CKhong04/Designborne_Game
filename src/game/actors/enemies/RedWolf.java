@@ -22,13 +22,9 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
 
     //Private attributes
     private static final int DROP_VIAL_CHANCE = 10;
-
     private static final int CHANCE_DROP_RUNE = 100;
-
     private static final int HIT_POINTS = 25;
-
     private static final int DAMAGE = 15;
-
     private final Display display = new Display();
     private final Weather weather;
 

@@ -15,7 +15,6 @@ public class Rune extends Item implements Consumable {
 
     private final int quantity;
 
-
     /***
      * Constructor.
 
