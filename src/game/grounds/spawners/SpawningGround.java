@@ -11,6 +11,7 @@ import java.util.Random;
  * Created by:
  * @author Laura Zhakupova
  * @author Carissa Khong
+ * Modified by: Ishita Gupta
  */
 public abstract class SpawningGround extends Ground {
     // Attributes
@@ -45,6 +46,11 @@ public abstract class SpawningGround extends Ground {
         }
     }
 
+    /**
+     * Updates the chanceToSpawn
+     *
+     * @param newChanceToSpawn the new chance to spawn
+     */
     public void updateChanceToSpawn(double newChanceToSpawn){
         chanceToSpawn = (int) newChanceToSpawn;
     }

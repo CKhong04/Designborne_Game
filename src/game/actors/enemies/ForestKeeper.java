@@ -16,7 +16,7 @@ import game.weathers.Weather;
  * The ForestKeeper class is a child class of the Enemy class. Forest Keepers are encountered in the Ancient Woods.
  * Created by:
  * @author Carissa Khong
- * Modified by: Ishita Gupta
+ * Modified by: Ishita Gupta, Khoi Nguyen
  *
  */
 public class ForestKeeper extends Enemy implements AncientWoodEntity {
@@ -72,7 +72,7 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
         return new IntrinsicWeapon(damage, verb, hitRate);
     }
     /**
-     * Update the ancient wood's entities when the weather is sunny.
+     * Update the ancient wood's entities when the weather is sunny. Does not make any change for Forest Keeper
      */
     @Override
     public void sunnyUpdate() {
