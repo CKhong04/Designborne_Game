@@ -1,6 +1,5 @@
 package game;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,9 +39,6 @@ public class Application {
         FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(),
                 new Wall(), new Floor(), new Puddle(), new BottomlessPit());
 
-        //An empty list of all the maps that are active in the game.
-        List<GameMap> mapList = new ArrayList<>();
-
         // Set up starting map
         List<String> map = Arrays.asList(
                 "...........................................................",
@@ -61,7 +57,6 @@ public class Application {
 
         GameMap gameMap = new GameMap(groundFactory, map);
         world.addGameMap(gameMap);
-        mapList.add(gameMap);
 
         Item broadsword = new Broadsword();
         gameMap.at(27, 5).addItem(broadsword);
@@ -89,7 +84,6 @@ public class Application {
 
         GameMap burialGroundGameMap = new GameMap(groundFactory,burialGroundMap);
         world.addGameMap(burialGroundGameMap);
-        mapList.add(burialGroundGameMap);
 
         burialGroundGameMap.at(23,2).setGround(new HollowSoldierGraveyard());
         burialGroundGameMap.at(13,11).setGround(new HollowSoldierGraveyard());
@@ -120,7 +114,6 @@ public class Application {
                 "~~~~~~..........++.................................+++.....");
         GameMap ancientWoodsGameMap = new GameMap(groundFactory, ancientWoodsMap);
         world.addGameMap(ancientWoodsGameMap);
-        mapList.add(ancientWoodsGameMap);
 
         SunnyWeather sunnyWeather = new SunnyWeather();
 
@@ -171,7 +164,6 @@ public class Application {
         );
         GameMap roomGameMap = new GameMap(groundFactory, roomMap);
         world.addGameMap(roomGameMap);
-        mapList.add(roomGameMap);
 
         // Adding the bushes and huts to the Room
         roomGameMap.at(30, 2).setGround(new Bush(sunnyWeather));
@@ -187,8 +179,12 @@ public class Application {
         woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room containing Abxervyer, the Forest Watcher."));
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
+        //Create the gate which Abxervyer will set once dead
+        Gate roomToWoodsGate = new Gate();
+        roomToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(45,3), "to the Ancient Woods."));
+
         // Add the boss to the room
-        roomGameMap.at(35,1).addActor(new Abxervyer(mapList, sunnyWeather));
+        roomGameMap.at(35,1).addActor(new Abxervyer(roomToWoodsGate, sunnyWeather));
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {

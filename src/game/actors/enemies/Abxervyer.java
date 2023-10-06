@@ -2,7 +2,6 @@ package game.actors.enemies;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actions.MoveActorAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
@@ -16,8 +15,6 @@ import game.utilities.Utility;
 import game.weathers.RainyWeather;
 import game.weathers.SunnyWeather;
 import game.weathers.Weather;
-
-import java.util.List;
 
 /**
  * The class for the Abxervyer
@@ -35,16 +32,16 @@ public class Abxervyer extends Enemy {
      */
     private int count = 0;
     private Weather weather;
-    private GameMap ancientWoodsMap;
+    private Gate gateToWoods;
 
     /**
      * The constructor is taken from the Enemy abstract class. For Abxervyer, this gives the name of the enemy, which is
      * Abxervyer, the Forest Watcher, its display character, 'Y' and its initial HP, 2000.
      * Additionally, Abxervyer is a resident of the Ancient Woods and is unable to be hurt when walking on the void.
      * Abxervyer has 5000 runes in its inventory, which it will drop when killed.
-     * @param maps The maps which are active in the game currently.
+     * @param gateToWoods The gate which appears when Abxervyer dies.
      */
-    public Abxervyer(List<GameMap> maps, Weather sunnyWeather) {
+    public Abxervyer(Gate gateToWoods, Weather sunnyWeather) {
         super("Abxervyer, the Forest Watcher", 'Y', HIT_POINTS);
 
         this.weather = sunnyWeather;
@@ -52,7 +49,7 @@ public class Abxervyer extends Enemy {
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
         this.addCapability(Ability.NOT_HURT_BY_VOID); //Abxervyer will not be hurt if it steps on a void.
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(5000));
-        this.ancientWoodsMap = maps.get(2); //The third item in the list is the Ancient Woods Map
+        this.gateToWoods = gateToWoods;
     }
 
     /**
@@ -103,9 +100,7 @@ public class Abxervyer extends Enemy {
     public String unconscious(Actor actor, GameMap map) {
         //Set the location the actor died at to become a gate, which transports the player back to the Ancient Woods.
         Location deathLocation = map.locationOf(this);
-        Gate roomToWoodsGate = new Gate();
-        roomToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsMap.at(45,3), "to the Ancient Woods."));
-        deathLocation.setGround(roomToWoodsGate);
+        deathLocation.setGround(this.gateToWoods);
         String result =  super.unconscious(actor, map);
         result += "\nYou have successfully defeated the boss, " + this;
         result += "\nAbxervyer crumples, as a Gate is created at its feet...";
