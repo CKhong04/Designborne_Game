@@ -10,7 +10,6 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
 
-import java.util.List;
 import java.util.Random;
 
 /**
@@ -28,10 +27,10 @@ public class StabAndStepAction extends Action implements StaminaConsumable {
 
     /**
      * The constructor for the StabAndStepAction
-     * @param weaponItem
-     * @param target
-     * @param targetLocation
-     * @param staminaDecreasePercentage
+     * @param weaponItem The weapon used to stab
+     * @param target The target being stabbed
+     * @param targetLocation The location of the target
+     * @param staminaDecreasePercentage The percentage of stamina to be decreased
      */
     public StabAndStepAction(WeaponItem weaponItem, Actor target, Location targetLocation, int staminaDecreasePercentage) {
         this.weaponItem = weaponItem;

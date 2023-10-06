@@ -12,12 +12,15 @@ import game.items.itemproperties.Consumable;
  * @author Ishita Gupta
  */
 public class Rune extends Item implements Consumable {
-
+    /**
+     * The quantity of the item
+     */
     private final int quantity;
 
-    /***
+    /**
      * Constructor.
-
+     *
+     * @param quantity the quantity of the item
      */
     public Rune(int quantity) {
         super("Runes", '$', true);

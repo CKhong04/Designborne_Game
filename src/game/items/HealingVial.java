@@ -24,7 +24,8 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable {
     //Private attributes
     private static final int INCREASE_HEALTH_VALUE = 10;
     private static final int SELL_PRICE = 35;
-    /***
+
+    /**
      * Constructor.
      */
     public HealingVial() {

@@ -16,8 +16,7 @@ public class WanderingUndeadGraveyard extends SpawningGround {
     private static final int CHANCE_TO_SPAWN = 25;
 
     /**
-     * A constructor for the WanderingUndeadGraveyard class. Each turn, this graveyard has a chance of spawning an
-     * enemy, which is 25%. On a map, this class is always displayed as an 'n'.
+     * Constructor
      */
     public WanderingUndeadGraveyard() {
         super(CHANCE_TO_SPAWN, 'n');

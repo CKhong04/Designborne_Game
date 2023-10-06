@@ -26,7 +26,8 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
     private static final int INCREASE_STAMINA_VALUE = 20;
     private static final int SELL_PRICE = 25;
     private static final int SELL_SCAM_CHANCE = 50;
-    /***
+
+    /**
      * Constructor.
      */
     public RefreshingFlask() {

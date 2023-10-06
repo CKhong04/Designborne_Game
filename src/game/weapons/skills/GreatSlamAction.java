@@ -30,7 +30,7 @@ public class GreatSlamAction extends Action implements StaminaConsumable {
 
     /**
      * Constructor for GreatSlamAction
-     * @param weaponItem declares the weapon doing the actio
+     * @param weaponItem declares the weapon doing the action
      * @param target the target being attacked
      * @param targetLocation the location of the attack
      * @param staminaDecreasePercentage the stamina being reduced

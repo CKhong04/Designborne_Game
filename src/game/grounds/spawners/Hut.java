@@ -22,7 +22,7 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
 
     /**
      * Constructor.
-     * An instance of the Hut class may spawn an enemy, with a chance of 15% each turn. The display symbol of a hut is 'h'.
+     * @param weather The weather of the AncientWoodMap.
      */
     public Hut(Weather weather) {
         super(NORMAL_CHANCE_TO_SPAWN, 'h');

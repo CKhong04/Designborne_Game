@@ -17,6 +17,9 @@ import game.items.itemproperties.Consumable;
  * Modified by: Ishita Gupta
  */
 public class Puddle extends Ground implements Consumable {
+    /**
+     * Constructor
+     */
     public Puddle() {
         super('~');
     }
@@ -29,7 +32,6 @@ public class Puddle extends Ground implements Consumable {
      * @param direction the direction of the Ground from the Actor
      * @return a list of actions that can be done by thr actor
      */
-
     public ActionList allowableActions(Actor actor, Location location, String direction) {
         ActionList actions = super.allowableActions(actor, location, direction);
         Actor currActor = location.getActor();

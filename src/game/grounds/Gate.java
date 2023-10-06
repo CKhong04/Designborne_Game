@@ -44,7 +44,6 @@ public class Gate extends Ground {
      * @param actor the Actor to check
      * @return Boolean, whether an actor can enter
      */
-
     @Override
     public boolean canActorEnter(Actor actor) {
         return !this.hasCapability(Status.LOCKED_GATE);

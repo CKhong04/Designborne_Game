@@ -4,7 +4,7 @@ package game.weathers;
  * Interface representing an Ancient Wood Entity.
  * Created by:
  * @author Laura Zhakupova
- * Modified by: Khoi Nguyen
+ * Modified by: Minh Nguyen
  */
 public interface AncientWoodEntity {
     /**
