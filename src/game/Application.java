@@ -20,7 +20,6 @@ import game.grounds.spawners.HollowSoldierGraveyard;
 import game.grounds.spawners.Hut;
 import game.grounds.spawners.WanderingUndeadGraveyard;
 import game.items.BloodBerry;
-import game.items.OldKey;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 import game.weapons.GiantHammer;
@@ -203,8 +202,7 @@ public class Application {
 
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
-        world.addPlayer(player, roomGameMap.at(25, 5));
-        roomGameMap.at(26,5).addItem(new OldKey());
+        world.addPlayer(player, gameMap.at(29, 5));
         world.run();
     }
 }

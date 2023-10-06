@@ -27,10 +27,8 @@ import java.util.List;
 public class Abxervyer extends Enemy {
     /**
      * Hit points of Abxervyer.
-     *
-
      */
-    private static final int HIT_POINTS = 20;
+    private static final int HIT_POINTS = 2000;
     private static final int CHANCE_DROP_RUNE = 100;
     /**
      * The count of turns.
@@ -38,7 +36,6 @@ public class Abxervyer extends Enemy {
     private int count = 0;
     private Weather weather;
     private GameMap ancientWoodsMap;
-    private Display display = new Display();
 
     /**
      * The constructor is taken from the Enemy abstract class. For Abxervyer, this gives the name of the enemy, which is
