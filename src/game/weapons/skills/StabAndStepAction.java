@@ -15,11 +15,11 @@ import java.util.Random;
 
 /**
  * Created by:
- * @author Khoi Nguyen
+ * @author Minh Nguyen
  * Modified by:
  * Carissa Khong
  */
-public class StabAndStepAction extends Action {
+public class StabAndStepAction extends Action implements StaminaConsumable {
     private final WeaponItem weaponItem;
     private final Actor target;
     private final int staminaDecreasePercentage;
@@ -41,25 +41,39 @@ public class StabAndStepAction extends Action {
     }
 
     /**
+     * This method consumes the stamina of the actor.
+     * @param actor the actor that consumes the stamina.
+     * @param staminaDecreasePercentage the percentage of stamina to be decreased.
+     * @return boolean, whether the actor has enough stamina to perform the action
+     */
+    @Override
+    public boolean consumeStamina(Actor actor, int staminaDecreasePercentage) {
+        int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
+        int consumedAmount = staminaDecreasePercentage * maxStamina / 100;
+
+        if (actor.getAttribute(BaseActorAttributes.STAMINA) >= consumedAmount) {
+            actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * The execute method of the Action, checks whether there is enough stamina for the actor performing it
      * Stabs the target and moves to another open spot
      *
      * @param actor The actor performing the action.
      * @param map The map the actor is on.
-     * @return String decribing the action completed
+     * @return String describing the action completed
      */
     public String execute(Actor actor, GameMap map) {
-        int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
-        int consumedAmount = this.staminaDecreasePercentage * maxStamina / 100;
-
-        boolean isStaminaEnough = actor.getAttribute(BaseActorAttributes.STAMINA) >= consumedAmount;
+        boolean isStaminaEnough = consumeStamina(actor, staminaDecreasePercentage);
 
         try {
             if (!(isStaminaEnough)) {
                 throw new Exception();
             }
-
-            actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
 
             StringBuilder result = new StringBuilder();
 

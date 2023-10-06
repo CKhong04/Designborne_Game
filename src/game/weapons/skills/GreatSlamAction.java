@@ -15,11 +15,11 @@ import java.util.Random;
 
 /**
  * Created by:
- * @author Khoi Nguyen
+ * @author Minh Nguyen
  * Modified by:
  * Carissa Khong
  */
-public class GreatSlamAction extends Action {
+public class GreatSlamAction extends Action implements StaminaConsumable {
     private final WeaponItem weaponItem;
     private final Actor target;
     private final int staminaDecreasePercentage;
@@ -43,6 +43,25 @@ public class GreatSlamAction extends Action {
     }
 
     /**
+     * This method consumes the stamina of the actor.
+     * @param actor the actor that consumes the stamina.
+     * @param staminaDecreasePercentage the percentage of stamina to be decreased.
+     * @return boolean, whether the actor has enough stamina to perform the action
+     */
+    @Override
+    public boolean consumeStamina(Actor actor, int staminaDecreasePercentage) {
+        int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
+        int consumedAmount = staminaDecreasePercentage * maxStamina / 100;
+
+        if (actor.getAttribute(BaseActorAttributes.STAMINA) >= consumedAmount) {
+            actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Execute method for the Action. Performs a check to see whether the actor has enough stamina to execute the action.
      * Hurts the target, the actor and all enemies in the vicinity.
      *
@@ -52,42 +71,38 @@ public class GreatSlamAction extends Action {
      */
     @Override
     public String execute(Actor actor, GameMap map) {
-        int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
-        int consumedAmount = this.staminaDecreasePercentage * maxStamina / 100;
-
-        boolean isStaminaEnough = actor.getAttribute(BaseActorAttributes.STAMINA) >= consumedAmount;
+        boolean isStaminaEnough = consumeStamina(actor, this.staminaDecreasePercentage);
 
         try {
             if (!(isStaminaEnough)) {
                 throw new Exception();
             }
-                actor.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.DECREASE, consumedAmount);
 
-                if (!(rand.nextInt(100) <= weaponItem.chanceToHit())) {
-                    return actor + " slams the ground but misses " + target + ".";
+            if (!(rand.nextInt(100) <= weaponItem.chanceToHit())) {
+                return actor + " slams the ground but misses " + target + ".";
+            }
+
+            StringBuilder result = new StringBuilder(new AttackAction(target, targetLocation.toString(), weaponItem).execute(actor, map));
+
+            // Hurt all surrounding actors, including the user at half damage
+            Location currentLocation = map.locationOf(actor);
+            List<Exit> availableExits = currentLocation.getExits();
+
+            weaponItem.updateDamageMultiplier(NEW_DAMAGE_MULTIPLIER);
+            actor.hurt(weaponItem.damage());
+
+            for (Exit availableExit : availableExits) {
+                Location destination = availableExit.getDestination();
+
+                if (destination.containsAnActor()) {
+                    Actor otherActor = destination.getActor();
+                    result.append("\n").append(new AttackAction(otherActor, destination.toString(), weaponItem).execute(actor, map));
                 }
+            }
 
-                StringBuilder result = new StringBuilder(new AttackAction(target, targetLocation.toString(), weaponItem).execute(actor, map));
+            weaponItem.updateDamageMultiplier(DEFAULT_DAMAGE_MULTIPLIER);
 
-                // Hurt all surrounding actors, including the user at half damage
-                Location currentLocation = map.locationOf(actor);
-                List<Exit> availableExits = currentLocation.getExits();
-
-                weaponItem.updateDamageMultiplier(NEW_DAMAGE_MULTIPLIER);
-                actor.hurt(weaponItem.damage());
-
-                for (Exit availableExit : availableExits) {
-                    Location destination = availableExit.getDestination();
-
-                    if (destination.containsAnActor()) {
-                        Actor otherActor = destination.getActor();
-                        result.append("\n").append(new AttackAction(otherActor, destination.toString(), weaponItem).execute(actor, map));
-                    }
-                }
-
-                weaponItem.updateDamageMultiplier(DEFAULT_DAMAGE_MULTIPLIER);
-
-                return result.toString();
+            return result.toString();
         } catch (Exception e){
             return actor + " does not have enough stamina to complete the Great Slam Skill!";
         }

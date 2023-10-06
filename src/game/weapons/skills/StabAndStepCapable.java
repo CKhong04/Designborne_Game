@@ -5,13 +5,14 @@ import edu.monash.fit2099.engine.positions.Location;
 
 /**
  * The interface for the StabAndStep Action
+ * @author Minh Nguyen
  */
 public interface StabAndStepCapable {
     /**
      * Constructor
      * @param otherActor The target being attacked
      * @param targetLocation The location of the target
-     * @return
+     * @return the StabAndStepAction
      */
     StabAndStepAction getStabAndStepAction(Actor otherActor, Location targetLocation);
 }
