@@ -17,6 +17,8 @@ import game.weathers.RainyWeather;
 import game.weathers.SunnyWeather;
 import game.weathers.Weather;
 
+import java.util.List;
+
 /**
  * The class for the Abxervyer
  * Created By:
@@ -28,7 +30,7 @@ public class Abxervyer extends Enemy {
      *
 
      */
-    private static final int HIT_POINTS = 2000;
+    private static final int HIT_POINTS = 20;
     private static final int CHANCE_DROP_RUNE = 100;
     /**
      * The count of turns.
@@ -43,9 +45,9 @@ public class Abxervyer extends Enemy {
      * Abxervyer, the Forest Watcher, its display character, 'Y' and its initial HP, 2000.
      * Additionally, Abxervyer is a resident of the Ancient Woods and is unable to be hurt when walking on the void.
      * Abxervyer has 5000 runes in its inventory, which it will drop when killed.
-     * @param map The map which the player can be transported to upon the death of Abxervyer.
+     * @param maps The maps which are active in the game currently.
      */
-    public Abxervyer(GameMap map, Weather sunnyWeather) {
+    public Abxervyer(List<GameMap> maps, Weather sunnyWeather) {
         super("Abxervyer, the Forest Watcher", 'Y', HIT_POINTS);
 
         this.weather = sunnyWeather;
@@ -53,7 +55,7 @@ public class Abxervyer extends Enemy {
         this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
         this.addCapability(Ability.NOT_HURT_BY_VOID); //Abxervyer will not be hurt if it steps on a void.
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(5000));
-        this.ancientWoodsMap = map;
+        this.ancientWoodsMap = maps.get(2); //The third item in the list is the Ancient Woods Map
     }
 
     /**
@@ -97,7 +99,8 @@ public class Abxervyer extends Enemy {
      * indicating that the boss has been defeated.
      * @param actor the perpetrator
      * @param map where the actor fell unconscious
-     * @return The string which is returned by the unconscious method in the Enemy class.
+     * @return The string which is returned by the unconscious method in the Enemy class, with additional information
+     * specific to the defeat of Abxervyer.
      */
     @Override
     public String unconscious(Actor actor, GameMap map) {
@@ -106,9 +109,10 @@ public class Abxervyer extends Enemy {
         Gate roomToWoodsGate = new Gate();
         roomToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsMap.at(45,3), "to the Ancient Woods."));
         deathLocation.setGround(roomToWoodsGate);
-        display.println("You have successfully defeated the boss, " + this);
-
-        return super.unconscious(actor, map);
+        String result =  super.unconscious(actor, map);
+        result += "\nYou have successfully defeated the boss, " + this;
+        result += "\nAbxervyer crumples, as a Gate is created at its feet...";
+        return result;
     }
 
     /**

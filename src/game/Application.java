@@ -1,5 +1,6 @@
 package game;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,10 +20,10 @@ import game.grounds.spawners.HollowSoldierGraveyard;
 import game.grounds.spawners.Hut;
 import game.grounds.spawners.WanderingUndeadGraveyard;
 import game.items.BloodBerry;
+import game.items.OldKey;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
 import game.weapons.GiantHammer;
-import game.weapons.GreatKnife;
 import game.weathers.SunnyWeather;
 
 /**
@@ -40,6 +41,9 @@ public class Application {
         FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(),
                 new Wall(), new Floor(), new Puddle(), new BottomlessPit());
 
+        //An empty list of all the maps that are active in the game.
+        List<GameMap> mapList = new ArrayList<>();
+
         // Set up starting map
         List<String> map = Arrays.asList(
                 "...........................................................",
@@ -51,13 +55,14 @@ public class Application {
                 "........~~................#_____#................++........",
                 ".........~~~..............###_###..........................",
                 "...~~~~~~~~....+++.........................................",
-                "....~~~~~........+++++++..................###..##...++++...",
-                "~~~~~~~..............+++..................#___..#...++.....",
+                "....~~~~~........+++++++.....+++++++++....###..##...++++...",
+                "~~~~~~~..............+++...+++++....++++..#___..#...++.....",
                 "~~~~~~.................++.................#..___#....+++...",
-                "~~~~~~~~~.................................#######.......++.");
+                "~~~~~~~~~.....................++++++......#######.......++.");
 
         GameMap gameMap = new GameMap(groundFactory, map);
         world.addGameMap(gameMap);
+        mapList.add(gameMap);
 
         Item broadsword = new Broadsword();
         gameMap.at(27, 5).addItem(broadsword);
@@ -85,6 +90,7 @@ public class Application {
 
         GameMap burialGroundGameMap = new GameMap(groundFactory,burialGroundMap);
         world.addGameMap(burialGroundGameMap);
+        mapList.add(burialGroundGameMap);
 
         burialGroundGameMap.at(23,2).setGround(new HollowSoldierGraveyard());
         burialGroundGameMap.at(13,11).setGround(new HollowSoldierGraveyard());
@@ -115,6 +121,7 @@ public class Application {
                 "~~~~~~..........++.................................+++.....");
         GameMap ancientWoodsGameMap = new GameMap(groundFactory, ancientWoodsMap);
         world.addGameMap(ancientWoodsGameMap);
+        mapList.add(ancientWoodsGameMap);
 
         SunnyWeather sunnyWeather = new SunnyWeather();
 
@@ -165,6 +172,7 @@ public class Application {
         );
         GameMap roomGameMap = new GameMap(groundFactory, roomMap);
         world.addGameMap(roomGameMap);
+        mapList.add(roomGameMap);
 
         // Adding the bushes and huts to the Room
         roomGameMap.at(30, 2).setGround(new Bush(sunnyWeather));
@@ -181,7 +189,7 @@ public class Application {
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
         // Add the boss to the room
-        roomGameMap.at(35,1).addActor(new Abxervyer(ancientWoodsGameMap, sunnyWeather));
+        roomGameMap.at(35,1).addActor(new Abxervyer(mapList, sunnyWeather));
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
@@ -195,7 +203,8 @@ public class Application {
 
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
-        world.addPlayer(player, gameMap.at(29, 5));
+        world.addPlayer(player, roomGameMap.at(25, 5));
+        roomGameMap.at(26,5).addItem(new OldKey());
         world.run();
     }
 }
