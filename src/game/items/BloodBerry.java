@@ -23,7 +23,7 @@ public class BloodBerry extends Item implements Sellable, Consumable {
     private static final int INCREASE_HEALTH_VALUE = 5;
     private static final int SELL_PRICE = 10;
 
-    /***
+    /**
      * Constructor.
      */
     public BloodBerry() {

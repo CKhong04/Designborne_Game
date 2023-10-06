@@ -7,7 +7,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import java.util.Random;
 
 /**
- * Class representing an abstract ground which is able to spawn different enemies..
+ * Class representing an abstract ground which is able to spawn different enemies.
  * Created by:
  * @author Laura Zhakupova
  * @author Carissa Khong
@@ -22,7 +22,7 @@ public abstract class SpawningGround extends Ground {
     private int chanceToSpawn;
 
     /**
-     * A constructor which takes chance to spawn as a parameter.
+     * Constructor
      *
      * @param chanceToSpawn chance to spawn in percentage.
      */

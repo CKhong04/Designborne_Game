@@ -79,11 +79,11 @@ public class Abxervyer extends Enemy {
         return super.findAction(map);
     }
 
-    /**
+    /** 
      * This allows the weather to be set to exhibit different characteristics.
      * @param newWeather The Weather being changed to
      */
-    public void setWeather(Weather newWeather) {
+    private void setWeather(Weather newWeather) {
         this.weather = newWeather;
     }
 

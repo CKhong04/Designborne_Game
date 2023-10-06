@@ -9,8 +9,6 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.enums.Status;
 
-import java.util.concurrent.ExecutionException;
-
 /**
  * An ability of a weapon to increase damage multiplier and hit rate.
  * Created by:
@@ -22,8 +20,8 @@ public class FocusAction extends Action {
     /**
      * Current weapon
      */
-    private WeaponItem weaponItem;
-    private int decreaseStaminaPercentage;
+    private final WeaponItem weaponItem;
+    private final int decreaseStaminaPercentage;
 
     /**
      * Constructor.

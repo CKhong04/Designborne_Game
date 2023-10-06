@@ -20,8 +20,8 @@ public class Bush extends SpawningGround implements AncientWoodEntity {
     private final Display display = new Display();
 
     /**
-     * This is the constructor for the Bush class.
-     * Bushes have a 30% chance of spawning an enemy each turn and are displayed with the character 'm' on the map.
+     * Constructor
+     * @param weather The weather of the AncientWoodMap.
      */
     public Bush(Weather weather) {
         super(NORMAL_CHANCE_TO_SPAWN,'m');

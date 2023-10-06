@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.positions.Location;
 
 /**
  * Interface that represents the GreatSlamCapable.
+ * @author Minh Nguyen
  */
 public interface GreatSlamCapable {
     /**
