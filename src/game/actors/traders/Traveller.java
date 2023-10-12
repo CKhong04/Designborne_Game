@@ -4,6 +4,8 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.BuyAction;
+import game.actions.TalkAction;
+import game.actors.traders.conversations.Talkable;
 import game.items.HealingVial;
 import game.items.RefreshingFlask;
 import game.weapons.Broadsword;
@@ -14,7 +16,7 @@ import game.weapons.GreatKnife;
  * Created by:
  * @author Laura Zhakupova
  */
-public class Traveller extends Trader {
+public class Traveller extends Trader implements Talkable {
 
     // Healing Vial price
     private static final int HEALING_VIAL_BUY_PRICE = 100;
@@ -53,6 +55,12 @@ public class Traveller extends Trader {
         list.add(new BuyAction(this, new Broadsword(),BROADSWORD_BUY_PRICE,BROADSWORD_BUY_SCAM_CHANCE));
         list.add(new BuyAction(this, new GreatKnife(),GREAT_KNIFE_BUY_PRICE));
 
+        list.add(new TalkAction(this));
+
         return list;
+    }
+
+    public String talked(){
+        return "";
     }
 }
