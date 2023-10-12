@@ -38,7 +38,7 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
         super("Forest Keeper", '8', HIT_POINTS);
         Utility.addItemByChance(this, DROP_VIAL_CHANCE, new HealingVial());
         Utility.addItemByChance(this,CHANCE_DROP_RUNE, new Rune(50));
-        this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
+        this.addCapability(Status.ABLE_TO_FOLLOW);
 
         this.weather = weather;
     }

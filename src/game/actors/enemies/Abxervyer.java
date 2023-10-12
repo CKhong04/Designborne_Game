@@ -46,7 +46,7 @@ public class Abxervyer extends Enemy {
 
         this.weather = sunnyWeather;
 
-        this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
+        this.addCapability(Status.ABLE_TO_FOLLOW);
         this.addCapability(Ability.NOT_HURT_BY_VOID); //Abxervyer will not be hurt if it steps on a void.
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(5000));
         this.gateToWoods = gateToWoods;

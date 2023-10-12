@@ -52,11 +52,13 @@ public abstract class Enemy extends Actor {
         if (!this.isConscious()){
             return new DeathAction();
         } else {
-            if (this.hasCapability(Status.RESIDENT_ANCIENT_WOODS)){
+            if (this.hasCapability(Status.ABLE_TO_FOLLOW)){
                 this.behaviours.put(0, new FollowBehaviour());
             }
             this.behaviours.put(1, new AttackBehaviour());
-            this.behaviours.put(2, new WanderBehaviour());
+            if (!this.hasCapability(Status.UNABLE_TO_MOVE)) {
+                this.behaviours.put(2, new WanderBehaviour());
+            }
             for (Behaviour behaviour : behaviours.values()) {
                 Action action = behaviour.getAction(this, map);
                 if(action != null)
