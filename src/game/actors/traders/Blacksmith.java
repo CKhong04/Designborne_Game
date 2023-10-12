@@ -2,9 +2,11 @@ package game.actors.traders;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
+import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import game.enums.Ability;
 
 public class Blacksmith extends Trader {
     /**
@@ -15,7 +17,5 @@ public class Blacksmith extends Trader {
      */
     public Blacksmith(String name, char displayChar) {
         super(name, displayChar);
-    }
-
-
+        this.addCapability(Ability.CAN_UPGRADE_ITEM);    }
 }
