@@ -176,7 +176,7 @@ public class Application {
 
         //Adding gates for access to the room
         Gate woodsToRoomGate = new Gate();
-        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room containing Abxervyer, the Forest Watcher."));
+        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room deep in the Woods."));
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
         //Add the new Overgrown Sanctuary game map
@@ -206,12 +206,17 @@ public class Application {
         overgrownSanctuaryGameMap.at(22, 9).setGround(new Bush(sunnyWeather));
 
         //Create the gate which Abxervyer will set once dead
-        Gate roomToWoodsGate = new Gate();
-        roomToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(45,3), "to the Ancient Woods."));
-        roomToWoodsGate.addMoveAction(new MoveActorAction(overgrownSanctuaryGameMap.at(31, 2), "to the Overgrown Sanctuary."));
+        Gate roomToOtherDestinationsGate = new Gate();
+        roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(45,3), "to the Ancient Woods."));
+        roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(overgrownSanctuaryGameMap.at(31, 2), "to the Overgrown Sanctuary."));
 
         // Add the boss to the room
-        roomGameMap.at(35,1).addActor(new Abxervyer(roomToWoodsGate, sunnyWeather));
+        roomGameMap.at(35,1).addActor(new Abxervyer(roomToOtherDestinationsGate, sunnyWeather));
+
+        //Add a gate from the sanctuary back to the room
+        Gate sanctuaryToRoomGate = new Gate();
+        sanctuaryToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13), "to the room deep in the Woods."));
+        overgrownSanctuaryGameMap.at(10, 4).setGround(sanctuaryToRoomGate);
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
