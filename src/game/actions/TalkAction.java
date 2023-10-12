@@ -14,7 +14,7 @@ public class TalkAction extends Action {
 
     @Override
     public String execute(Actor actor, GameMap map) {
-        return this.talkingActor.talked();
+        return this.talkingActor + ": " + this.talkingActor.talked(actor);
     }
 
     @Override

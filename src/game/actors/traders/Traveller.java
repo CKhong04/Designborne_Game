@@ -8,8 +8,11 @@ import game.actions.TalkAction;
 import game.actors.traders.conversations.Talkable;
 import game.items.HealingVial;
 import game.items.RefreshingFlask;
+import game.utilities.Utility;
 import game.weapons.Broadsword;
 import game.weapons.GreatKnife;
+
+import java.util.ArrayList;
 
 /**
  * Class representing a Traveller.
@@ -56,11 +59,25 @@ public class Traveller extends Trader implements Talkable {
         list.add(new BuyAction(this, new GreatKnife(),GREAT_KNIFE_BUY_PRICE));
 
         list.add(new TalkAction(this));
-
         return list;
     }
 
-    public String talked(){
-        return "";
+    public String talked(Actor player){
+        ArrayList<String> conversationArray = new ArrayList<>();
+        conversationArray.add("Of course, I will never give you up, valuable customer!");
+        conversationArray.add("I promise I will never let you down with the quality of the items that I sell.");
+        // other stuff
+
+        if (!player.hasCapability(Status.DEFEATED_ABXERVYER)){
+            conversationArray.add("You know the rules of this world, and so do I. Each area is ruled by a lord. Defeat the lord of this area, Abxervyer, and you may proceed to the next area.");
+        }
+
+        if (player.hasCapability(Status.DEFEATED_ABXERVYER) && (player.hasCapability(Status.HOLDS_GIANT_HAMMER))){
+            conversationArray.add("Congratulations on defeating the lord of this area. I noticed you still hold on to that hammer. Why don’t you sell it to me? We've known each other for so long. I can tell you probably don’t need that weapon any longer.");
+        } else if (player.hasCapability(Status.HOLDS_GIANT_HAMMER)){
+            conversationArray.add("Ooh, that’s a fascinating weapon you got there. I will pay a good price for it. You wouldn't get this price from any other guy.");
+        }
+
+        return Utility.getString(conversationArray);
     }
 }

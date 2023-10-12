@@ -1,5 +1,7 @@
 package game.actors.traders.conversations;
 
+import edu.monash.fit2099.engine.actors.Actor;
+
 public interface Talkable {
-    String talked();
+    String talked(Actor player);
 }

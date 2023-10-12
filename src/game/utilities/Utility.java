@@ -3,6 +3,7 @@ package game.utilities;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -53,5 +54,11 @@ public class Utility {
         } else {
             return originalPrice;
         }
+    }
+
+    public static String getString(ArrayList<String> array){
+        Random rand = new Random();
+        int stringPosition = rand.nextInt(array.size());
+        return array.get(stringPosition);
     }
 }
