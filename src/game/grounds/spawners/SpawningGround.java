@@ -51,7 +51,7 @@ public abstract class SpawningGround extends Ground {
      *
      * @param newChanceToSpawn the new chance to spawn
      */
-    public void updateChanceToSpawn(double newChanceToSpawn){
+    protected void updateChanceToSpawn(double newChanceToSpawn){
         chanceToSpawn = (int) newChanceToSpawn;
     }
 }

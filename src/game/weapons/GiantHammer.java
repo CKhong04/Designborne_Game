@@ -77,7 +77,7 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
             actions.add(getGreatSlamAction(otherActor, location));
         }
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
-            actions.add(new SellAction(otherActor, this, SELL_PRICE));
+            actions.add(new SellAction(otherActor, this));
         }
         return actions;
     }
