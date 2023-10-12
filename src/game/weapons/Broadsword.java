@@ -7,10 +7,12 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
 import game.actions.SellAction;
+import game.actions.UpgradeAction;
 import game.enums.Ability;
 import game.enums.Status;
 import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Sellable;
+import game.items.itemproperties.Upgradable;
 import game.utilities.Utility;
 import game.weapons.skills.FocusCapable;
 import game.weapons.skills.FocusAction;
@@ -22,7 +24,7 @@ import game.weapons.skills.FocusAction;
  * Modified by:
  * Khoi Nguyen, Carissa Khong
  */
-public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable {
+public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable, Upgradable {
     /**
      * The turn counter.
      */
@@ -30,7 +32,7 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     /**
      * Normal damage for this weapon.
      */
-    private static final int DAMAGE = 110;
+    private static int DAMAGE = 110;
     /**
      * Normal hit rate of this weapon.
      */
@@ -55,6 +57,9 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
      * The sell price of this weapon.
      */
     private static final int SELL_PRICE = 100;
+
+    private static final int UPGRADE_PRICE = 1000;
+
     private final Display display = new Display();
 
     /**
@@ -157,6 +162,9 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
             actions.add(new SellAction(otherActor, this, SELL_PRICE));
         }
+        if (otherActor.hasCapability(Ability.CAN_UPGRADE_ITEM)) {
+            actions.add(new UpgradeAction(this, UPGRADE_PRICE));
+        }
         return actions;
     }
 
@@ -189,5 +197,11 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
         }
         actor.deductBalance(buyPrice);
         return buyPrice;
+    }
+
+    @Override
+    public void upgrade(Actor actor) {
+        actor.deductBalance(UPGRADE_PRICE);
+        DAMAGE += 10;
     }
 }

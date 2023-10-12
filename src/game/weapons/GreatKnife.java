@@ -2,14 +2,18 @@ package game.weapons;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
+import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
 import game.actions.SellAction;
+import game.actions.UpgradeAction;
 import game.enums.Ability;
 import game.enums.Status;
 import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Sellable;
+import game.items.itemproperties.Upgradable;
 import game.utilities.Utility;
 import game.weapons.skills.StabAndStepAction;
 import game.weapons.skills.StabAndStepCapable;
@@ -19,7 +23,7 @@ import game.weapons.skills.StabAndStepCapable;
  * Created by:
  * @author Minh Nguyen
  */
-public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable {
+public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable, Upgradable {
     /**
      * The damage to this weapon.
      */
@@ -27,7 +31,7 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
     /**
      * The hit rate of this weapon.
      */
-    private static final int HIT_RATE = 70;
+    private static int HIT_RATE = 70;
     /**
      * The stamina decrease percentage of this weapon.
      */
@@ -40,6 +44,11 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
      * The sell scam chance of this weapon.
      */
     private static final int SELL_SCAM_CHANCE = 10;
+
+    private static final int UPGRADE_PRICE = 2000;
+
+    private int staminaRecoveryRate = 1;
+
 
     /**
      * Constructor.
@@ -76,6 +85,9 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         }
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
             actions.add(new SellAction(otherActor, this, SELL_PRICE));
+        }
+        if (otherActor.hasCapability(Ability.CAN_UPGRADE_ITEM)){
+            actions.add(new UpgradeAction(this, UPGRADE_PRICE));
         }
         return actions;
     }
@@ -117,5 +129,14 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         trader.addBalance(newPrice);
         actor.addItemToInventory(this);
         return newPrice;
+    }
+
+
+    @Override
+    public void upgrade(Actor actor) {
+        actor.deductBalance(UPGRADE_PRICE);
+        int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
+        int recoverPercentage = staminaRecoveryRate * maxStamina / 100;
+        HIT_RATE += recoverPercentage;
     }
 }
