@@ -179,9 +179,36 @@ public class Application {
         woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room containing Abxervyer, the Forest Watcher."));
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
+        //Add the new Overgrown Sanctuary game map
+        List<String> overgrownSanctuaryMap = Arrays.asList(
+        "++++.....++++........++++~~~~~.......~~~..........",
+        "++++......++.........++++~~~~.........~...........",
+        "+++............~~~...+++++~~.......+++............",
+        "..............~~~...++++++......++++++............",
+        "................~~.++++........++++++~~...........",
+        "..............~~~..+++.........+++..~~~...........",
+        "..................+++..........++...~~~...........",
+        "~~~...........................~~~..~~~~.....~~~~..",
+        "~~~~............+++..........~~~~~~~~~~.......~~..",
+        "~~~~............+++.........~~~~~~~~~~~~..........",
+        "++~..............+++.......+~~........~~..........",
+        "+++..............+++......+++..........~~.........",
+        "+++..............+++......+++..........~~.........",
+        "~~~..............+++......+++..........~~~........",
+        "~~~~.............+++......+++..........~~~........"
+        );
+        GameMap overgrownSanctuaryGameMap = new GameMap(groundFactory, overgrownSanctuaryMap);
+        world.addGameMap(overgrownSanctuaryGameMap);
+
+        //Add the relevant spawning grounds
+        overgrownSanctuaryGameMap.at(8, 12).setGround(new HollowSoldierGraveyard());
+        overgrownSanctuaryGameMap.at(42, 5).setGround(new Hut(sunnyWeather));
+        overgrownSanctuaryGameMap.at(22, 9).setGround(new Bush(sunnyWeather));
+
         //Create the gate which Abxervyer will set once dead
         Gate roomToWoodsGate = new Gate();
         roomToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(45,3), "to the Ancient Woods."));
+        roomToWoodsGate.addMoveAction(new MoveActorAction(overgrownSanctuaryGameMap.at(31, 2), "to the Overgrown Sanctuary."));
 
         // Add the boss to the room
         roomGameMap.at(35,1).addActor(new Abxervyer(roomToWoodsGate, sunnyWeather));
