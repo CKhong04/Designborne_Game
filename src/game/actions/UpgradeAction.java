@@ -28,6 +28,6 @@ public class UpgradeAction extends Action {
 
     @Override
     public String menuDescription(Actor actor) {
-        return "Upgrade " + this.item + "for" + upgradePrice + "runes";
+        return "Upgrade " + this.item + " for " + upgradePrice + " runes";
     }
 }
