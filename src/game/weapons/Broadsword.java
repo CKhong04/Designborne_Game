@@ -33,6 +33,8 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
      * Normal damage for this weapon.
      */
     private static int DAMAGE = 110;
+
+    private final static int DEFAULT_DAMAGE = 110;
     /**
      * Normal hit rate of this weapon.
      */
@@ -58,6 +60,8 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
      */
     private static final int SELL_PRICE = 100;
 
+    private static float DAMAGE_MULTIPLIER;
+
     private static final int UPGRADE_PRICE = 1000;
 
     private final Display display = new Display();
@@ -67,6 +71,7 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
      */
     public Broadsword() {
         super("Broadsword", '1', DAMAGE, "slashes", HIT_RATE);
+        DAMAGE_MULTIPLIER = DEFAULT_DAMAGE_MULTIPLIER;
     }
 
     /**
@@ -85,15 +90,15 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
 
         if (this.hasCapability(Status.FOCUS_SKILL)){
             if (this.turnCounter > 0){
-                float newDamageMultiplier = DEFAULT_DAMAGE_MULTIPLIER + DEFAULT_DAMAGE_MULTIPLIER * SKILL_DAMAGE_MULTIPLIER / 100;
+                DAMAGE_MULTIPLIER = DEFAULT_DAMAGE_MULTIPLIER + DEFAULT_DAMAGE_MULTIPLIER * SKILL_DAMAGE_MULTIPLIER / 100;
 
-                this.updateDamageMultiplier(newDamageMultiplier);
+                this.updateDamageMultiplier(DAMAGE_MULTIPLIER);
                 this.updateHitRate(NEW_HIT_RATE);
-                display.println("Focus skill turns left: " + turnCounter);
+                display.println("Focs skill turns left: " + turnCounter);
                 this.turnCounter -=1;
             } else if (this.turnCounter == 0) {
                 super.updateHitRate(HIT_RATE);
-                super.updateDamageMultiplier(DEFAULT_DAMAGE_MULTIPLIER);
+                DAMAGE_MULTIPLIER = DEFAULT_DAMAGE_MULTIPLIER;
 
                 this.removeCapability(Status.FOCUS_SKILL);
                 display.println("The Broadsword's focus skill has been deactivated");
@@ -200,8 +205,18 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     }
 
     @Override
+    public int damage() {
+        if (DAMAGE_MULTIPLIER > DEFAULT_DAMAGE_MULTIPLIER){
+            DAMAGE =  Math.round(DEFAULT_DAMAGE * DAMAGE_MULTIPLIER);
+        }
+        return DAMAGE;
+    }
+
+
+    @Override
     public void upgrade(Actor actor) {
         actor.deductBalance(UPGRADE_PRICE);
         DAMAGE += 10;
     }
+
 }

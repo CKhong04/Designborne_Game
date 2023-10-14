@@ -199,6 +199,7 @@ public class Application {
 
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
+        player.addBalance(1000);
 
         Blacksmith blacksmith = new Blacksmith("Blacksmith", 'B');
         world.addPlayer(blacksmith, gameMap.at(27, 6) );
