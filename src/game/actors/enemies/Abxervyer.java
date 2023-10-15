@@ -7,6 +7,8 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.actors.traders.conversations.TalkableEntity;
+import game.actors.traders.conversations.TalkingMaterial;
 import game.enums.Ability;
 import game.enums.Status;
 import game.grounds.Gate;
@@ -21,7 +23,7 @@ import game.weathers.Weather;
  * Created By:
  * @author Ishita Gupta, Carissa Khong, Minh Nguyen, Laura Zhakupova
  */
-public class Abxervyer extends Enemy {
+public class Abxervyer extends Enemy implements TalkingMaterial {
     /**
      * Hit points of Abxervyer.
      */
@@ -32,7 +34,8 @@ public class Abxervyer extends Enemy {
      */
     private int count = 0;
     private Weather weather;
-    private Gate gateToWoods;
+    private final Gate gateToWoods;
+    private final TalkableEntity talkableEntity;
 
     /**
      * The constructor is taken from the Enemy abstract class. For Abxervyer, this gives the name of the enemy, which is
@@ -41,7 +44,7 @@ public class Abxervyer extends Enemy {
      * Abxervyer has 5000 runes in its inventory, which it will drop when killed.
      * @param gateToWoods The gate which appears when Abxervyer dies.
      */
-    public Abxervyer(Gate gateToWoods, Weather sunnyWeather) {
+    public Abxervyer(Gate gateToWoods, Weather sunnyWeather, TalkableEntity talkableEntity) {
         super("Abxervyer, the Forest Watcher", 'Y', HIT_POINTS);
 
         this.weather = sunnyWeather;
@@ -50,6 +53,9 @@ public class Abxervyer extends Enemy {
         this.addCapability(Ability.NOT_HURT_BY_VOID); //Abxervyer will not be hurt if it steps on a void.
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(5000));
         this.gateToWoods = gateToWoods;
+
+        this.talkableEntity = talkableEntity;
+        this.talkableEntity.addObserver(this);
     }
 
     /**
@@ -117,5 +123,14 @@ public class Abxervyer extends Enemy {
         int hitRate = 25;
         String verb = "smashes";
         return new IntrinsicWeapon(damage, verb, hitRate);
+    }
+
+    @Override
+    public String getPhrase() {
+        if (!this.isConscious()) {
+            return "Somebody once told me that a sacred tree rules the land beyond the ancient woods until this day.";
+        }
+
+        return "Beyond the burial ground, you’ll come across the ancient woods ruled by Abxervyer. Use my creation to slay them and proceed further!";
     }
 }

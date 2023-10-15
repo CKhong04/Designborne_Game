@@ -1,12 +1,16 @@
 package game.actors.traders;
 
-import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
+import game.actors.traders.conversations.TalkingMaterial;
+import game.actors.traders.conversations.TalkableEntity;
 
-public class Blacksmith extends Trader {
+import java.util.ArrayList;
+
+public class Blacksmith extends Trader implements TalkableEntity {
+    public ArrayList<TalkingMaterial> talkingMaterials = new ArrayList<>();
+
     /**
      * A constructor which accepts name and a display character.
      *
@@ -17,5 +21,20 @@ public class Blacksmith extends Trader {
         super(name, displayChar);
     }
 
+    @Override
+    public void addObserver(TalkingMaterial talkingMaterial) {
+        talkingMaterials.add(talkingMaterial);
+    }
 
+    @Override
+    public void removeObserver(TalkingMaterial talkingMaterial) {
+        talkingMaterials.remove(talkingMaterial);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (TalkingMaterial talkingMaterial : talkingMaterials) {
+            talkingMaterial.getPhrase();
+        }
+    }
 }
