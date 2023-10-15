@@ -4,17 +4,21 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.BuyAction;
+import game.actors.traders.conversations.TalkableEntity;
+import game.actors.traders.conversations.TalkingMaterial;
 import game.items.HealingVial;
 import game.items.RefreshingFlask;
 import game.weapons.Broadsword;
 import game.weapons.GreatKnife;
+
+import java.util.ArrayList;
 
 /**
  * Class representing a Traveller.
  * Created by:
  * @author Laura Zhakupova
  */
-public class Traveller extends Trader {
+public class Traveller extends Trader implements TalkableEntity {
 
     // Healing Vial price
     private static final int HEALING_VIAL_BUY_PRICE = 100;
@@ -29,11 +33,31 @@ public class Traveller extends Trader {
     // Great Knife price
     private static final int GREAT_KNIFE_BUY_PRICE = 300;
 
+    public ArrayList<TalkingMaterial> talkingMaterials = new ArrayList<>();
+
+
     /**
      * The constructor of the Traveller class.
      */
     public Traveller() {
         super("Traveller", 'ඞ');
+    }
+
+    @Override
+    public void addObserver(TalkingMaterial talkingMaterial) {
+        talkingMaterials.add(talkingMaterial);
+    }
+
+    @Override
+    public void removeObserver(TalkingMaterial talkingMaterial) {
+        talkingMaterials.remove(talkingMaterial);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (TalkingMaterial talkingMaterial : talkingMaterials) {
+            talkingMaterial.getPhrase();
+        }
     }
 
     /**
@@ -51,7 +75,7 @@ public class Traveller extends Trader {
         list.add(new BuyAction(this, new HealingVial(),HEALING_VIAL_BUY_PRICE));
         list.add(new BuyAction(this, new RefreshingFlask(),REFRESHING_FLASK_BUY_PRICE));
         list.add(new BuyAction(this, new Broadsword(),BROADSWORD_BUY_PRICE,BROADSWORD_BUY_SCAM_CHANCE));
-        list.add(new BuyAction(this, new GreatKnife(),GREAT_KNIFE_BUY_PRICE));
+        list.add(new BuyAction(this, new GreatKnife(this),GREAT_KNIFE_BUY_PRICE));
 
         return list;
     }

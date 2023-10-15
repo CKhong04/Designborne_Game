@@ -116,6 +116,10 @@ public class Application {
         GameMap ancientWoodsGameMap = new GameMap(groundFactory, ancientWoodsMap);
         world.addGameMap(ancientWoodsGameMap);
 
+        // Add the blacksmith
+        Blacksmith blacksmith = new Blacksmith();
+        ancientWoodsGameMap.at(27, 6).addActor(blacksmith);
+
         SunnyWeather sunnyWeather = new SunnyWeather();
 
         //Add the bushes and huts to the Ancient Woods map
@@ -185,7 +189,7 @@ public class Application {
         roomToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(45,3), "to the Ancient Woods."));
 
         // Add the boss to the room
-        roomGameMap.at(35,1).addActor(new Abxervyer(roomToWoodsGate, sunnyWeather));
+        roomGameMap.at(35,1).addActor(new Abxervyer(roomToWoodsGate, sunnyWeather, blacksmith));
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
@@ -200,9 +204,7 @@ public class Application {
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
 
-        Blacksmith blacksmith = new Blacksmith("Blacksmith", 'B');
-        world.addPlayer(blacksmith, gameMap.at(27, 6) );
-        world.addPlayer(player, gameMap.at(29, 5));
+        world.addPlayer(player, ancientWoodsGameMap.at(27, 5));
         world.run();
     }
 }
