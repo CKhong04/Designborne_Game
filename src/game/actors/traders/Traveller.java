@@ -35,7 +35,6 @@ public class Traveller extends Trader implements TalkableEntity {
 
     public ArrayList<TalkingMaterial> talkingMaterials = new ArrayList<>();
 
-
     /**
      * The constructor of the Traveller class.
      */
@@ -44,20 +43,22 @@ public class Traveller extends Trader implements TalkableEntity {
     }
 
     @Override
-    public void addObserver(TalkingMaterial talkingMaterial) {
+    public void addTalkingMaterial(TalkingMaterial talkingMaterial) {
         talkingMaterials.add(talkingMaterial);
     }
 
     @Override
-    public void removeObserver(TalkingMaterial talkingMaterial) {
+    public void removeTalkingMaterial(TalkingMaterial talkingMaterial) {
         talkingMaterials.remove(talkingMaterial);
     }
 
     @Override
-    public void notifyObservers() {
+    public String talked() {
         for (TalkingMaterial talkingMaterial : talkingMaterials) {
             talkingMaterial.getPhrase();
         }
+
+        return null;
     }
 
     /**

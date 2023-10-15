@@ -52,7 +52,7 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         super("Great Knife", '>', DAMAGE, "slashes", HIT_RATE);
 
         this.talkableEntity = talkableEntity;
-        this.talkableEntity.addObserver(this);
+        this.talkableEntity.addTalkingMaterial(this);
     }
 
     /**
@@ -77,7 +77,7 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
     @Override
     public void tick(Location currentLocation) {
         isHolding = false;
-        this.talkableEntity.removeObserver(this);
+        this.talkableEntity.removeTalkingMaterial(this);
     }
 
     @Override

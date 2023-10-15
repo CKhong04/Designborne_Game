@@ -55,7 +55,7 @@ public class Abxervyer extends Enemy implements TalkingMaterial {
         this.gateToWoods = gateToWoods;
 
         this.talkableEntity = talkableEntity;
-        this.talkableEntity.addObserver(this);
+        this.talkableEntity.addTalkingMaterial(this);
     }
 
     /**
