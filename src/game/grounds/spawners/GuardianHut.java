@@ -14,7 +14,7 @@ public class GuardianHut extends SpawningGround{
     }
 
     /**
-     * Calls the spawnEnemy method of the Enemy class, allowing a new EldentreeGuardian to be spawned.
+     * Calls the spawnEnemy method of the SpawningGround class, allowing a new EldentreeGuardian to be spawned.
      * @param location The location of the Hut.
      */
     @Override

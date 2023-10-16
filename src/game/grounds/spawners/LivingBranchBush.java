@@ -13,7 +13,7 @@ public class LivingBranchBush extends SpawningGround{
     }
 
     /**
-     * The method which spawns a new enemy, taken from the Enemy super class.
+     * The method which spawns a new enemy, taken from the SpawningGround super class.
      * @param location The location of the Bush.
      */
     @Override
