@@ -14,10 +14,7 @@ import game.actors.Player;
 import game.actors.enemies.Abxervyer;
 import game.actors.traders.Traveller;
 import game.grounds.*;
-import game.grounds.spawners.Bush;
-import game.grounds.spawners.HollowSoldierGraveyard;
-import game.grounds.spawners.Hut;
-import game.grounds.spawners.WanderingUndeadGraveyard;
+import game.grounds.spawners.*;
 import game.items.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
@@ -118,10 +115,10 @@ public class Application {
         SunnyWeather sunnyWeather = new SunnyWeather();
 
         //Add the bushes and huts to the Ancient Woods map
-        ancientWoodsGameMap.at(11, 3).setGround(new Bush(sunnyWeather));
+        ancientWoodsGameMap.at(11, 3).setGround(new RedWolfBush(sunnyWeather));
 
-        ancientWoodsGameMap.at(46,9).setGround(new Hut(sunnyWeather));
-        ancientWoodsGameMap.at(8, 7).setGround(new Hut(sunnyWeather));
+        ancientWoodsGameMap.at(46,9).setGround(new ForestKeeperHut(sunnyWeather));
+        ancientWoodsGameMap.at(8, 7).setGround(new ForestKeeperHut(sunnyWeather));
 
         ancientWoodsGameMap.at(47,1).addItem(new BloodBerry());
 
@@ -166,10 +163,10 @@ public class Application {
         world.addGameMap(roomGameMap);
 
         // Adding the bushes and huts to the Room
-        roomGameMap.at(30, 2).setGround(new Bush(sunnyWeather));
+        roomGameMap.at(30, 2).setGround(new RedWolfBush(sunnyWeather));
 
-        roomGameMap.at(19,10).setGround(new Hut(sunnyWeather));
-        roomGameMap.at(2, 11).setGround(new Hut(sunnyWeather));
+        roomGameMap.at(19,10).setGround(new ForestKeeperHut(sunnyWeather));
+        roomGameMap.at(2, 11).setGround(new ForestKeeperHut(sunnyWeather));
 
         Item giantHammer = new GiantHammer();
         roomGameMap.at(27, 6).addItem(giantHammer);
@@ -202,8 +199,8 @@ public class Application {
 
         //Add the relevant spawning grounds
         overgrownSanctuaryGameMap.at(8, 12).setGround(new HollowSoldierGraveyard());
-        overgrownSanctuaryGameMap.at(42, 5).setGround(new Hut(sunnyWeather));
-        overgrownSanctuaryGameMap.at(22, 9).setGround(new Bush(sunnyWeather));
+        overgrownSanctuaryGameMap.at(42, 5).setGround(new GuardianHut());
+        overgrownSanctuaryGameMap.at(22, 9).setGround(new LivingBranchBush());
 
         //Create the gate which Abxervyer will set once dead
         Gate roomToOtherDestinationsGate = new Gate();
