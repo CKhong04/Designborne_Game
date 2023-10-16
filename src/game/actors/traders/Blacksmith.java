@@ -1,59 +1,57 @@
 package game.actors.traders;
 
-import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.ListenAction;
-import game.actors.traders.conversations.TalkingMaterial;
-import game.actors.traders.conversations.TalkableEntity;
+import game.actors.traders.conversations.Monologue;
+import game.actors.traders.conversations.Talkable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-public class Blacksmith extends Trader implements TalkableEntity {
-    private final ArrayList<TalkingMaterial> talkingMaterials = new ArrayList<>();
-    private final ArrayList<String> phrases = new ArrayList<>();
+public class Blacksmith extends Trader implements Talkable {
     private final Random rand = new Random();
+    /**
+     * The list of monologues that the blacksmith can speak.
+     */
+    private final List<Monologue> monologues;
 
     /**
      * Constructor
      */
-    public Blacksmith() {
+    public Blacksmith(List<Monologue> monologues) {
         super("Blacksmith", 'B');
+
+        this.monologues = monologues;
     }
 
-    @Override
-    public void addTalkingMaterial(TalkingMaterial talkingMaterial) {
-        talkingMaterials.add(talkingMaterial);
-    }
-
-    @Override
-    public void removeTalkingMaterial(TalkingMaterial talkingMaterial) {
-        talkingMaterials.remove(talkingMaterial);
-    }
-
+    /**
+     * Get the monologue to be spoken.
+     * @return the monologue to be spoken.
+     */
     @Override
     public String talked() {
-        phrases.add("I used to be an adventurer like you, but then …. Nevermind, let’s get back to smithing.");
-        phrases.add("It’s dangerous to go alone. Take my creation with you on your adventure!");
-        phrases.add("Ah, it’s you. Let’s get back to make your weapons stronger.");
+        List<String> availablePhrases = new ArrayList<>();
 
-        for (TalkingMaterial talkingMaterial : talkingMaterials) {
-            phrases.add(talkingMaterial.getPhrase());
+        for (Monologue monologue : monologues) {
+            if (monologue.canBeSpoken()) {
+                String phrase = monologue.getPhrase();
+                availablePhrases.add(phrase);
+            }
         }
 
-        return phrases.get(rand.nextInt(phrases.size()));
+        return availablePhrases.get(rand.nextInt(availablePhrases.size()));
     }
 
-    @Override
-    public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
-        phrases.clear();
-
-        return super.playTurn(actions, lastAction, map, display);
-    }
-
+    /**
+     * Get the list of allowable actions the blacksmith can perform.
+     * @param otherActor the Actor that might be performing attack
+     * @param direction  String representing the direction of the other Actor
+     * @param map        current GameMap
+     * @return the list of allowable actions the blacksmith can perform.
+     */
     @Override
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList actions = super.allowableActions(otherActor, direction, map);
