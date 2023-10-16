@@ -6,7 +6,6 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
 import game.actions.AttackAction;
 import game.actions.SellAction;
-import game.actors.traders.conversations.TalkingMaterial;
 import game.enums.Ability;
 import game.enums.Status;
 import game.items.itemproperties.Buyable;
@@ -14,14 +13,13 @@ import game.items.itemproperties.Sellable;
 import game.utilities.Utility;
 import game.weapons.skills.StabAndStepAction;
 import game.weapons.skills.StabAndStepCapable;
-import game.actors.traders.conversations.TalkableEntity;
 
 /**
  * Class representing a Great Knife.
  * Created by:
  * @author Minh Nguyen
  */
-public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable, TalkingMaterial {
+public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable {
     /**
      * The damage to this weapon.
      */
@@ -42,17 +40,14 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
      * The sell scam chance of this weapon.
      */
     private static final int SELL_SCAM_CHANCE = 10;
-    private final TalkableEntity talkableEntity;
-    private boolean isHolding = false;
 
     /**
      * Constructor.
      */
-    public GreatKnife(TalkableEntity talkableEntity) {
+    public GreatKnife() {
         super("Great Knife", '>', DAMAGE, "slashes", HIT_RATE);
 
-        this.talkableEntity = talkableEntity;
-        this.talkableEntity.addTalkingMaterial(this);
+        this.addCapability(Status.HOLDING_GREAT_KNIFE);
     }
 
     /**
@@ -66,23 +61,8 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
     }
 
     @Override
-    public String getPhrase() {
-        if (isHolding) {
-            return "Hey now, that’s a weapon from a foreign land that I have not seen for so long. I can upgrade it for you if you wish.";
-        }
-
-        return null;
-    }
-
-    @Override
     public void tick(Location currentLocation) {
-        isHolding = false;
-        this.talkableEntity.removeTalkingMaterial(this);
-    }
-
-    @Override
-    public void tick(Location currentLocation, Actor actor) {
-        isHolding = true;
+        this.removeCapability(Status.HOLDING_GREAT_KNIFE);
     }
 
     /**

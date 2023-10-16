@@ -3,11 +3,11 @@ package game.actions;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.actors.traders.conversations.TalkableEntity;
+import game.actors.traders.conversations.Talkable;
 
 public class ListenAction extends Action {
-    private final TalkableEntity talkableEntity;
-    public ListenAction(TalkableEntity talkableEntity) {
+    private final Talkable talkableEntity;
+    public ListenAction(Talkable talkableEntity) {
         this.talkableEntity = talkableEntity;
     }
 
