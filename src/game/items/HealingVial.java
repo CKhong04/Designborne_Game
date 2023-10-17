@@ -7,23 +7,28 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.ConsumeAction;
 import game.actions.SellAction;
+import game.actions.UpgradeAction;
 import game.enums.Ability;
 import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Consumable;
 import game.items.itemproperties.Sellable;
+import game.items.itemproperties.Upgradable;
 import game.utilities.Utility;
 
 /**
  * Class representing a healing vial.
  * Created by:
  * @author Laura Zhakupova
- * Modified by:
- * @author Ishita Gupta
+ * Modified by: Ishita Gupta
  */
-public class HealingVial extends Item implements Sellable, Buyable, Consumable {
+public class HealingVial extends Item implements Sellable, Buyable, Consumable, Upgradable {
     //Private attributes
-    private static final int INCREASE_HEALTH_VALUE = 10;
+    private static int INCREASE_HEALTH_VALUE = 10;
     private static final int SELL_PRICE = 35;
+
+    private static final int UPGRADE_PRICE = 250;
+
+    private static boolean UPGRADE_HAPPENED = false;
 
     /**
      * Constructor.
@@ -58,6 +63,9 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable {
         ActionList actions = super.allowableActions(otherActor, location);
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
             actions.add(new SellAction(otherActor, this, SELL_PRICE));
+        }
+        if (!UPGRADE_HAPPENED && otherActor.hasCapability(Ability.CAN_UPGRADE_ITEM)){
+            actions.add(new UpgradeAction(this, UPGRADE_PRICE));
         }
         return actions;
     }
@@ -104,5 +112,12 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable {
         int updateValue = actor.getAttributeMaximum(baseActorAttributes) * INCREASE_HEALTH_VALUE / 100;
         actor.heal(updateValue);
         actor.removeItemFromInventory(this);
+    }
+
+    @Override
+    public void upgrade(Actor actor) {
+        UPGRADE_HAPPENED = true;
+        actor.deductBalance(UPGRADE_PRICE);
+       INCREASE_HEALTH_VALUE = 80;
     }
 }

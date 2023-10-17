@@ -12,6 +12,7 @@ import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.World;
 import game.actors.Player;
 import game.actors.enemies.Abxervyer;
+import game.actors.traders.Blacksmith;
 import game.actors.traders.Traveller;
 import game.grounds.*;
 import game.grounds.spawners.Bush;
@@ -198,6 +199,10 @@ public class Application {
 
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
+        player.addBalance(1000);
+
+        Blacksmith blacksmith = new Blacksmith("Blacksmith", 'B');
+        world.addPlayer(blacksmith, gameMap.at(27, 6) );
         world.addPlayer(player, gameMap.at(29, 5));
         world.run();
     }

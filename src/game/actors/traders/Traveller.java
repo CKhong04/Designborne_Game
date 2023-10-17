@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.BuyAction;
+import game.enums.Ability;
 import game.items.HealingVial;
 import game.items.RefreshingFlask;
 import game.weapons.Broadsword;
@@ -34,6 +35,7 @@ public class Traveller extends Trader {
      */
     public Traveller() {
         super("Traveller", 'ඞ');
+        this.addCapability(Ability.CAN_BE_SOLD_TO);
     }
 
     /**

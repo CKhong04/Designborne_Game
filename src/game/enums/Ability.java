@@ -7,5 +7,6 @@ package game.enums;
 public enum Ability {
     CANNOT_ACCESS_FLOOR,
     NOT_HURT_BY_VOID,
-    CAN_BE_SOLD_TO
+    CAN_BE_SOLD_TO,
+    CAN_UPGRADE_ITEM
 }
