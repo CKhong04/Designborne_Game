@@ -6,12 +6,11 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.enums.Ability;
-import game.enums.Status;
 import game.items.BloodBerry;
 import game.items.Rune;
 import game.utilities.Utility;
 
-public class LivingBranch extends Enemy{
+public class LivingBranch extends Enemy {
 
     private static final int DAMAGE = 250;
     private static final int HIT_POINTS = 75;
@@ -27,7 +26,6 @@ public class LivingBranch extends Enemy{
         Utility.addItemByChance(this, DROP_BLOODBERRY_CHANCE, new BloodBerry());
         Utility.addItemByChance(this, DROP_RUNES_CHANCE, new Rune(500));
         this.addCapability(Ability.NOT_HURT_BY_VOID);
-        this.addCapability(Status.UNABLE_TO_MOVE);
     }
 
     @Override

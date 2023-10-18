@@ -5,6 +5,8 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.actors.enemies.abilities.MoveCapable;
+import game.behaviours.WanderBehaviour;
 import game.items.OldKey;
 import game.items.Rune;
 import game.items.HealingVial;
@@ -16,7 +18,7 @@ import game.utilities.Utility;
  * @author
  * Modified by: Laura Zhakupova, Ishita Gupta
  */
-public class WanderingUndead extends Enemy {
+public class WanderingUndead extends Enemy implements MoveCapable {
     // Private attributes
     private static final int CHANCE_DROP_KEY = 25;
     private static final int CHANCE_DROP_HEALING_VIAL = 20;
@@ -44,6 +46,7 @@ public class WanderingUndead extends Enemy {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+        canMove();
         return super.findAction(map);
     }
 
@@ -60,4 +63,8 @@ public class WanderingUndead extends Enemy {
     }
 
 
+    @Override
+    public void canMove() {
+        this.behaviours.put(2, new WanderBehaviour());
+    }
 }

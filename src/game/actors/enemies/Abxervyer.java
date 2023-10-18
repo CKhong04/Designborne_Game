@@ -7,6 +7,10 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.actors.enemies.abilities.FollowCapable;
+import game.actors.enemies.abilities.MoveCapable;
+import game.behaviours.FollowBehaviour;
+import game.behaviours.WanderBehaviour;
 import game.enums.Ability;
 import game.enums.Status;
 import game.grounds.Gate;
@@ -21,7 +25,7 @@ import game.weathers.Weather;
  * Created By:
  * @author Ishita Gupta, Carissa Khong, Minh Nguyen, Laura Zhakupova
  */
-public class Abxervyer extends Enemy {
+public class Abxervyer extends Enemy implements MoveCapable, FollowCapable {
     /**
      * Hit points of Abxervyer.
      */
@@ -46,7 +50,6 @@ public class Abxervyer extends Enemy {
 
         this.weather = sunnyWeather;
 
-        this.addCapability(Status.ABLE_TO_FOLLOW);
         this.addCapability(Ability.NOT_HURT_BY_VOID); //Abxervyer will not be hurt if it steps on a void.
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(5000));
         this.gateToWoods = gateToWoods;
@@ -74,6 +77,8 @@ public class Abxervyer extends Enemy {
             setWeather(new RainyWeather());
             weather.notifyEntities();
         }
+        canFollow();
+        canMove();
 
         count ++;
         return super.findAction(map);
@@ -117,5 +122,15 @@ public class Abxervyer extends Enemy {
         int hitRate = 25;
         String verb = "smashes";
         return new IntrinsicWeapon(damage, verb, hitRate);
+    }
+
+    @Override
+    public void canFollow() {
+        this.behaviours.put(0, new FollowBehaviour());
+    }
+
+    @Override
+    public void canMove() {
+        this.behaviours.put(2, new WanderBehaviour());
     }
 }
