@@ -13,7 +13,8 @@ import game.items.HealingVial;
 import game.utilities.Utility;
 
 /**
- * Class representing the Wandering Undead.
+ * Class representing the Wandering Undead. The Wandering Undead can move around the area and therefore implements
+ * MoveCapable.
  * Created by:
  * @author
  * Modified by: Laura Zhakupova, Ishita Gupta
@@ -62,7 +63,9 @@ public class WanderingUndead extends Enemy implements MoveCapable {
         return new IntrinsicWeapon(damage, verb);
     }
 
-
+    /**
+     * canMove adds WanderBehaviour to the Wandering Undead's behaviour HashMap.
+     */
     @Override
     public void canMove() {
         this.behaviours.put(2, new WanderBehaviour());

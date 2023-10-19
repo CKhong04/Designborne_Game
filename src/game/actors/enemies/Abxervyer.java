@@ -121,11 +121,17 @@ public class Abxervyer extends Enemy implements MoveCapable, FollowCapable {
         return new IntrinsicWeapon(damage, verb, hitRate);
     }
 
+    /**
+     * Allows the actor to add a FollowBehaviour to their behaviours HashMap, allowing it to follow a hostile player.
+     */
     @Override
     public void canFollow() {
         this.behaviours.put(0, new FollowBehaviour());
     }
 
+    /**
+     * Allows the actor to add a WanderBehaviour to their behaviours HashMap, allowing it to wander in the maps.
+     */
     @Override
     public void canMove() {
         this.behaviours.put(2, new WanderBehaviour());
