@@ -2,7 +2,6 @@ package game.weapons;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
@@ -13,7 +12,7 @@ import game.enums.Ability;
 import game.enums.Status;
 import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Sellable;
-import game.items.itemproperties.Upgradable;
+import game.items.itemproperties.Upgradeable;
 import game.utilities.Utility;
 import game.weapons.skills.StabAndStepAction;
 import game.weapons.skills.StabAndStepCapable;
@@ -23,7 +22,7 @@ import game.weapons.skills.StabAndStepCapable;
  * Created by:
  * @author Minh Nguyen
  */
-public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable, Upgradable {
+public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable, Upgradeable {
     /**
      * The damage to this weapon.
      */
