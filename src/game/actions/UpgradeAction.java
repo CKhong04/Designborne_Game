@@ -3,14 +3,14 @@ package game.actions;
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
-import game.items.itemproperties.Upgradable;
+import game.items.itemproperties.Upgradeable;
 
 public class UpgradeAction extends Action {
 
-    private final Upgradable item;
+    private final Upgradeable item;
     private final int upgradePrice;
 
-    public UpgradeAction(Upgradable item, int upgradePrice){
+    public UpgradeAction(Upgradeable item, int upgradePrice){
         this.item = item;
         this.upgradePrice = upgradePrice;
     }

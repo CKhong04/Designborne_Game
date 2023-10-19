@@ -12,7 +12,7 @@ import game.enums.Ability;
 import game.enums.Status;
 import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Sellable;
-import game.items.itemproperties.Upgradable;
+import game.items.itemproperties.Upgradeable;
 import game.utilities.Utility;
 import game.weapons.skills.FocusCapable;
 import game.weapons.skills.FocusAction;
@@ -24,7 +24,7 @@ import game.weapons.skills.FocusAction;
  * Modified by:
  * Khoi Nguyen, Carissa Khong
  */
-public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable, Upgradable {
+public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable, Upgradeable {
     /**
      * The turn counter.
      */
