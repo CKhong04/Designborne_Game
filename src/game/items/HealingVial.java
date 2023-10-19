@@ -13,6 +13,7 @@ import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Consumable;
 import game.items.itemproperties.Sellable;
 import game.items.itemproperties.Upgradeable;
+import game.respawn.RespawnEntity;
 import game.utilities.Utility;
 
 /**
@@ -21,7 +22,7 @@ import game.utilities.Utility;
  * @author Laura Zhakupova
  * Modified by: Ishita Gupta
  */
-public class HealingVial extends Item implements Sellable, Buyable, Consumable, Upgradeable {
+public class HealingVial extends Item implements Sellable, Buyable, Consumable, Upgradeable, RespawnEntity {
     //Private attributes
     private static int INCREASE_HEALTH_VALUE = 10;
     private static final int SELL_PRICE = 35;
@@ -29,6 +30,8 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
     private static final int UPGRADE_PRICE = 250;
 
     private static boolean UPGRADE_HAPPENED = false;
+
+    private Location LOCATION;
 
     /**
      * Constructor.
@@ -119,5 +122,15 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
         UPGRADE_HAPPENED = true;
         actor.deductBalance(UPGRADE_PRICE);
        INCREASE_HEALTH_VALUE = 80;
+    }
+
+    @Override
+    public void tick(Location currentLocation, Actor actor) {
+        this.LOCATION = currentLocation;
+    }
+
+    @Override
+    public void respawnUpdate() {
+        this.LOCATION.removeItem(this);
     }
 }

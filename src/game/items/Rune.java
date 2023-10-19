@@ -3,19 +3,23 @@ package game.items;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
+import edu.monash.fit2099.engine.positions.Location;
 import game.actions.ConsumeAction;
 import game.items.itemproperties.Consumable;
+import game.respawn.RespawnEntity;
 
 /**
  * Class representing an item, Rune
  * Created by:
  * @author Ishita Gupta
  */
-public class Rune extends Item implements Consumable {
+public class Rune extends Item implements Consumable, RespawnEntity {
     /**
      * The quantity of the item
      */
     private final int quantity;
+
+    private static Location LOCATION;
 
     /**
      * Constructor.
@@ -23,6 +27,7 @@ public class Rune extends Item implements Consumable {
      * @param quantity the quantity of the item
      */
     public Rune(int quantity) {
+
         super("Runes", '$', true);
         this.quantity = quantity;
     }
@@ -50,6 +55,16 @@ public class Rune extends Item implements Consumable {
         ActionList actions = super.allowableActions(actor);
         actions.add(new ConsumeAction(this));
         return actions;
+    }
+
+    @Override
+    public void tick(Location currentLocation, Actor actor) {
+        this.LOCATION = currentLocation;
+    }
+
+    @Override
+    public void respawnUpdate() {
+        this.LOCATION.removeItem(this);
     }
 }
 

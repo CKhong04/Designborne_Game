@@ -14,6 +14,7 @@ import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Consumable;
 import game.items.itemproperties.Sellable;
 import game.items.itemproperties.Upgradeable;
+import game.respawn.RespawnEntity;
 import game.utilities.Utility;
 
 /**
@@ -23,13 +24,15 @@ import game.utilities.Utility;
  * Modified by:
  * @author Ishita Gupta
  */
-public class RefreshingFlask extends Item implements Sellable, Buyable, Consumable, Upgradeable {
+public class RefreshingFlask extends Item implements Sellable, Buyable, Consumable, Upgradeable, RespawnEntity {
     //Private attributes
     private static int INCREASE_STAMINA_VALUE = 20;
     private static final int SELL_PRICE = 25;
     private static final int SELL_SCAM_CHANCE = 50;
     private static final int UPGRADE_PRICE = 175;
     private static boolean UPGRADE_HAPPENED = false;
+
+    private static Location LOCATION;
 
 
 
@@ -126,5 +129,15 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
         UPGRADE_HAPPENED = true;
         actor.deductBalance(UPGRADE_PRICE);
         INCREASE_STAMINA_VALUE = 100;
+    }
+
+    @Override
+    public void tick(Location currentLocation, Actor actor) {
+        this.LOCATION = currentLocation;
+    }
+
+    @Override
+    public void respawnUpdate() {
+        this.LOCATION.removeItem(this);
     }
 }
