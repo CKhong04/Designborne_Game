@@ -5,6 +5,8 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.actors.enemies.abilities.MoveCapable;
+import game.behaviours.WanderBehaviour;
 import game.items.Rune;
 import game.items.HealingVial;
 import game.items.RefreshingFlask;
@@ -15,7 +17,7 @@ import game.utilities.Utility;
  * Created by:
  * @author Laura Zhakupova, Ishita Gupta
  */
-public class HollowSoldier extends Enemy {
+public class HollowSoldier extends Enemy implements MoveCapable {
     // Private attributes
     private static final int CHANCE_DROP_HEALING_VIAL = 20;
     private static final int CHANCE_DROP_REFRESHING_FLASK = 30;
@@ -42,6 +44,7 @@ public class HollowSoldier extends Enemy {
      */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
+        canMove();
         return super.findAction(map);
     }
 
@@ -58,5 +61,8 @@ public class HollowSoldier extends Enemy {
     }
 
 
-
+    @Override
+    public void canMove() {
+        this.behaviours.put(2, new WanderBehaviour());
+    }
 }

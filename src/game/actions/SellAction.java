@@ -14,7 +14,6 @@ public class SellAction extends Action {
     // Private attributes
     private final Actor trader;
     private final Sellable item;
-    private final int sellPrice;
 
     /**
      * A constructor which accepts a trader and an item.
@@ -22,10 +21,9 @@ public class SellAction extends Action {
      * @param trader actor who buys the item.
      * @param item which is sold.
      */
-    public SellAction(Actor trader, Sellable item, int sellPrice){
+    public SellAction(Actor trader, Sellable item){
         this.trader = trader;
         this.item = item;
-        this.sellPrice = sellPrice;
     }
 
     /**

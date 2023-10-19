@@ -5,7 +5,10 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import game.enums.Status;
+import game.actors.enemies.abilities.FollowCapable;
+import game.actors.enemies.abilities.MoveCapable;
+import game.behaviours.FollowBehaviour;
+import game.behaviours.WanderBehaviour;
 import game.items.Rune;
 import game.items.HealingVial;
 import game.utilities.Utility;
@@ -18,7 +21,7 @@ import game.weathers.Weather;
  * @author Carissa Khong
  * Modified by: Ishita Gupta, Khoi Nguyen
  */
-public class RedWolf extends Enemy implements AncientWoodEntity {
+public class RedWolf extends Enemy implements AncientWoodEntity, FollowCapable, MoveCapable {
 
     //Private attributes
     private static final int DROP_VIAL_CHANCE = 10;
@@ -40,7 +43,6 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
         super("Red Wolf", 'r', HIT_POINTS);
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(25));
         Utility.addItemByChance(this, DROP_VIAL_CHANCE, new HealingVial());
-        this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
 
         this.weather = weather;
     }
@@ -59,7 +61,8 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
         if (!this.isConscious()) {
             weather.unregisterEntity(this);
         }
-
+        canFollow();
+        canMove();
         return super.findAction(map);
     }
 
@@ -89,5 +92,15 @@ public class RedWolf extends Enemy implements AncientWoodEntity {
     public void rainyUpdate(){
         this.updateDamageMultiplier(DAMAGE);
         display.println("The Red Wolf returns to its normal state.");
+    }
+
+    @Override
+    public void canFollow() {
+        this.behaviours.put(0, new FollowBehaviour());
+    }
+
+    @Override
+    public void canMove() {
+        this.behaviours.put(2, new WanderBehaviour());
     }
 }

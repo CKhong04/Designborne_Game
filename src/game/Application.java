@@ -19,10 +19,7 @@ import game.actors.traders.conversations.conditions.ActorIsHoldingWeaponItemCond
 import game.actors.traders.conversations.conditions.ActorIsUnconsiousCondition;
 import game.enums.Status;
 import game.grounds.*;
-import game.grounds.spawners.Bush;
-import game.grounds.spawners.HollowSoldierGraveyard;
-import game.grounds.spawners.Hut;
-import game.grounds.spawners.WanderingUndeadGraveyard;
+import game.grounds.spawners.*;
 import game.items.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
@@ -123,10 +120,10 @@ public class Application {
         SunnyWeather sunnyWeather = new SunnyWeather();
 
         //Add the bushes and huts to the Ancient Woods map
-        ancientWoodsGameMap.at(11, 3).setGround(new Bush(sunnyWeather));
+        ancientWoodsGameMap.at(11, 3).setGround(new RedWolfBush(sunnyWeather));
 
-        ancientWoodsGameMap.at(46,9).setGround(new Hut(sunnyWeather));
-        ancientWoodsGameMap.at(8, 7).setGround(new Hut(sunnyWeather));
+        ancientWoodsGameMap.at(46,9).setGround(new ForestKeeperHut(sunnyWeather));
+        ancientWoodsGameMap.at(8, 7).setGround(new ForestKeeperHut(sunnyWeather));
 
         ancientWoodsGameMap.at(47,1).addItem(new BloodBerry());
 
@@ -171,26 +168,58 @@ public class Application {
         world.addGameMap(roomGameMap);
 
         // Adding the bushes and huts to the Room
-        roomGameMap.at(30, 2).setGround(new Bush(sunnyWeather));
+        roomGameMap.at(30, 2).setGround(new RedWolfBush(sunnyWeather));
 
-        roomGameMap.at(19,10).setGround(new Hut(sunnyWeather));
-        roomGameMap.at(2, 11).setGround(new Hut(sunnyWeather));
+        roomGameMap.at(19,10).setGround(new ForestKeeperHut(sunnyWeather));
+        roomGameMap.at(2, 11).setGround(new ForestKeeperHut(sunnyWeather));
 
         Item giantHammer = new GiantHammer();
         roomGameMap.at(27, 6).addItem(giantHammer);
 
         //Adding gates for access to the room
         Gate woodsToRoomGate = new Gate();
-        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room containing Abxervyer, the Forest Watcher."));
+        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room deep in the Woods."));
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
+        //Add the new Overgrown Sanctuary game map
+        List<String> overgrownSanctuaryMap = Arrays.asList(
+        "++++.....++++........++++~~~~~.......~~~..........",
+        "++++......++.........++++~~~~.........~...........",
+        "+++............~~~...+++++~~.......+++............",
+        "..............~~~...++++++......++++++............",
+        "................~~.++++........++++++~~...........",
+        "..............~~~..+++.........+++..~~~...........",
+        "..................+++..........++...~~~...........",
+        "~~~...........................~~~..~~~~.....~~~~..",
+        "~~~~............+++..........~~~~~~~~~~.......~~..",
+        "~~~~............+++.........~~~~~~~~~~~~..........",
+        "++~..............+++.......+~~........~~..........",
+        "+++..............+++......+++..........~~.........",
+        "+++..............+++......+++..........~~.........",
+        "~~~..............+++......+++..........~~~........",
+        "~~~~.............+++......+++..........~~~........"
+        );
+        GameMap overgrownSanctuaryGameMap = new GameMap(groundFactory, overgrownSanctuaryMap);
+        world.addGameMap(overgrownSanctuaryGameMap);
+
+        //Add the relevant spawning grounds
+        overgrownSanctuaryGameMap.at(8, 12).setGround(new HollowSoldierGraveyard());
+        overgrownSanctuaryGameMap.at(42, 5).setGround(new GuardianHut());
+        overgrownSanctuaryGameMap.at(22, 9).setGround(new LivingBranchBush());
+
         //Create the gate which Abxervyer will set once dead
-        Gate roomToWoodsGate = new Gate();
-        roomToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(45,3), "to the Ancient Woods."));
+        Gate roomToOtherDestinationsGate = new Gate();
+        roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(45,3), "to the Ancient Woods."));
+        roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(overgrownSanctuaryGameMap.at(31, 2), "to the Overgrown Sanctuary."));
 
         // Add the boss to the room
         Abxervyer abxervyer = new Abxervyer(roomToWoodsGate, sunnyWeather);
         roomGameMap.at(35,1).addActor(abxervyer);
+
+        //Add a gate from the sanctuary back to the room
+        Gate sanctuaryToRoomGate = new Gate();
+        sanctuaryToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13), "to the room deep in the Woods."));
+        overgrownSanctuaryGameMap.at(10, 4).setGround(sanctuaryToRoomGate);
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
@@ -203,7 +232,7 @@ public class Application {
         }
 
         // Add player
-        Player player = new Player("The Abstracted One", '@', 1000, 200);
+        Player player = new Player("The Abstracted One", '@', 150, 200);
         world.addPlayer(player, ancientWoodsGameMap.at(27, 5));
 
         // Add the monologues

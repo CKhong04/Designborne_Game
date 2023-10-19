@@ -1,6 +1,7 @@
 package game.actors.traders;
 
 import edu.monash.fit2099.engine.actions.ActionList;
+import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.ListenAction;
@@ -10,6 +11,7 @@ import game.actors.traders.conversations.Talkable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import game.enums.Ability;
 
 public class Blacksmith extends Trader implements Talkable {
     private final Random rand = new Random();
@@ -25,6 +27,7 @@ public class Blacksmith extends Trader implements Talkable {
         super("Blacksmith", 'B');
 
         this.monologues = monologues;
+        this.addCapability(Ability.CAN_UPGRADE_ITEM)
     }
 
     /**
