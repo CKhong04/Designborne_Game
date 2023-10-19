@@ -8,6 +8,8 @@ import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.enums.Status;
 import game.actions.UnlockGateAction;
+import game.respawn.Respawn;
+import game.respawn.RespawnEntity;
 
 import java.util.ArrayList;
 
@@ -18,10 +20,12 @@ import java.util.ArrayList;
  * Modified by:
  * Carissa Khong
  */
-public class Gate extends Ground {
+public class Gate extends Ground implements RespawnEntity {
     // Private attributes
     private ArrayList<Action> moveActions = new ArrayList<>();
     private final Display display = new Display();
+
+    private Respawn respawn;
 
     /**
      * A constructor.
@@ -29,6 +33,7 @@ public class Gate extends Ground {
     public Gate(){
         super('=');
         this.addCapability(Status.LOCKED_GATE);
+        respawn.registerEntity(this);
     }
 
     /**
@@ -75,5 +80,13 @@ public class Gate extends Ground {
             }
         }
         return actions;
+    }
+
+    /**
+     * When the actor is respawned, all gates need to be locked again, meaning they must be unlocked again to use it.
+     */
+    @Override
+    public void respawnUpdate() {
+        this.addCapability(Status.LOCKED_GATE);
     }
 }
