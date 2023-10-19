@@ -232,8 +232,8 @@ public class Application {
         }
 
         // Add player
-        Player player = new Player("The Abstracted One", '@', 150, 200);
-        world.addPlayer(player, ancientWoodsGameMap.at(27, 5));
+        Player player = new Player("The Abstracted One", '@', 150, 200, gameMap);
+        world.addPlayer(player, gameMap.at(29, 7));
 
         // Add the monologues
         List<Monologue> monologues = Arrays.asList(

@@ -10,7 +10,7 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import game.actions.DeathAction;
+import game.actions.RespawnAction;
 import game.enums.Status;
 
 /**
@@ -24,6 +24,7 @@ public class Player extends Actor {
      * Stamina recovery rate is 1% per turn
      */
     private int staminaRecoveryRate = 1;
+    private GameMap spawnMap;
 
     /**
      * Constructor.
@@ -33,11 +34,12 @@ public class Player extends Actor {
      * @param hitPoints Player's starting number of hit points.
      * @param staminaPoints Player's starting number of stamina.
      */
-    public Player(String name, char displayChar, int hitPoints, int staminaPoints) {
+    public Player(String name, char displayChar, int hitPoints, int staminaPoints, GameMap spawnMap) {
         super(name, displayChar, hitPoints);
         this.addCapability(Status.HOSTILE_TO_ENEMY);
         this.addCapability(Status.DRINK_WATER);
         this.addAttribute(BaseActorAttributes.STAMINA, new BaseActorAttribute(staminaPoints));
+        this.spawnMap = spawnMap;
     }
 
     /**
@@ -88,7 +90,7 @@ public class Player extends Actor {
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         if (!this.isConscious()){
-            return new DeathAction();
+            return new RespawnAction(spawnMap);
         } else {
             recoverStamina();
 
