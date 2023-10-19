@@ -4,6 +4,7 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.BuyAction;
+import game.actions.ListenAction;
 import game.actors.traders.conversations.Monologue;
 import game.actors.traders.conversations.Talkable;
 import game.enums.Ability;
@@ -84,6 +85,8 @@ public class Traveller extends Trader implements Talkable {
         list.add(new BuyAction(this, new RefreshingFlask(), REFRESHING_FLASK_BUY_PRICE));
         list.add(new BuyAction(this, new Broadsword(), BROADSWORD_BUY_PRICE,BROADSWORD_BUY_SCAM_CHANCE));
         list.add(new BuyAction(this, new GreatKnife(), GREAT_KNIFE_BUY_PRICE));
+
+        list.add(new ListenAction(this));
 
         return list;
     }
