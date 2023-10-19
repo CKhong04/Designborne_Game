@@ -204,6 +204,10 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
         return buyPrice;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int damage() {
         if (DAMAGE_MULTIPLIER > DEFAULT_DAMAGE_MULTIPLIER){

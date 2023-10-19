@@ -5,6 +5,7 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
+import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
@@ -13,6 +14,7 @@ import game.behaviours.*;
 import game.enums.Ability;
 import game.enums.Status;
 import game.actions.AttackAction;
+import game.respawn.RespawnEntity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +27,7 @@ import java.util.Map;
  * Modified by:
  * Carissa Khong, Ishita Gupta, Khoi Nguyen
  */
-public abstract class Enemy extends Actor {
+public abstract class Enemy extends Actor implements RespawnEntity {
     // Private attributes
     protected Map<Integer, Behaviour> behaviours = new HashMap<>();
     /**
@@ -95,5 +97,7 @@ public abstract class Enemy extends Actor {
         return this + " met their demise at the hand of " + actor;
     }
 
-
+    public void respawnUpdate(){
+        this.hurt(this.getAttribute(BaseActorAttributes.HEALTH));
+    }
 }
