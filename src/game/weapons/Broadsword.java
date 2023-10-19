@@ -165,7 +165,7 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
             actions.add(new AttackAction(otherActor,location.toString(),this));
         }
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
-            actions.add(new SellAction(otherActor, this, SELL_PRICE));
+            actions.add(new SellAction(otherActor, this));
         }
         if (otherActor.hasCapability(Ability.CAN_UPGRADE_ITEM)) {
             actions.add(new UpgradeAction(this, UPGRADE_PRICE));

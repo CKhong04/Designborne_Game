@@ -1,6 +1,7 @@
 package game.grounds.spawners;
 
 import edu.monash.fit2099.engine.actors.Actor;
+import edu.monash.fit2099.engine.positions.Exit;
 import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 
@@ -32,17 +33,22 @@ public abstract class SpawningGround extends Ground {
     }
 
     /**
-     * Method which can be used by subclasses to spawn enemy
-     * depending on the chance of the spawn.
+     * Method which can be used by subclasses to spawn enemy dependent on the chance of spawning.
      *
      * @param enemy to be added to the map.
-     * @param location where the enemy is added.
+     * @param location where the enemy could be spawned or spawned in its surroundings.
      */
     protected void spawnEnemy(Actor enemy, Location location){
-        if (!location.containsAnActor()){
-            if (rand.nextInt(100) <= chanceToSpawn) {
-                location.addActor(enemy);
+        boolean willSpawn = rand.nextInt(100) <= chanceToSpawn;
+        for (Exit exit : location.getExits()){
+            Location destination = exit.getDestination();
+            if (willSpawn && !(destination.containsAnActor())){
+                destination.addActor(enemy);
+                return; //If an enemy has been added, return
             }
+        }
+        if (willSpawn && !(location.containsAnActor())){
+            location.addActor(enemy);
         }
     }
 
@@ -51,7 +57,7 @@ public abstract class SpawningGround extends Ground {
      *
      * @param newChanceToSpawn the new chance to spawn
      */
-    public void updateChanceToSpawn(double newChanceToSpawn){
+    protected void updateChanceToSpawn(double newChanceToSpawn){
         chanceToSpawn = (int) newChanceToSpawn;
     }
 }

@@ -9,6 +9,8 @@ import edu.monash.fit2099.engine.positions.Location;
 import game.enums.Status;
 import game.actions.UnlockGateAction;
 
+import java.util.ArrayList;
+
 /**
  * Class representing a gate.
  * Created by:
@@ -18,7 +20,7 @@ import game.actions.UnlockGateAction;
  */
 public class Gate extends Ground {
     // Private attributes
-    private Action moveAction;
+    private ArrayList<Action> moveActions = new ArrayList<>();
     private final Display display = new Display();
 
     /**
@@ -35,7 +37,7 @@ public class Gate extends Ground {
      * @param moveAction action which allows user to move to another map.
      */
     public void addMoveAction(Action moveAction){
-        this.moveAction = moveAction;
+        this.moveActions.add(moveAction);
     }
 
     /**
@@ -68,7 +70,9 @@ public class Gate extends Ground {
         } else if (this.hasCapability(Status.LOCKED_GATE) && actor.hasCapability(Status.HOSTILE_TO_ENEMY)){
             display.println("The gate is locked. " + actor + " must have an Old Key to unlock it.");
         } else {
-            actions.add(this.moveAction);
+            for (Action moveAction : moveActions) {
+                actions.add(moveAction);
+            }
         }
         return actions;
     }

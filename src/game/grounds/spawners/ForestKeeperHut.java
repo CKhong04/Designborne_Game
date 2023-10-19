@@ -13,7 +13,7 @@ import game.weathers.Weather;
  * @author Carissa Khong
  * Modified By: Ishita Gupta, Khoi Nguyen
  */
-public class Hut extends SpawningGround implements AncientWoodEntity {
+public class ForestKeeperHut extends SpawningGround implements AncientWoodEntity {
     //Private attributes
     private static final int NORMAL_CHANCE_TO_SPAWN = 15;
     private static final double SUNNY_SPAWNING_CHANCE = NORMAL_CHANCE_TO_SPAWN * 2;
@@ -24,7 +24,7 @@ public class Hut extends SpawningGround implements AncientWoodEntity {
      * Constructor.
      * @param weather The weather of the AncientWoodMap.
      */
-    public Hut(Weather weather) {
+    public ForestKeeperHut(Weather weather) {
         super(NORMAL_CHANCE_TO_SPAWN, 'h');
 
         this.weather = weather;

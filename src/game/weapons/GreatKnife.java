@@ -84,7 +84,7 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
             actions.add(this.getStabAndStepAction(otherActor, location));
         }
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
-            actions.add(new SellAction(otherActor, this, SELL_PRICE));
+            actions.add(new SellAction(otherActor, this));
         }
         if (otherActor.hasCapability(Ability.CAN_UPGRADE_ITEM)){
             actions.add(new UpgradeAction(this, UPGRADE_PRICE));

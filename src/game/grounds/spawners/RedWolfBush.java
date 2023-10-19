@@ -13,7 +13,7 @@ import game.weathers.Weather;
  * Modified By:
  * Ishita Gupta, Khoi Nguyen
  */
-public class Bush extends SpawningGround implements AncientWoodEntity {
+public class RedWolfBush extends SpawningGround implements AncientWoodEntity {
     private static final int NORMAL_CHANCE_TO_SPAWN = 30;
     private static final double RAINY_SPAWNING_CHANCE = NORMAL_CHANCE_TO_SPAWN * 1.5;
     private final Weather weather;
@@ -23,7 +23,7 @@ public class Bush extends SpawningGround implements AncientWoodEntity {
      * Constructor
      * @param weather The weather of the AncientWoodMap.
      */
-    public Bush(Weather weather) {
+    public RedWolfBush(Weather weather) {
         super(NORMAL_CHANCE_TO_SPAWN,'m');
 
         this.weather = weather;
