@@ -13,9 +13,11 @@ import game.items.RefreshingFlask;
 import game.utilities.Utility;
 
 /**
- * Class representing the Hollow Soldier.
+ * Class representing the Hollow Soldier. It can wander around the void and so implements MoveCapable.
  * Created by:
  * @author Laura Zhakupova, Ishita Gupta
+ * Modified by:
+ * Carissa Khong
  */
 public class HollowSoldier extends Enemy implements MoveCapable {
     // Private attributes

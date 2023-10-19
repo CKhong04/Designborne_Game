@@ -15,6 +15,13 @@ import game.items.RefreshingFlask;
 import game.items.Rune;
 import game.utilities.Utility;
 
+/**
+ * EldentreeGuardian is an enemy encountered in the Overgrown Sanctuary. It implements MoveCapable and FollowCapable as
+ * it is able to wander and follow a hostile actor. It can drop a Healing Vial, Refreshing Flask and will drop runes
+ * when it dies.
+ * Created by:
+ * @author Carissa Khong
+ */
 public class EldentreeGuardian extends Enemy implements MoveCapable, FollowCapable {
 
     private static final int DAMAGE = 50;
@@ -24,8 +31,8 @@ public class EldentreeGuardian extends Enemy implements MoveCapable, FollowCapab
     private static final int DROP_RUNES_CHANCE = 100;
 
     /**
-     * A constructor which accepts name, display character and hit points.
-     * An enemy cannot move through a Floor in the maps, therefore, an Ability is added preventing this from happening.
+     * The Eldentree Guardian is able to drop three different types of items. It also cannot be hurt when it walks on a
+     * void.
      */
     public EldentreeGuardian() {
         super("Eldentree Guardian", 'e', HIT_POINTS);
@@ -35,6 +42,17 @@ public class EldentreeGuardian extends Enemy implements MoveCapable, FollowCapab
         this.addCapability(Ability.NOT_HURT_BY_VOID);
     }
 
+    /**
+     * In Eldentree Guardian's playTurn method, canFollow and canMove are called, which add FollowBehaviour and
+     * WanderBehaviour to the actor's behaviours list.
+     * Then, the findAction method from the enemy superclass is called, where an action will be returned for the Guardian
+     * to complete.
+     * @param actions    collection of possible Actions for this Actor
+     * @param lastAction The Action this Actor took last turn. Can do interesting things in conjunction with Action.getNextAction()
+     * @param map        the map containing the Actor
+     * @param display    the I/O object to which messages may be written
+     * @return The action that the Eldentree Guardian is taking.
+     */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         canFollow();
@@ -42,6 +60,9 @@ public class EldentreeGuardian extends Enemy implements MoveCapable, FollowCapab
         return findAction(map);
     }
 
+    /**
+     * @return A new Intrinsic Weapon with the characteristics defined below.
+     */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
         int hitRate = 80;
@@ -50,11 +71,17 @@ public class EldentreeGuardian extends Enemy implements MoveCapable, FollowCapab
         return new IntrinsicWeapon(DAMAGE, verb, hitRate);
     }
 
+    /**
+     * Adds Follow Behaviour to the Eldentree Guardian's behaviours HashMap.
+     */
     @Override
     public void canFollow() {
         this.behaviours.put(0, new FollowBehaviour());
     }
 
+    /**
+     * Adds a WanderBehaviour to the Eldentree Guardian's behaviours HashMap.
+     */
     @Override
     public void canMove() {
         this.behaviours.put(2, new WanderBehaviour());

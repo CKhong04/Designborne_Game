@@ -17,6 +17,7 @@ import game.weathers.Weather;
 
 /**
  * The class RedWolf is a child class of the abstract class Enemy. It is encountered in the Ancient Woods.
+ * It can follow hostile actors and can wander around, therefore implementing FollowCapable and MoveCapable.
  * Created by:
  * @author Carissa Khong
  * Modified by: Ishita Gupta, Khoi Nguyen
@@ -94,11 +95,17 @@ public class RedWolf extends Enemy implements AncientWoodEntity, FollowCapable, 
         display.println("The Red Wolf returns to its normal state.");
     }
 
+    /**
+     * canFollow adds FollowBehaviour to the Red Wolf's behaviour HashMap.
+     */
     @Override
     public void canFollow() {
         this.behaviours.put(0, new FollowBehaviour());
     }
 
+    /**
+     * canMove adds WanderBehaviour to the Red Wolf's behaviour HashMap.
+     */
     @Override
     public void canMove() {
         this.behaviours.put(2, new WanderBehaviour());

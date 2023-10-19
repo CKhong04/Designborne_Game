@@ -53,10 +53,9 @@ public abstract class Enemy extends Actor implements RespawnEntity {
      * @param map the map containing the Actor
      * @return the valid action that can be performed in that iteration or null if no valid action is found
      */
-    public Action findAction(GameMap map) {
+    protected Action findAction(GameMap map) {
         if (!this.isConscious()){
             this.unconscious(map);
-            return new DoNothingAction();
         } else {
             this.behaviours.put(1, new AttackBehaviour());
             for (Behaviour behaviour : behaviours.values()) {
@@ -64,8 +63,8 @@ public abstract class Enemy extends Actor implements RespawnEntity {
                 if(action != null)
                     return action;
             }
-            return new DoNothingAction();
         }
+        return new DoNothingAction();
     }
 
     /**
@@ -101,6 +100,9 @@ public abstract class Enemy extends Actor implements RespawnEntity {
         return this + " met their demise at the hand of " + actor;
     }
 
+    /**
+     * When respawnUpdate is called, all enemies must be hurt by their health amount, so they become unconscious.
+     */
     public void respawnUpdate(){
         this.hurt(this.getAttribute(BaseActorAttributes.HEALTH));
 //        respawn.unregisterEntity(this);

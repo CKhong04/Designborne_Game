@@ -10,6 +10,11 @@ import game.items.BloodBerry;
 import game.items.Rune;
 import game.utilities.Utility;
 
+/**
+ * The LivingBranch is an enemy encountered in the Overgrown Sanctuary.
+ * Created by:
+ * @author Carissa Khong
+ */
 public class LivingBranch extends Enemy {
 
     private static final int DAMAGE = 250;
@@ -18,8 +23,8 @@ public class LivingBranch extends Enemy {
     private static final int DROP_RUNES_CHANCE = 100;
 
     /**
-     * A constructor which accepts name, display character and hit points.
-     * An enemy cannot move through a Floor in the maps, therefore, an Ability is added preventing this from happening.
+     * A constructor for the Living Branch class. It can drop Bloodberries and Runes when it is killed. Also, Living
+     * Branches cannot be hurt if they spawn on a void.
      */
     public LivingBranch() {
         super("Living Branch", '?', HIT_POINTS);
@@ -28,11 +33,17 @@ public class LivingBranch extends Enemy {
         this.addCapability(Ability.NOT_HURT_BY_VOID);
     }
 
+    /**
+     * @return An action called when the findAction method of the Enemy class is run.
+     */
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         return super.findAction(map);
     }
 
+    /**
+     * @return An Intrinsic Weapon with the characteristics given below.
+     */
     @Override
     public IntrinsicWeapon getIntrinsicWeapon() {
         int hitRate = 90;
