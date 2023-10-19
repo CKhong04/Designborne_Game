@@ -213,7 +213,7 @@ public class Application {
         roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(overgrownSanctuaryGameMap.at(31, 2), "to the Overgrown Sanctuary."));
 
         // Add the boss to the room
-        Abxervyer abxervyer = new Abxervyer(roomToWoodsGate, sunnyWeather);
+        Abxervyer abxervyer = new Abxervyer(roomToOtherDestinationsGate, sunnyWeather);
         roomGameMap.at(35,1).addActor(abxervyer);
 
         //Add a gate from the sanctuary back to the room

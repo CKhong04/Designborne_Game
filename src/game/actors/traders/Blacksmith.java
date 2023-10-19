@@ -27,7 +27,7 @@ public class Blacksmith extends Trader implements Talkable {
         super("Blacksmith", 'B');
 
         this.monologues = monologues;
-        this.addCapability(Ability.CAN_UPGRADE_ITEM)
+        this.addCapability(Ability.CAN_UPGRADE_ITEM);
     }
 
     /**
