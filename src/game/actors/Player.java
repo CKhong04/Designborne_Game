@@ -14,6 +14,7 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.enums.Status;
 import game.items.Rune;
+import game.respawn.AllRespawn;
 import game.utilities.FancyMessage;
 
 /**
@@ -26,8 +27,8 @@ public class Player extends Actor {
     /**
      * Stamina recovery rate is 1% per turn
      */
-    private int staminaRecoveryRate = 1;
-    private GameMap spawningMap;
+    private final int staminaRecoveryRate = 1;
+    private final GameMap spawningMap;
 
     /**
      * Constructor.
@@ -73,6 +74,10 @@ public class Player extends Actor {
         this.modifyAttribute(BaseActorAttributes.STAMINA,ActorAttributeOperations.UPDATE,this.getAttributeMaximum(BaseActorAttributes.STAMINA));
         int numOfRunes = this.getBalance();
         this.deductBalance(numOfRunes);
+
+        AllRespawn allRespawn = new AllRespawn();
+        allRespawn.notifyEntities();
+
         deathLocation.addItem(new Rune(numOfRunes));
     }
 
