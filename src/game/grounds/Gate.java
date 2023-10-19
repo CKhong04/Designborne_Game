@@ -8,7 +8,8 @@ import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.enums.Status;
 import game.actions.UnlockGateAction;
-import game.respawn.Respawn;
+import game.respawn.ImmortalRespawn;
+import game.respawn.MortalRespawn;
 import game.respawn.RespawnEntity;
 
 import java.util.ArrayList;
@@ -25,15 +26,13 @@ public class Gate extends Ground implements RespawnEntity {
     private ArrayList<Action> moveActions = new ArrayList<>();
     private final Display display = new Display();
 
-    private Respawn respawn;
-
     /**
      * A constructor.
      */
     public Gate(){
         super('=');
         this.addCapability(Status.LOCKED_GATE);
-        respawn.registerEntity(this);
+        new ImmortalRespawn().registerEntity(this);
     }
 
     /**

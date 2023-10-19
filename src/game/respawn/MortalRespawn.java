@@ -1,8 +1,6 @@
 package game.respawn;
 
-import game.weathers.AncientWoodEntity;
-
-public class AllRespawn implements Respawn {
+public class MortalRespawn implements Respawn {
 
     @Override
     public void registerEntity(RespawnEntity object) {
@@ -19,5 +17,9 @@ public class AllRespawn implements Respawn {
         for (RespawnEntity entity : respawnEntities) {
             entity.respawnUpdate();
         }
+        respawnEntities.clear();
+//        for (RespawnEntity entity: oneRespawnEntities){
+//            entity.respawnUpdate();
+//        }
     }
 }

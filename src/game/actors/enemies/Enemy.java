@@ -13,7 +13,7 @@ import game.behaviours.*;
 import game.enums.Ability;
 import game.enums.Status;
 import game.actions.AttackAction;
-import game.respawn.Respawn;
+import game.respawn.MortalRespawn;
 import game.respawn.RespawnEntity;
 
 import java.util.HashMap;
@@ -31,7 +31,7 @@ public abstract class Enemy extends Actor implements RespawnEntity {
     // Private attributes
     protected Map<Integer, Behaviour> behaviours = new HashMap<>();
 
-    private Respawn respawn;
+    private MortalRespawn respawn = new MortalRespawn();
     /**
      * A constructor which accepts name, display character and hit points.
      * An enemy cannot move through a Floor in the maps, therefore, an Ability is added preventing this from happening.
@@ -103,6 +103,6 @@ public abstract class Enemy extends Actor implements RespawnEntity {
 
     public void respawnUpdate(){
         this.hurt(this.getAttribute(BaseActorAttributes.HEALTH));
-        respawn.unregisterEntity(this);
+//        respawn.unregisterEntity(this);
     }
 }

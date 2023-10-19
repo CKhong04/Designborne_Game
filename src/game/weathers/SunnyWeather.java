@@ -3,7 +3,6 @@ package game.weathers;
 
 /**
  * SunnyWeather is the concrete subject of the observer pattern.
- *
  * Created by:
  * @author Ishita Gupta
  */

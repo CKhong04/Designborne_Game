@@ -14,6 +14,7 @@ import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Consumable;
 import game.items.itemproperties.Sellable;
 import game.items.itemproperties.Upgradeable;
+import game.respawn.MortalRespawn;
 import game.respawn.RespawnEntity;
 import game.utilities.Utility;
 
@@ -33,6 +34,8 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
     private static boolean UPGRADE_HAPPENED = false;
 
     private static Location LOCATION;
+
+    private MortalRespawn respawn = new MortalRespawn();
 
 
 
@@ -139,5 +142,6 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
     @Override
     public void respawnUpdate() {
         this.LOCATION.removeItem(this);
+//        respawn.unregisterEntity(this);
     }
 }

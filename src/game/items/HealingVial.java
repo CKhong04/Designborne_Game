@@ -13,6 +13,7 @@ import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Consumable;
 import game.items.itemproperties.Sellable;
 import game.items.itemproperties.Upgradeable;
+import game.respawn.MortalRespawn;
 import game.respawn.RespawnEntity;
 import game.utilities.Utility;
 
@@ -31,13 +32,17 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
 
     private static boolean UPGRADE_HAPPENED = false;
 
-    private Location LOCATION;
+    private static Location LOCATION;
+
+    private MortalRespawn respawn = new MortalRespawn();
 
     /**
      * Constructor.
      */
     public HealingVial() {
         super("Healing Vial",'a', true);
+        respawn.registerEntity(this);
+
     }
 
     /**
@@ -132,5 +137,6 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
     @Override
     public void respawnUpdate() {
         this.LOCATION.removeItem(this);
+//        respawn.unregisterEntity(this);
     }
 }

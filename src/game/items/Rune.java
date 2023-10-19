@@ -6,6 +6,7 @@ import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actions.ConsumeAction;
 import game.items.itemproperties.Consumable;
+import game.respawn.MortalRespawn;
 import game.respawn.RespawnEntity;
 
 /**
@@ -21,15 +22,18 @@ public class Rune extends Item implements Consumable, RespawnEntity {
 
     private static Location LOCATION;
 
+    private MortalRespawn respawn = new MortalRespawn();
+
     /**
      * Constructor.
      *
      * @param quantity the quantity of the item
      */
-    public Rune(int quantity) {
+    public Rune(int quantity){
 
         super("Runes", '$', true);
         this.quantity = quantity;
+        respawn.registerEntity(this);
     }
 
     /**
@@ -65,6 +69,7 @@ public class Rune extends Item implements Consumable, RespawnEntity {
     @Override
     public void respawnUpdate() {
         this.LOCATION.removeItem(this);
+//        respawn.unregisterEntity(this);
     }
 }
 
