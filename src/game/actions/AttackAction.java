@@ -84,8 +84,6 @@ public class AttackAction extends Action {
         target.hurt(damage);
         if (!target.isConscious()) {
             result += "\n" + target.unconscious(actor, map);
-            result += "\n" + new DeathAction().execute(target, map);
-
             }
 
         return result;

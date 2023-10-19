@@ -2,6 +2,7 @@ package game.actors;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
+import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
@@ -9,9 +10,11 @@ import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import game.actions.RespawnAction;
 import game.enums.Status;
+import game.items.Rune;
+import game.utilities.FancyMessage;
 
 /**
  * Class representing the Player.
@@ -24,7 +27,7 @@ public class Player extends Actor {
      * Stamina recovery rate is 1% per turn
      */
     private int staminaRecoveryRate = 1;
-    private GameMap spawnMap;
+    private GameMap spawningMap;
 
     /**
      * Constructor.
@@ -34,12 +37,43 @@ public class Player extends Actor {
      * @param hitPoints Player's starting number of hit points.
      * @param staminaPoints Player's starting number of stamina.
      */
-    public Player(String name, char displayChar, int hitPoints, int staminaPoints, GameMap spawnMap) {
+    public Player(String name, char displayChar, int hitPoints, int staminaPoints, GameMap spawningMap) {
         super(name, displayChar, hitPoints);
         this.addCapability(Status.HOSTILE_TO_ENEMY);
         this.addCapability(Status.DRINK_WATER);
         this.addAttribute(BaseActorAttributes.STAMINA, new BaseActorAttribute(staminaPoints));
-        this.spawnMap = spawnMap;
+        this.spawningMap = spawningMap;
+    }
+
+    public String unconscious(Actor actor, GameMap map) {
+        Location deathLocation = map.locationOf(this);
+        map.removeActor(this);
+        respawn(deathLocation);
+        return this + " met their demise in the hand of " + actor;
+    }
+
+    public String unconscious(GameMap map) {
+        Location deathLocation = map.locationOf(this);
+        map.removeActor(this);
+        respawn(deathLocation);
+        return this + " ceased to exist.";
+    }
+
+    public void respawn(Location deathLocation) {
+        for (String line : FancyMessage.YOU_DIED.split("\n")) {
+            new Display().println(line);
+            try {
+                Thread.sleep(200);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+        this.spawningMap.at(29, 5).addActor(this);
+        this.modifyAttribute(BaseActorAttributes.HEALTH,ActorAttributeOperations.UPDATE,this.getAttributeMaximum(BaseActorAttributes.HEALTH));
+        this.modifyAttribute(BaseActorAttributes.STAMINA,ActorAttributeOperations.UPDATE,this.getAttributeMaximum(BaseActorAttributes.STAMINA));
+        int numOfRunes = this.getBalance();
+        this.deductBalance(numOfRunes);
+        deathLocation.addItem(new Rune(numOfRunes));
     }
 
     /**
@@ -90,7 +124,8 @@ public class Player extends Actor {
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         if (!this.isConscious()){
-            return new RespawnAction(spawnMap);
+            this.unconscious(map);
+            return new DoNothingAction();
         } else {
             recoverStamina();
 

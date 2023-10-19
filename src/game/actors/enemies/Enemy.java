@@ -8,7 +8,6 @@ import edu.monash.fit2099.engine.actors.Behaviour;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
-import game.actions.DeathAction;
 import game.behaviours.*;
 import game.enums.Ability;
 import game.enums.Status;
@@ -50,7 +49,8 @@ public abstract class Enemy extends Actor {
      */
     public Action findAction(GameMap map) {
         if (!this.isConscious()){
-            return new DeathAction();
+            this.unconscious(map);
+            return new DoNothingAction();
         } else {
             this.behaviours.put(1, new AttackBehaviour());
             for (Behaviour behaviour : behaviours.values()) {
