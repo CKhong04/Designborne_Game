@@ -46,8 +46,7 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
 
     private static final int UPGRADE_PRICE = 2000;
 
-    private int staminaRecoveryRate = 1;
-
+    private final int staminaRecoveryRate = 1;
 
     /**
      * Constructor.

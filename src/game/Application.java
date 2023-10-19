@@ -21,7 +21,9 @@ import game.enums.Status;
 import game.grounds.*;
 import game.grounds.spawners.*;
 import game.items.BloodBerry;
+import game.items.OldKey;
 import game.utilities.FancyMessage;
+import game.utilities.Map;
 import game.weapons.Broadsword;
 import game.weapons.GiantHammer;
 import game.weathers.SunnyWeather;
@@ -41,23 +43,8 @@ public class Application {
         FancyGroundFactory groundFactory = new FancyGroundFactory(new Dirt(),
                 new Wall(), new Floor(), new Puddle(), new BottomlessPit());
 
-        // Set up starting map
-        List<String> map = Arrays.asList(
-                "...........................................................",
-                "...#######...................................++++..........",
-                "...#__.......................................+++++++.......",
-                "...#..___#.....................................+++.........",
-                "...###.###................#######................+++.......",
-                "..........................#_____#.................+........",
-                "........~~................#_____#................++........",
-                ".........~~~..............###_###..........................",
-                "...~~~~~~~~....+++.........................................",
-                "....~~~~~........+++++++..................###..##...++++...",
-                "~~~~~~~..............+++..................#___..#...++.....",
-                "~~~~~~.................++.................#..___#....+++...",
-                "~~~~~~~~~.................................#######.......++.");
-
-        GameMap gameMap = new GameMap(groundFactory, map);
+        // Set up abandoned village map
+        GameMap gameMap = new GameMap(groundFactory, Map.ABANDONED_VILLAGE_MAP);
         world.addGameMap(gameMap);
 
         Item broadsword = new Broadsword();
@@ -66,25 +53,8 @@ public class Application {
         gameMap.at(55,2).setGround(new WanderingUndeadGraveyard());
         gameMap.at(34,10).setGround(new WanderingUndeadGraveyard());
 
-        // Set up second map
-        List<String> burialGroundMap = Arrays.asList(
-                "...........+++++++........~~~~~~++....~~",
-                "...........++++++.........~~~~~~+.....~~",
-                "............++++...........~~~~~......++",
-                "............+.+.............~~~.......++",
-                "..........++~~~.......................++",
-                ".........+++~~~....#######...........+++",
-                ".........++++~.....#_____#.........+++++",
-                "..........+++......#_____#........++++++",
-                "..........+++......###_###.......~~+++++",
-                "..........~~.....................~~...++",
-                "..........~~~..................++.......",
-                "...........~~....~~~~~.........++.......",
-                "......~~....++..~~~~~~~~~~~......~......",
-                "....+~~~~..++++++++~~~~~~~~~....~~~.....",
-                "....+~~~~..++++++++~~~..~~~~~..~~~~~....");
-
-        GameMap burialGroundGameMap = new GameMap(groundFactory,burialGroundMap);
+        // Set up burial ground map
+        GameMap burialGroundGameMap = new GameMap(groundFactory, Map.BURIAL_GROUND_MAP);
         world.addGameMap(burialGroundGameMap);
 
         burialGroundGameMap.at(23,2).setGround(new HollowSoldierGraveyard());
@@ -100,26 +70,13 @@ public class Application {
         burialGroundGameMap.at(38,14).setGround(groundToVillageGate);
         groundToVillageGate.addMoveAction(new MoveActorAction(gameMap.at(27, 0), "to the Abandoned Village."));
 
-        //Create the Ancient Woods Map
-        List<String> ancientWoodsMap = Arrays.asList(
-                "...............++++++..............++++++..................",
-                "...#######.......+++++...~~~~~...++++......................",
-                "...#__...#........++++.....~~~..+++++++....###.............",
-                "...#..___#.....+++........~~~~~.....++++...#.#......++++...",
-                "...###_###......+...........~~~....++++...........+++.+....",
-                ".....................................+++.............++.+..",
-                "++......~~..........................+++.........+++++++....",
-                "++++.....~~~..............###_###....+.............++++....",
-                ".+++++~~~~~.....+++++.....#.___.#.....................++...",
-                "....+++++.....++++........#....._.......................+..",
-                "~~~~~+++........+++.......#######...................+.++...",
-                "~~~~~~..........++.................................+++.....");
-        GameMap ancientWoodsGameMap = new GameMap(groundFactory, ancientWoodsMap);
+        // Set up the ancient woods map
+        GameMap ancientWoodsGameMap = new GameMap(groundFactory, Map.ANCIENT_WOODS_MAP);
         world.addGameMap(ancientWoodsGameMap);
 
         SunnyWeather sunnyWeather = new SunnyWeather();
 
-        //Add the bushes and huts to the Ancient Woods map
+        // Add the bushes and huts
         ancientWoodsGameMap.at(11, 3).setGround(new RedWolfBush(sunnyWeather));
 
         ancientWoodsGameMap.at(46,9).setGround(new ForestKeeperHut(sunnyWeather));
@@ -127,7 +84,7 @@ public class Application {
 
         ancientWoodsGameMap.at(47,1).addItem(new BloodBerry());
 
-        //Add the gates to and from this place
+        // Set up gates
         Gate burialGroundToWoodsGate = new Gate();
         burialGroundToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(26,6),"to the Ancient Woods."));
         burialGroundGameMap.at(4,6).setGround(burialGroundToWoodsGate);
@@ -136,38 +93,15 @@ public class Application {
         woodsToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(5,6),"to the Burial Ground."));
         ancientWoodsGameMap.at(27,6).setGround(woodsToBurialGroundGate);
 
-        //Add Traveller
+        // Add Traveller
         Traveller traveller = new Traveller();
         ancientWoodsGameMap.at(6, 3).addActor(traveller);
 
-        //Creating the room in ancient woods
-        List<String> roomMap = Arrays.asList(
-                "########################################",
-                "#~~~.......+++......~+++++.............#",
-                "#~~~.......+++.......+++++.............#",
-                "#~~++......+++........++++.............#",
-                "#~~++......++...........+..............#",
-                "#~~~~~...........+.......~~~++........+#",
-                "#~~~~~..........++++....~~~~++++....+++#",
-                "#~~~~~...........+++++++~~~~.++++....++#",
-                "#~~~~..............++++++~~...+++.....+#",
-                "#......._______.......+++......++.....+#",
-                "#.........___._........+~~............+#",
-                "#..........___.........~~~~...........+#",
-                "#.......................~~++...........#",
-                "#....++++...............+++++..........#",
-                "#....++++~..............+++++........++#",
-                "#.....+++~~.............++++...........#",
-                "#......++..++++.....................~~~#",
-                "#..........+++++.....................~~#",
-                "#..........++++++..................~~~~#",
-                "#.........~~+++++....................~~#",
-                "########################################"
-        );
-        GameMap roomGameMap = new GameMap(groundFactory, roomMap);
+        // Set up the room map in ancient woods
+        GameMap roomGameMap = new GameMap(groundFactory, Map.ROOM_MAP);
         world.addGameMap(roomGameMap);
 
-        // Adding the bushes and huts to the Room
+        // Adding the bushes and huts
         roomGameMap.at(30, 2).setGround(new RedWolfBush(sunnyWeather));
 
         roomGameMap.at(19,10).setGround(new ForestKeeperHut(sunnyWeather));
@@ -176,30 +110,13 @@ public class Application {
         Item giantHammer = new GiantHammer();
         roomGameMap.at(27, 6).addItem(giantHammer);
 
-        //Adding gates for access to the room
+        // Adding gates for access to the room
         Gate woodsToRoomGate = new Gate();
         woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room deep in the Woods."));
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
-        //Add the new Overgrown Sanctuary game map
-        List<String> overgrownSanctuaryMap = Arrays.asList(
-        "++++.....++++........++++~~~~~.......~~~..........",
-        "++++......++.........++++~~~~.........~...........",
-        "+++............~~~...+++++~~.......+++............",
-        "..............~~~...++++++......++++++............",
-        "................~~.++++........++++++~~...........",
-        "..............~~~..+++.........+++..~~~...........",
-        "..................+++..........++...~~~...........",
-        "~~~...........................~~~..~~~~.....~~~~..",
-        "~~~~............+++..........~~~~~~~~~~.......~~..",
-        "~~~~............+++.........~~~~~~~~~~~~..........",
-        "++~..............+++.......+~~........~~..........",
-        "+++..............+++......+++..........~~.........",
-        "+++..............+++......+++..........~~.........",
-        "~~~..............+++......+++..........~~~........",
-        "~~~~.............+++......+++..........~~~........"
-        );
-        GameMap overgrownSanctuaryGameMap = new GameMap(groundFactory, overgrownSanctuaryMap);
+        // Set up overgrown sanctuary map
+        GameMap overgrownSanctuaryGameMap = new GameMap(groundFactory, Map.OVERGROWN_SANCTUARY_MAP);
         world.addGameMap(overgrownSanctuaryGameMap);
 
         //Add the relevant spawning grounds
@@ -207,7 +124,7 @@ public class Application {
         overgrownSanctuaryGameMap.at(42, 5).setGround(new GuardianHut());
         overgrownSanctuaryGameMap.at(22, 9).setGround(new LivingBranchBush());
 
-        //Create the gate which Abxervyer will set once dead
+        // Create the gate which Abxervyer will set once dead
         Gate roomToOtherDestinationsGate = new Gate();
         roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(45,3), "to the Ancient Woods."));
         roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(overgrownSanctuaryGameMap.at(31, 2), "to the Overgrown Sanctuary."));
@@ -216,7 +133,7 @@ public class Application {
         Abxervyer abxervyer = new Abxervyer(roomToOtherDestinationsGate, sunnyWeather);
         roomGameMap.at(35,1).addActor(abxervyer);
 
-        //Add a gate from the sanctuary back to the room
+        // Add a gate from the sanctuary back to the room
         Gate sanctuaryToRoomGate = new Gate();
         sanctuaryToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13), "to the room deep in the Woods."));
         overgrownSanctuaryGameMap.at(10, 4).setGround(sanctuaryToRoomGate);
@@ -233,7 +150,8 @@ public class Application {
 
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
-        world.addPlayer(player, ancientWoodsGameMap.at(27, 5));
+        world.addPlayer(player, gameMap.at(27, 2));
+        player.addItemToInventory(new OldKey());
 
         // Add the monologues
         List<Monologue> monologues = Arrays.asList(
