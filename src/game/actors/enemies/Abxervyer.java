@@ -12,7 +12,6 @@ import game.actors.enemies.abilities.MoveCapable;
 import game.behaviours.FollowBehaviour;
 import game.behaviours.WanderBehaviour;
 import game.enums.Ability;
-import game.enums.Status;
 import game.grounds.Gate;
 import game.items.Rune;
 import game.utilities.Utility;
@@ -47,9 +46,7 @@ public class Abxervyer extends Enemy implements MoveCapable, FollowCapable {
      */
     public Abxervyer(Gate gateToWoods, Weather sunnyWeather) {
         super("Abxervyer, the Forest Watcher", 'Y', HIT_POINTS);
-
         this.weather = sunnyWeather;
-
         this.addCapability(Ability.NOT_HURT_BY_VOID); //Abxervyer will not be hurt if it steps on a void.
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(5000));
         this.gateToWoods = gateToWoods;
