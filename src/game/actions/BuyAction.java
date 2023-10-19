@@ -32,10 +32,10 @@ public class BuyAction extends Action {
 
     /**
      * A constructor which accepts a seller, an item and a scam chance if a scam is taking place.
-     * @param trader
-     * @param item
-     * @param buyPrice
-     * @param scamChance
+     * @param trader actor who sells the item.
+     * @param item which is sold.
+     * @param buyPrice price of the item.
+     * @param scamChance chance of a scam.
      */
     public BuyAction(Actor trader, Buyable item, int buyPrice, int scamChance){
         this.trader = trader;

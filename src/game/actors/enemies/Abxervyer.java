@@ -35,7 +35,7 @@ public class Abxervyer extends Enemy implements MoveCapable, FollowCapable {
      */
     private int count = 0;
     private Weather weather;
-    private Gate gateToWoods;
+    private final Gate gateToWoods;
 
     /**
      * The constructor is taken from the Enemy abstract class. For Abxervyer, this gives the name of the enemy, which is

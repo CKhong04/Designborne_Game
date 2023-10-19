@@ -54,6 +54,8 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
      */
     public GreatKnife() {
         super("Great Knife", '>', DAMAGE, "slashes", HIT_RATE);
+
+        this.addCapability(Status.HOLDING_GREAT_KNIFE);
     }
 
     /**
@@ -64,6 +66,11 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
     @Override
     public StabAndStepAction getStabAndStepAction(Actor otherActor, Location targetLocation) {
         return new StabAndStepAction(this, otherActor, targetLocation, STAMINA_DECREASE_PERCENTAGE);
+    }
+
+    @Override
+    public void tick(Location currentLocation) {
+        this.removeCapability(Status.HOLDING_GREAT_KNIFE);
     }
 
     /**

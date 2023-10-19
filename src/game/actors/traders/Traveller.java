@@ -4,11 +4,14 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.BuyAction;
+import game.actors.traders.conversations.Talkable;
 import game.enums.Ability;
 import game.items.HealingVial;
 import game.items.RefreshingFlask;
 import game.weapons.Broadsword;
 import game.weapons.GreatKnife;
+
+import java.util.ArrayList;
 
 /**
  * Class representing a Traveller.
@@ -30,6 +33,7 @@ public class Traveller extends Trader {
     // Great Knife price
     private static final int GREAT_KNIFE_BUY_PRICE = 300;
 
+
     /**
      * The constructor of the Traveller class.
      */
@@ -50,10 +54,10 @@ public class Traveller extends Trader {
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList list = super.allowableActions(otherActor, direction, map);
 
-        list.add(new BuyAction(this, new HealingVial(),HEALING_VIAL_BUY_PRICE));
-        list.add(new BuyAction(this, new RefreshingFlask(),REFRESHING_FLASK_BUY_PRICE));
-        list.add(new BuyAction(this, new Broadsword(),BROADSWORD_BUY_PRICE,BROADSWORD_BUY_SCAM_CHANCE));
-        list.add(new BuyAction(this, new GreatKnife(),GREAT_KNIFE_BUY_PRICE));
+        list.add(new BuyAction(this, new HealingVial(), HEALING_VIAL_BUY_PRICE));
+        list.add(new BuyAction(this, new RefreshingFlask(), REFRESHING_FLASK_BUY_PRICE));
+        list.add(new BuyAction(this, new Broadsword(), BROADSWORD_BUY_PRICE,BROADSWORD_BUY_SCAM_CHANCE));
+        list.add(new BuyAction(this, new GreatKnife(), GREAT_KNIFE_BUY_PRICE));
 
         return list;
     }

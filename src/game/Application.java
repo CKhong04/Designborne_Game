@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.monash.fit2099.engine.actions.MoveActorAction;
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.FancyGroundFactory;
@@ -14,6 +13,11 @@ import game.actors.Player;
 import game.actors.enemies.Abxervyer;
 import game.actors.traders.Blacksmith;
 import game.actors.traders.Traveller;
+import game.actors.traders.conversations.Monologue;
+import game.actors.traders.conversations.conditions.ActorIsConsiousCondition;
+import game.actors.traders.conversations.conditions.ActorIsHoldingWeaponItemCondition;
+import game.actors.traders.conversations.conditions.ActorIsUnconsiousCondition;
+import game.enums.Status;
 import game.grounds.*;
 import game.grounds.spawners.*;
 import game.items.BloodBerry;
@@ -133,8 +137,8 @@ public class Application {
         ancientWoodsGameMap.at(27,6).setGround(woodsToBurialGroundGate);
 
         //Add Traveller
-        Actor Traveller = new Traveller();
-        world.addPlayer(Traveller, ancientWoodsGameMap.at(6, 3));
+        Traveller traveller = new Traveller();
+        ancientWoodsGameMap.at(6, 3).addActor(traveller);
 
         //Creating the room in ancient woods
         List<String> roomMap = Arrays.asList(
@@ -209,7 +213,8 @@ public class Application {
         roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(overgrownSanctuaryGameMap.at(31, 2), "to the Overgrown Sanctuary."));
 
         // Add the boss to the room
-        roomGameMap.at(35,1).addActor(new Abxervyer(roomToOtherDestinationsGate, sunnyWeather));
+        Abxervyer abxervyer = new Abxervyer(roomToWoodsGate, sunnyWeather);
+        roomGameMap.at(35,1).addActor(abxervyer);
 
         //Add a gate from the sanctuary back to the room
         Gate sanctuaryToRoomGate = new Gate();
@@ -228,11 +233,22 @@ public class Application {
 
         // Add player
         Player player = new Player("The Abstracted One", '@', 150, 200);
-        player.addBalance(1000);
+        world.addPlayer(player, ancientWoodsGameMap.at(27, 5));
 
-        Blacksmith blacksmith = new Blacksmith("Blacksmith", 'B');
-        world.addPlayer(blacksmith, gameMap.at(27, 6) );
-        world.addPlayer(player, gameMap.at(29, 5));
+        // Add the monologues
+        List<Monologue> monologues = Arrays.asList(
+                new Monologue("I used to be an adventurer like you, but then …. Nevermind, let’s get back to smithing."),
+                new Monologue("It’s dangerous to go alone. Take my creation with you on your adventure!"),
+                new Monologue("Ah, it’s you. Let’s get back to make your weapons stronger."),
+                new Monologue("Beyond the burial ground, you’ll come across the ancient woods ruled by Abxervyer. Use my creation to slay them and proceed further!", List.of(new ActorIsConsiousCondition(abxervyer))),
+                new Monologue("Somebody once told me that a sacred tree rules the land beyond the ancient woods until this day.", List.of(new ActorIsUnconsiousCondition(abxervyer))),
+                new Monologue("Hey now, that’s a weapon from a foreign land that I have not seen for so long. I can upgrade it for you if you wish.", List.of(new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GREAT_KNIFE)))
+        );
+
+        // Add the blacksmith
+        Blacksmith blacksmith = new Blacksmith(monologues);
+        ancientWoodsGameMap.at(27, 6).addActor(blacksmith);
+
         world.run();
     }
 }
