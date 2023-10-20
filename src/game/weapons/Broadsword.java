@@ -13,6 +13,8 @@ import game.enums.Status;
 import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Sellable;
 import game.items.itemproperties.Upgradeable;
+import game.respawn.MortalRespawn;
+import game.respawn.RespawnEntity;
 import game.utilities.Utility;
 import game.weapons.skills.FocusCapable;
 import game.weapons.skills.FocusAction;
@@ -24,7 +26,7 @@ import game.weapons.skills.FocusAction;
  * Modified by:
  * Khoi Nguyen, Carissa Khong
  */
-public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable, Upgradeable {
+public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable, Upgradeable, RespawnEntity {
     /**
      * The turn counter.
      */
@@ -65,6 +67,9 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     private static final int UPGRADE_PRICE = 1000;
 
     private final Display display = new Display();
+
+    private MortalRespawn respawn = new MortalRespawn();
+    private static Location LOCATION;
 
     /**
      * Constructor.
@@ -121,6 +126,10 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     @Override
     public void tick(Location currentLocation, Actor actor) {
         activateSkill();
+        if (check){
+            respawn.unregisterEntity(this);
+        }
+        check = false;
     }
 
     /**
@@ -133,6 +142,11 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     public void tick(Location currentLocation) {
         if (this.hasCapability(Status.FOCUS_SKILL)){
             this.removeCapability(Status.FOCUS_SKILL);
+        }
+        LOCATION = currentLocation;
+        if(!check){
+            respawn.registerEntity(this);
+            check = true;
         }
     }
 
@@ -221,6 +235,13 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     public void upgrade(Actor actor) {
         actor.deductBalance(UPGRADE_PRICE);
         DAMAGE += 10;
+    }
+
+    private boolean check = false;
+
+    @Override
+    public void respawnUpdate() {
+        LOCATION.removeItem(this);
     }
 
 }
