@@ -24,17 +24,28 @@ public class OldKey extends Item implements RespawnEntity{
     public OldKey(){
         super("Old Key", '-', true);
         this.addCapability(Status.HAS_KEY);
-        respawn.registerEntity(this);
+    }
+
+    private boolean check = false;
+    public void tick(Location currentLocation, Actor actor) {
+        if (check){
+            respawn.unregisterEntity(this);
+        }
+        check = false;
+
     }
 
     @Override
-    public void tick(Location currentLocation, Actor actor) {
-        this.LOCATION = currentLocation;
+    public void tick(Location currentLocation) {
+        LOCATION = currentLocation;
+        if(!check){
+            respawn.registerEntity(this);
+            check = true;
+        }
     }
 
     @Override
     public void respawnUpdate() {
-        this.LOCATION.removeItem(this);
-//        respawn.unregisterEntity(this);
+        LOCATION.removeItem(this);
     }
 }

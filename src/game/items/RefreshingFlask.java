@@ -134,14 +134,27 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
         INCREASE_STAMINA_VALUE = 100;
     }
 
-    @Override
+    private boolean check = false;
     public void tick(Location currentLocation, Actor actor) {
-        this.LOCATION = currentLocation;
+        if (check){
+            respawn.unregisterEntity(this);
+        }
+        check = false;
+
     }
 
     @Override
+    public void tick(Location currentLocation) {
+        LOCATION = currentLocation;
+        if(!check){
+            respawn.registerEntity(this);
+            check = true;
+        }
+    }
+
+
+    @Override
     public void respawnUpdate() {
-        this.LOCATION.removeItem(this);
-//        respawn.unregisterEntity(this);
+        LOCATION.removeItem(this);
     }
 }

@@ -36,12 +36,13 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
 
     private MortalRespawn respawn = new MortalRespawn();
 
+    private boolean check;
+
     /**
      * Constructor.
      */
     public HealingVial() {
         super("Healing Vial",'a', true);
-        respawn.registerEntity(this);
 
     }
 
@@ -129,14 +130,28 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
        INCREASE_HEALTH_VALUE = 80;
     }
 
-    @Override
+
     public void tick(Location currentLocation, Actor actor) {
-        this.LOCATION = currentLocation;
+        if (check){
+            respawn.unregisterEntity(this);
+        }
+        check = false;
+
+    }
+
+    @Override
+    public void tick(Location currentLocation) {
+        LOCATION = currentLocation;
+        if(!check){
+            respawn.registerEntity(this);
+            check = true;
+        }
     }
 
     @Override
     public void respawnUpdate() {
-        this.LOCATION.removeItem(this);
-//        respawn.unregisterEntity(this);
+        LOCATION.removeItem(this);
     }
+
+
 }

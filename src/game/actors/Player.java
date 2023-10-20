@@ -14,7 +14,9 @@ import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
 import game.enums.Status;
 import game.items.Rune;
+import game.respawn.ImmortalRespawn;
 import game.respawn.MortalRespawn;
+import game.respawn.Respawn;
 import game.utilities.FancyMessage;
 
 /**
@@ -77,7 +79,8 @@ public class Player extends Actor {
 
         MortalRespawn allRespawn = new MortalRespawn();
         allRespawn.notifyEntities();
-
+        ImmortalRespawn oneRespawn = new ImmortalRespawn();
+        oneRespawn.notifyEntities();
         deathLocation.addItem(new Rune(numOfRunes));
     }
 

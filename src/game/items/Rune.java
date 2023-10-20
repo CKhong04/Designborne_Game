@@ -20,7 +20,7 @@ public class Rune extends Item implements Consumable, RespawnEntity {
      */
     private final int quantity;
 
-    private static Location LOCATION;
+    private Location location;
 
     private MortalRespawn respawn = new MortalRespawn();
 
@@ -33,7 +33,6 @@ public class Rune extends Item implements Consumable, RespawnEntity {
 
         super("Runes", '$', true);
         this.quantity = quantity;
-        respawn.registerEntity(this);
     }
 
     /**
@@ -60,16 +59,22 @@ public class Rune extends Item implements Consumable, RespawnEntity {
         actions.add(new ConsumeAction(this));
         return actions;
     }
-
-    @Override
+    private boolean check = false;
     public void tick(Location currentLocation, Actor actor) {
-        this.LOCATION = currentLocation;
+        respawn.unregisterEntity(this);
+        check = false;
+
     }
 
     @Override
+    public void tick(Location currentLocation) {
+        this.location = currentLocation;
+        respawn.registerEntity(this);
+        check = true;
+    }
+    @Override
     public void respawnUpdate() {
-        this.LOCATION.removeItem(this);
-//        respawn.unregisterEntity(this);
+        this.location.removeItem(this);
     }
 }
 
