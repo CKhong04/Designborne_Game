@@ -30,6 +30,8 @@ import java.util.Map;
 public abstract class Enemy extends Actor implements RespawnEntity {
     // Protected attribute
     protected Map<Integer, Behaviour> behaviours = new HashMap<>();
+    //Private attribute
+    private MortalRespawn respawn = new MortalRespawn();
 
     /**
      * A constructor which accepts name, display character and hit points.
@@ -43,7 +45,7 @@ public abstract class Enemy extends Actor implements RespawnEntity {
         super(name, displayChar, hitPoints);
         this.addCapability(Ability.CANNOT_ACCESS_FLOOR);
         this.addCapability(Status.HOSTILE_TO_PLAYER);
-        new MortalRespawn().registerEntity(this);
+        respawn.registerEntity(this);
     }
 
     /**

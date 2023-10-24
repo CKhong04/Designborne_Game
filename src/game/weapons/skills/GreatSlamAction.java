@@ -94,7 +94,7 @@ public class GreatSlamAction extends Action implements StaminaConsumable {
             for (Exit availableExit : availableExits) {
                 Location destination = availableExit.getDestination();
 
-                if (destination.containsAnActor()) {
+                if (destination.containsAnActor() && destination.getActor() != target) {
                     Actor otherActor = destination.getActor();
                     result.append("\n").append(new AttackAction(otherActor, destination.toString(), weaponItem).execute(actor, map));
                 }

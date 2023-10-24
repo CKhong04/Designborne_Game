@@ -114,7 +114,7 @@ public class Abxervyer extends Boss implements MoveCapable, FollowCapable{
     public IntrinsicWeapon getIntrinsicWeapon() {
         int damage = 80;
         int hitRate = 25;
-        String verb = "smashes";
+        String verb = "punches";
         return new IntrinsicWeapon(damage, verb, hitRate);
     }
 
