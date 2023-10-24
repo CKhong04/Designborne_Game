@@ -13,8 +13,6 @@ import game.enums.Status;
 import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Sellable;
 import game.items.itemproperties.Upgradeable;
-import game.respawn.MortalRespawn;
-import game.respawn.RespawnEntity;
 import game.utilities.Utility;
 import game.weapons.skills.FocusCapable;
 import game.weapons.skills.FocusAction;
@@ -26,7 +24,7 @@ import game.weapons.skills.FocusAction;
  * Modified by:
  * Khoi Nguyen, Carissa Khong
  */
-public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable, Upgradeable, RespawnEntity {
+public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Buyable, Upgradeable {
     /**
      * The turn counter.
      */
@@ -68,9 +66,6 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
 
     private final Display display = new Display();
 
-    private MortalRespawn respawn = new MortalRespawn();
-    private static Location LOCATION;
-
     /**
      * Constructor.
      */
@@ -111,6 +106,10 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
         }
     }
 
+    /**
+     * Returns a Focus Action for the Broadsword.
+     * @return A Focus Action.
+     */
     public FocusAction getFocusAction() {
         return new FocusAction(this, 20);
     }
@@ -126,10 +125,6 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     @Override
     public void tick(Location currentLocation, Actor actor) {
         activateSkill();
-        if (check){
-            respawn.unregisterEntity(this);
-        }
-        check = false;
     }
 
     /**
@@ -142,11 +137,6 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     public void tick(Location currentLocation) {
         if (this.hasCapability(Status.FOCUS_SKILL)){
             this.removeCapability(Status.FOCUS_SKILL);
-        }
-        LOCATION = currentLocation;
-        if(!check){
-            respawn.registerEntity(this);
-            check = true;
         }
     }
 
@@ -219,8 +209,10 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     }
 
     /**
-     *
-     * @return
+     * Overrides the damage method from the WeaponItem class in the game engine's weapons package.
+     * It checks if the damage multiplier has been updated already and is now greater than the default multiplier.
+     * If so, use the default damage multiplier.
+     * @return The damage inflicted using the weapon.
      */
     @Override
     public int damage() {
@@ -231,17 +223,15 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     }
 
 
+    /**
+     * Called when upgrading the Broadsword. Updates the actor's balance and increases the damage inflicted when using
+     * the weapon.
+     * @param actor The actor holding the weapon.
+     */
     @Override
     public void upgrade(Actor actor) {
         actor.deductBalance(UPGRADE_PRICE);
         DAMAGE += 10;
-    }
-
-    private boolean check = false;
-
-    @Override
-    public void respawnUpdate() {
-        LOCATION.removeItem(this);
     }
 
 }

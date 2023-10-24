@@ -14,8 +14,6 @@ import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Consumable;
 import game.items.itemproperties.Sellable;
 import game.items.itemproperties.Upgradeable;
-import game.respawn.MortalRespawn;
-import game.respawn.RespawnEntity;
 import game.utilities.Utility;
 
 /**
@@ -25,19 +23,13 @@ import game.utilities.Utility;
  * Modified by:
  * @author Ishita Gupta
  */
-public class RefreshingFlask extends Item implements Sellable, Buyable, Consumable, Upgradeable, RespawnEntity {
+public class RefreshingFlask extends Item implements Sellable, Buyable, Consumable, Upgradeable{
     //Private attributes
     private static int INCREASE_STAMINA_VALUE = 20;
     private static final int SELL_PRICE = 25;
     private static final int SELL_SCAM_CHANCE = 50;
     private static final int UPGRADE_PRICE = 175;
     private static boolean UPGRADE_HAPPENED = false;
-
-    private static Location LOCATION;
-
-    private MortalRespawn respawn = new MortalRespawn();
-
-
 
     /**
      * Constructor.
@@ -127,34 +119,15 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
         return actions;
     }
 
+    /**
+     * When the Refreshing Flask is updated, this method is called, increasing the amount the stamina would be changed
+     * by to 100.
+     * @param actor The actor whose inventory the Refreshing Flask is in.
+     */
     @Override
     public void upgrade(Actor actor) {
         UPGRADE_HAPPENED = true;
         actor.deductBalance(UPGRADE_PRICE);
         INCREASE_STAMINA_VALUE = 100;
-    }
-
-    private boolean check = false;
-    public void tick(Location currentLocation, Actor actor) {
-        if (check){
-            respawn.unregisterEntity(this);
-        }
-        check = false;
-
-    }
-
-    @Override
-    public void tick(Location currentLocation) {
-        LOCATION = currentLocation;
-        if(!check){
-            respawn.registerEntity(this);
-            check = true;
-        }
-    }
-
-
-    @Override
-    public void respawnUpdate() {
-        LOCATION.removeItem(this);
     }
 }

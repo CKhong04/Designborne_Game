@@ -13,20 +13,16 @@ import game.enums.Status;
 import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Sellable;
 import game.items.itemproperties.Upgradeable;
-import game.respawn.MortalRespawn;
-import game.respawn.RespawnEntity;
 import game.utilities.Utility;
 import game.weapons.skills.StabAndStepAction;
 import game.weapons.skills.StabAndStepCapable;
-
-import javax.imageio.spi.RegisterableService;
 
 /**
  * Class representing a Great Knife.
  * Created by:
  * @author Minh Nguyen
  */
-public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable, Upgradeable, RespawnEntity {
+public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable, Upgradeable {
     /**
      * The damage to this weapon.
      */
@@ -52,10 +48,6 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
 
     private int staminaRecoveryRate = 1;
 
-    private MortalRespawn respawn = new MortalRespawn();
-    private static Location LOCATION;
-
-
     /**
      * Constructor.
      */
@@ -78,9 +70,6 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
     @Override
     public void tick(Location currentLocation) {
         this.removeCapability(Status.HOLDING_GREAT_KNIFE);
-        LOCATION = currentLocation;
-        respawn.registerEntity(this);
-        check = true;
     }
 
     /**
@@ -146,13 +135,6 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         actor.addItemToInventory(this);
         return newPrice;
     }
-    private boolean check = false;
-
-    public void tick(Location currentLocation, Actor actor) {
-        respawn.unregisterEntity(this);
-        check = false;
-
-    }
 
     @Override
     public void upgrade(Actor actor) {
@@ -160,9 +142,5 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
         int recoverPercentage = staminaRecoveryRate * maxStamina / 100;
         HIT_RATE += recoverPercentage;
-    }
-
-    public void respawnUpdate() {
-        LOCATION.removeItem(this);
     }
 }

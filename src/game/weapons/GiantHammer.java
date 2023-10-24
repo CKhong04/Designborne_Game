@@ -9,8 +9,6 @@ import game.actions.SellAction;
 import game.enums.Ability;
 import game.enums.Status;
 import game.items.itemproperties.Sellable;
-import game.respawn.MortalRespawn;
-import game.respawn.RespawnEntity;
 import game.weapons.skills.GreatSlamAction;
 import game.weapons.skills.GreatSlamCapable;
 
@@ -21,7 +19,7 @@ import game.weapons.skills.GreatSlamCapable;
  * Modified by:
  * Carissa Khong, Laura Zhakupova
  */
-public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapable, RespawnEntity {
+public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapable{
     /**
      * The damage to this weapon.
      */
@@ -39,11 +37,6 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
      * The sell price of this weapon.
      */
     private static final int SELL_PRICE = 250;
-
-    private MortalRespawn respawn = new MortalRespawn();
-    private static Location LOCATION;
-    private boolean check = false;
-
 
     /**
      * Constructor.
@@ -96,24 +89,5 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
         actor.removeItemFromInventory(this);
         trader.addItemToInventory(this);
         return SELL_PRICE;
-    }
-
-
-    public void tick(Location currentLocation, Actor actor) {
-        respawn.unregisterEntity(this);
-        check = false;
-
-    }
-
-    @Override
-    public void tick(Location currentLocation) {
-        LOCATION = currentLocation;
-        respawn.registerEntity(this);
-        check = true;
-    }
-
-    @Override
-    public void respawnUpdate() {
-        LOCATION.removeItem(this);
     }
 }

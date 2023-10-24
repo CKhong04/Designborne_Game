@@ -13,17 +13,15 @@ import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Consumable;
 import game.items.itemproperties.Sellable;
 import game.items.itemproperties.Upgradeable;
-import game.respawn.MortalRespawn;
-import game.respawn.RespawnEntity;
 import game.utilities.Utility;
 
 /**
  * Class representing a healing vial.
  * Created by:
  * @author Laura Zhakupova
- * Modified by: Ishita Gupta
+ * Modified by: Ishita Gupta, Carissa Khong
  */
-public class HealingVial extends Item implements Sellable, Buyable, Consumable, Upgradeable, RespawnEntity {
+public class HealingVial extends Item implements Sellable, Buyable, Consumable, Upgradeable{
     //Private attributes
     private static int INCREASE_HEALTH_VALUE = 10;
     private static final int SELL_PRICE = 35;
@@ -32,18 +30,11 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
 
     private static boolean UPGRADE_HAPPENED = false;
 
-    private static Location LOCATION;
-
-    private MortalRespawn respawn = new MortalRespawn();
-
-    private boolean check;
-
     /**
      * Constructor.
      */
     public HealingVial() {
         super("Healing Vial",'a', true);
-
     }
 
     /**
@@ -123,35 +114,15 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
         actor.removeItemFromInventory(this);
     }
 
+    /**
+     * When an upgrade occurs, a boolean signifying the item has been updated becomes true. The actor has the upgrade
+     * price deducted from their balance. The value signifying the healing amount is updated to 80.
+     * @param actor The actor whose inventory the HealingVial is in.
+     */
     @Override
     public void upgrade(Actor actor) {
         UPGRADE_HAPPENED = true;
         actor.deductBalance(UPGRADE_PRICE);
-       INCREASE_HEALTH_VALUE = 80;
+        INCREASE_HEALTH_VALUE = 80;
     }
-
-
-    public void tick(Location currentLocation, Actor actor) {
-        if (check){
-            respawn.unregisterEntity(this);
-        }
-        check = false;
-
-    }
-
-    @Override
-    public void tick(Location currentLocation) {
-        LOCATION = currentLocation;
-        if(!check){
-            respawn.registerEntity(this);
-            check = true;
-        }
-    }
-
-    @Override
-    public void respawnUpdate() {
-        LOCATION.removeItem(this);
-    }
-
-
 }
