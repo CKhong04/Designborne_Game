@@ -28,10 +28,9 @@ import java.util.Map;
  * Carissa Khong, Ishita Gupta, Khoi Nguyen
  */
 public abstract class Enemy extends Actor implements RespawnEntity {
-    // Private attributes
+    // Protected attribute
     protected Map<Integer, Behaviour> behaviours = new HashMap<>();
 
-    private MortalRespawn respawn = new MortalRespawn();
     /**
      * A constructor which accepts name, display character and hit points.
      * An enemy cannot move through a Floor in the maps, therefore, an Ability is added preventing this from happening.
@@ -44,7 +43,7 @@ public abstract class Enemy extends Actor implements RespawnEntity {
         super(name, displayChar, hitPoints);
         this.addCapability(Ability.CANNOT_ACCESS_FLOOR);
         this.addCapability(Status.HOSTILE_TO_PLAYER);
-        respawn.registerEntity(this);
+        new MortalRespawn().registerEntity(this);
     }
 
     /**
