@@ -31,7 +31,7 @@ public abstract class Enemy extends Actor implements RespawnEntity {
     // Protected attribute
     protected Map<Integer, Behaviour> behaviours = new HashMap<>();
     //Private attribute
-    private MortalRespawn respawn = new MortalRespawn();
+    private final MortalRespawn respawn = new MortalRespawn();
 
     /**
      * A constructor which accepts name, display character and hit points.
@@ -99,6 +99,17 @@ public abstract class Enemy extends Actor implements RespawnEntity {
             deathLocation.addItem(item);
         }
         return this + " met their demise at the hand of " + actor;
+    }
+
+    /**
+     * Overrides the unconscious method called when an enemy falls unconscious due to natural causes.
+     * @param map where the actor fell unconscious
+     * @return The result from the unconscious method of the Actor class.
+     */
+    @Override
+    public String unconscious(GameMap map) {
+        respawn.unregisterEntity(this);
+        return super.unconscious(map);
     }
 
     /**
