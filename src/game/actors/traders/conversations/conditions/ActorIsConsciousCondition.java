@@ -7,7 +7,7 @@ import edu.monash.fit2099.engine.actors.Actor;
  * Created by:
  * @author Minh Nguyen
  */
-public class ActorIsConsiousCondition implements Condition {
+public class ActorIsConsciousCondition implements Condition {
     /**
      * The actor to be checked.
      */
@@ -17,7 +17,7 @@ public class ActorIsConsiousCondition implements Condition {
      * Constructor.
      * @param actor the actor to be checked.
      */
-    public ActorIsConsiousCondition(Actor actor) {
+    public ActorIsConsciousCondition(Actor actor) {
         this.actor = actor;
     }
 

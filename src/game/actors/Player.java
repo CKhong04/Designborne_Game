@@ -89,7 +89,7 @@ public class Player extends Actor {
                 exception.printStackTrace();
             }
         }
-        this.spawningMap.at(31, 5).addActor(this);
+        this.spawningMap.at(29, 5).addActor(this);
         this.modifyAttribute(BaseActorAttributes.HEALTH,ActorAttributeOperations.UPDATE,this.getAttributeMaximum(BaseActorAttributes.HEALTH));
         this.modifyAttribute(BaseActorAttributes.STAMINA,ActorAttributeOperations.UPDATE,this.getAttributeMaximum(BaseActorAttributes.STAMINA));
         int numOfRunes = this.getBalance();
