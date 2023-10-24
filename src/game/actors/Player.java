@@ -28,7 +28,7 @@ public class Player extends Actor {
     /**
      * Stamina recovery rate is 1% per turn
      */
-    private final int staminaRecoveryRate = 1;
+    private final static int STAMINA_RECOVERY_RATE = 1;
     private final GameMap spawningMap;
 
     /**
@@ -101,7 +101,7 @@ public class Player extends Actor {
         int currentStamina = this.getAttribute(BaseActorAttributes.STAMINA);
         int maxStamina = this.getAttributeMaximum(BaseActorAttributes.STAMINA);
         if (currentStamina < maxStamina){
-            int recoverPercentage = staminaRecoveryRate * maxStamina / 100;
+            int recoverPercentage = STAMINA_RECOVERY_RATE * maxStamina / 100;
             this.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.INCREASE,recoverPercentage);
         }
     }

@@ -235,7 +235,7 @@ public class Application {
         Player player = new Player("The Abstracted One", '@', 150, 200, gameMap);
         world.addPlayer(player, gameMap.at(29, 5));
 
-        // Add the monologues
+        // Add the monologues the blacksmith can use.
         List<Monologue> monologues = Arrays.asList(
                 new Monologue("I used to be an adventurer like you, but then …. Nevermind, let’s get back to smithing."),
                 new Monologue("It’s dangerous to go alone. Take my creation with you on your adventure!"),
@@ -247,7 +247,7 @@ public class Application {
 
         // Add the blacksmith
         Blacksmith blacksmith = new Blacksmith(monologues);
-        ancientWoodsGameMap.at(27, 6).addActor(blacksmith);
+        gameMap.at(31, 6).addActor(blacksmith);
 
         world.run();
     }
