@@ -22,7 +22,7 @@ import game.utilities.FancyMessage;
  * Class representing the Player.
  * Created by:
  * @author Adrian Kristanto
- * Modified by: Laura Zhakupova
+ * Modified by: Laura Zhakupova, Ishita Gupta, Carissa Khong
  */
 public class Player extends Actor {
     /**
@@ -47,6 +47,14 @@ public class Player extends Actor {
         this.spawningMap = spawningMap;
     }
 
+    /**
+     * Overrides the unconscious method from the Actor class, where the actor is killed by another actor. Calls the
+     * respawn method to allow them to respawn.
+     * @param actor the perpetrator
+     * @param map where the actor fell unconscious
+     * @return A String articulating what had occurred.
+     */
+    @Override
     public String unconscious(Actor actor, GameMap map) {
         Location deathLocation = map.locationOf(this);
         map.removeActor(this);
@@ -54,6 +62,13 @@ public class Player extends Actor {
         return this + " met their demise in the hand of " + actor;
     }
 
+    /**
+     * Overrides the unconscious method where an actor dies to natural causes. Calls the respawn method allowing the
+     * Player to respawn.
+     * @param map where the actor fell unconscious
+     * @return A String indicating the actor became unconscious.
+     */
+    @Override
     public String unconscious(GameMap map) {
         Location deathLocation = map.locationOf(this);
         map.removeActor(this);
@@ -61,6 +76,10 @@ public class Player extends Actor {
         return this + " ceased to exist.";
     }
 
+    /**
+     * Handles the events that occur when the player dies and respawns, including notifying all necessary entities.
+     * @param deathLocation The location where the player died.
+     */
     public void respawn(Location deathLocation) {
         for (String line : FancyMessage.YOU_DIED.split("\n")) {
             new Display().println(line);
@@ -70,16 +89,16 @@ public class Player extends Actor {
                 exception.printStackTrace();
             }
         }
-        this.spawningMap.at(29, 5).addActor(this);
+        this.spawningMap.at(31, 5).addActor(this);
         this.modifyAttribute(BaseActorAttributes.HEALTH,ActorAttributeOperations.UPDATE,this.getAttributeMaximum(BaseActorAttributes.HEALTH));
         this.modifyAttribute(BaseActorAttributes.STAMINA,ActorAttributeOperations.UPDATE,this.getAttributeMaximum(BaseActorAttributes.STAMINA));
         int numOfRunes = this.getBalance();
         this.deductBalance(numOfRunes);
 
-        MortalRespawn allRespawn = new MortalRespawn();
-        allRespawn.notifyEntities();
-        ImmortalRespawn oneRespawn = new ImmortalRespawn();
-        oneRespawn.notifyEntities();
+        MortalRespawn mortalRespawn = new MortalRespawn();
+        mortalRespawn.notifyEntities();
+        ImmortalRespawn immortalRespawn = new ImmortalRespawn();
+        immortalRespawn.notifyEntities();
         deathLocation.addItem(new Rune(numOfRunes));
     }
 

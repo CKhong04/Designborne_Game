@@ -105,6 +105,5 @@ public abstract class Enemy extends Actor implements RespawnEntity {
      */
     public void respawnUpdate(){
         this.hurt(this.getAttribute(BaseActorAttributes.HEALTH));
-//        respawn.unregisterEntity(this);
     }
 }

@@ -1,4 +1,4 @@
-package game.actors.enemies;
+package game.actors.enemies.bosses;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
@@ -7,11 +7,11 @@ import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
+import game.actors.enemies.Enemy;
 import game.actors.enemies.abilities.FollowCapable;
 import game.actors.enemies.abilities.MoveCapable;
 import game.behaviours.FollowBehaviour;
 import game.behaviours.WanderBehaviour;
-import game.enums.Ability;
 import game.grounds.Gate;
 import game.items.Rune;
 import game.utilities.Utility;
@@ -24,7 +24,7 @@ import game.weathers.Weather;
  * Created By:
  * @author Ishita Gupta, Carissa Khong, Minh Nguyen, Laura Zhakupova
  */
-public class Abxervyer extends Enemy implements MoveCapable, FollowCapable {
+public class Abxervyer extends Boss implements MoveCapable, FollowCapable{
     /**
      * Hit points of Abxervyer.
      */
@@ -40,14 +40,12 @@ public class Abxervyer extends Enemy implements MoveCapable, FollowCapable {
     /**
      * The constructor is taken from the Enemy abstract class. For Abxervyer, this gives the name of the enemy, which is
      * Abxervyer, the Forest Watcher, its display character, 'Y' and its initial HP, 2000.
-     * Additionally, Abxervyer is a resident of the Ancient Woods and is unable to be hurt when walking on the void.
      * Abxervyer has 5000 runes in its inventory, which it will drop when killed.
      * @param gateToWoods The gate which appears when Abxervyer dies.
      */
     public Abxervyer(Gate gateToWoods, Weather sunnyWeather) {
         super("Abxervyer, the Forest Watcher", 'Y', HIT_POINTS);
         this.weather = sunnyWeather;
-        this.addCapability(Ability.NOT_HURT_BY_VOID); //Abxervyer will not be hurt if it steps on a void.
         Utility.addItemByChance(this, CHANCE_DROP_RUNE, new Rune(5000));
         this.gateToWoods = gateToWoods;
     }

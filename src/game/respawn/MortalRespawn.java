@@ -30,7 +30,7 @@ public class MortalRespawn implements Respawn {
     }
 
     /**
-     * A method to notify any entities that respawning has occurred and they should perform their respawn update.
+     * A method to notify any entities that respawning has occurred, and they should perform their respawn update.
      * The list of entities which are mortal is cleared.
      */
     @Override

@@ -31,7 +31,7 @@ public class ImmortalRespawn implements Respawn {
     }
 
     /**
-     * notifyEntities alerts all entities in the list that the respawning has occurred so they can respond accordingly.
+     * notifyEntities alerts all entities in the list that the respawning has occurred, so they can respond accordingly.
      */
     @Override
     public void notifyEntities() {
