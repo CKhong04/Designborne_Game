@@ -13,7 +13,7 @@ import game.enums.Ability;
 import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Consumable;
 import game.items.itemproperties.Sellable;
-import game.items.itemproperties.Upgradable;
+import game.items.itemproperties.Upgradeable;
 import game.utilities.Utility;
 
 /**
@@ -23,7 +23,7 @@ import game.utilities.Utility;
  * Modified by:
  * @author Ishita Gupta
  */
-public class RefreshingFlask extends Item implements Sellable, Buyable, Consumable, Upgradable {
+public class RefreshingFlask extends Item implements Sellable, Buyable, Consumable, Upgradeable {
     //Private attributes
     private static int INCREASE_STAMINA_VALUE = 20;
     private static final int SELL_PRICE = 25;
@@ -52,7 +52,7 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
     public ActionList allowableActions(Actor otherActor, Location location) {
         ActionList actions = super.allowableActions(otherActor, location);
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
-            actions.add(new SellAction(otherActor, this, SELL_PRICE));
+            actions.add(new SellAction(otherActor, this));
         }
 
         if (!UPGRADE_HAPPENED && otherActor.hasCapability(Ability.CAN_UPGRADE_ITEM)){

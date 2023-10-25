@@ -32,10 +32,6 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
      * The stamina decrease percentage of this weapon.
      */
     private static final int STAMINA_DECREASE_PERCENTAGE = 5;
-    /**
-     * The buy price of this weapon.
-     */
-    private static final int BUY_PRICE = 0;
 
     /**
      * The sell price of this weapon.
@@ -47,6 +43,7 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
      */
     public GiantHammer() {
         super("Giant Hammer", 'P', DAMAGE, "smashes", HIT_RATE);
+        this.addCapability(Status.HOLDING_GIANT_HAMMER);
     }
 
     /**
@@ -77,7 +74,7 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
             actions.add(getGreatSlamAction(otherActor, location));
         }
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
-            actions.add(new SellAction(otherActor, this, SELL_PRICE));
+            actions.add(new SellAction(otherActor, this));
         }
         return actions;
     }

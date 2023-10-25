@@ -2,7 +2,6 @@ package game.weapons;
 
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
-import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.WeaponItem;
@@ -13,7 +12,7 @@ import game.enums.Ability;
 import game.enums.Status;
 import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Sellable;
-import game.items.itemproperties.Upgradable;
+import game.items.itemproperties.Upgradeable;
 import game.utilities.Utility;
 import game.weapons.skills.StabAndStepAction;
 import game.weapons.skills.StabAndStepCapable;
@@ -23,7 +22,7 @@ import game.weapons.skills.StabAndStepCapable;
  * Created by:
  * @author Minh Nguyen
  */
-public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable, Upgradable {
+public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAndStepCapable, Upgradeable {
     /**
      * The damage to this weapon.
      */
@@ -55,6 +54,8 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
      */
     public GreatKnife() {
         super("Great Knife", '>', DAMAGE, "slashes", HIT_RATE);
+
+        this.addCapability(Status.HOLDING_GREAT_KNIFE);
     }
 
     /**
@@ -65,6 +66,11 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
     @Override
     public StabAndStepAction getStabAndStepAction(Actor otherActor, Location targetLocation) {
         return new StabAndStepAction(this, otherActor, targetLocation, STAMINA_DECREASE_PERCENTAGE);
+    }
+
+    @Override
+    public void tick(Location currentLocation) {
+        this.removeCapability(Status.HOLDING_GREAT_KNIFE);
     }
 
     /**
@@ -84,7 +90,7 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
             actions.add(this.getStabAndStepAction(otherActor, location));
         }
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
-            actions.add(new SellAction(otherActor, this, SELL_PRICE));
+            actions.add(new SellAction(otherActor, this));
         }
         if (otherActor.hasCapability(Ability.CAN_UPGRADE_ITEM)){
             actions.add(new UpgradeAction(this, UPGRADE_PRICE));

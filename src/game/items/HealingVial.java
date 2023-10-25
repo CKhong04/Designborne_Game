@@ -12,7 +12,7 @@ import game.enums.Ability;
 import game.items.itemproperties.Buyable;
 import game.items.itemproperties.Consumable;
 import game.items.itemproperties.Sellable;
-import game.items.itemproperties.Upgradable;
+import game.items.itemproperties.Upgradeable;
 import game.utilities.Utility;
 
 /**
@@ -21,7 +21,7 @@ import game.utilities.Utility;
  * @author Laura Zhakupova
  * Modified by: Ishita Gupta
  */
-public class HealingVial extends Item implements Sellable, Buyable, Consumable, Upgradable {
+public class HealingVial extends Item implements Sellable, Buyable, Consumable, Upgradeable {
     //Private attributes
     private static int INCREASE_HEALTH_VALUE = 10;
     private static final int SELL_PRICE = 35;
@@ -62,7 +62,7 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
     public ActionList allowableActions(Actor otherActor, Location location) {
         ActionList actions = super.allowableActions(otherActor, location);
         if (otherActor.hasCapability((Ability.CAN_BE_SOLD_TO))){
-            actions.add(new SellAction(otherActor, this, SELL_PRICE));
+            actions.add(new SellAction(otherActor, this));
         }
         if (!UPGRADE_HAPPENED && otherActor.hasCapability(Ability.CAN_UPGRADE_ITEM)){
             actions.add(new UpgradeAction(this, UPGRADE_PRICE));

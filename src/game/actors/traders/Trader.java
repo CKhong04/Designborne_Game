@@ -22,8 +22,6 @@ public abstract class Trader extends Actor {
      */
     public Trader(String name, char displayChar) {
         super(name, displayChar, 100);
-
-
     }
 
     /**

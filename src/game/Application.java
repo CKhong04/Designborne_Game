@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import edu.monash.fit2099.engine.actions.MoveActorAction;
-import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.FancyGroundFactory;
@@ -14,11 +13,13 @@ import game.actors.Player;
 import game.actors.enemies.Abxervyer;
 import game.actors.traders.Blacksmith;
 import game.actors.traders.Traveller;
+import game.actors.traders.conversations.Monologue;
+import game.actors.traders.conversations.conditions.ActorIsConsiousCondition;
+import game.actors.traders.conversations.conditions.ActorIsHoldingWeaponItemCondition;
+import game.actors.traders.conversations.conditions.ActorIsUnconsiousCondition;
+import game.enums.Status;
 import game.grounds.*;
-import game.grounds.spawners.Bush;
-import game.grounds.spawners.HollowSoldierGraveyard;
-import game.grounds.spawners.Hut;
-import game.grounds.spawners.WanderingUndeadGraveyard;
+import game.grounds.spawners.*;
 import game.items.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;
@@ -119,10 +120,10 @@ public class Application {
         SunnyWeather sunnyWeather = new SunnyWeather();
 
         //Add the bushes and huts to the Ancient Woods map
-        ancientWoodsGameMap.at(11, 3).setGround(new Bush(sunnyWeather));
+        ancientWoodsGameMap.at(11, 3).setGround(new RedWolfBush(sunnyWeather));
 
-        ancientWoodsGameMap.at(46,9).setGround(new Hut(sunnyWeather));
-        ancientWoodsGameMap.at(8, 7).setGround(new Hut(sunnyWeather));
+        ancientWoodsGameMap.at(46,9).setGround(new ForestKeeperHut(sunnyWeather));
+        ancientWoodsGameMap.at(8, 7).setGround(new ForestKeeperHut(sunnyWeather));
 
         ancientWoodsGameMap.at(47,1).addItem(new BloodBerry());
 
@@ -134,10 +135,6 @@ public class Application {
         Gate woodsToBurialGroundGate = new Gate();
         woodsToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(5,6),"to the Burial Ground."));
         ancientWoodsGameMap.at(27,6).setGround(woodsToBurialGroundGate);
-
-        //Add Traveller
-        Actor Traveller = new Traveller();
-        world.addPlayer(Traveller, ancientWoodsGameMap.at(6, 3));
 
         //Creating the room in ancient woods
         List<String> roomMap = Arrays.asList(
@@ -167,25 +164,91 @@ public class Application {
         world.addGameMap(roomGameMap);
 
         // Adding the bushes and huts to the Room
-        roomGameMap.at(30, 2).setGround(new Bush(sunnyWeather));
+        roomGameMap.at(30, 2).setGround(new RedWolfBush(sunnyWeather));
 
-        roomGameMap.at(19,10).setGround(new Hut(sunnyWeather));
-        roomGameMap.at(2, 11).setGround(new Hut(sunnyWeather));
+        roomGameMap.at(19,10).setGround(new ForestKeeperHut(sunnyWeather));
+        roomGameMap.at(2, 11).setGround(new ForestKeeperHut(sunnyWeather));
 
         Item giantHammer = new GiantHammer();
         roomGameMap.at(27, 6).addItem(giantHammer);
 
         //Adding gates for access to the room
         Gate woodsToRoomGate = new Gate();
-        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room containing Abxervyer, the Forest Watcher."));
+        woodsToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13),"to the room deep in the Woods."));
         ancientWoodsGameMap.at(44,3).setGround(woodsToRoomGate);
 
+        //Add the new Overgrown Sanctuary game map
+        List<String> overgrownSanctuaryMap = Arrays.asList(
+        "++++.....++++........++++~~~~~.......~~~..........",
+        "++++......++.........++++~~~~.........~...........",
+        "+++............~~~...+++++~~.......+++............",
+        "..............~~~...++++++......++++++............",
+        "................~~.++++........++++++~~...........",
+        "..............~~~..+++.........+++..~~~...........",
+        "..................+++..........++...~~~...........",
+        "~~~...........................~~~..~~~~.....~~~~..",
+        "~~~~............+++..........~~~~~~~~~~.......~~..",
+        "~~~~............+++.........~~~~~~~~~~~~..........",
+        "++~..............+++.......+~~........~~..........",
+        "+++..............+++......+++..........~~.........",
+        "+++..............+++......+++..........~~.........",
+        "~~~..............+++......+++..........~~~........",
+        "~~~~.............+++......+++..........~~~........"
+        );
+        GameMap overgrownSanctuaryGameMap = new GameMap(groundFactory, overgrownSanctuaryMap);
+        world.addGameMap(overgrownSanctuaryGameMap);
+
+        //Add the relevant spawning grounds
+        overgrownSanctuaryGameMap.at(8, 12).setGround(new HollowSoldierGraveyard());
+        overgrownSanctuaryGameMap.at(42, 5).setGround(new GuardianHut());
+        overgrownSanctuaryGameMap.at(22, 9).setGround(new LivingBranchBush());
+
         //Create the gate which Abxervyer will set once dead
-        Gate roomToWoodsGate = new Gate();
-        roomToWoodsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(45,3), "to the Ancient Woods."));
+        Gate roomToOtherDestinationsGate = new Gate();
+        roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(45,3), "to the Ancient Woods."));
+        roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(overgrownSanctuaryGameMap.at(31, 2), "to the Overgrown Sanctuary."));
 
         // Add the boss to the room
-        roomGameMap.at(35,1).addActor(new Abxervyer(roomToWoodsGate, sunnyWeather));
+        Abxervyer abxervyer = new Abxervyer(roomToOtherDestinationsGate, sunnyWeather);
+        roomGameMap.at(35,1).addActor(abxervyer);
+
+        //Add a gate from the sanctuary back to the room
+        Gate sanctuaryToRoomGate = new Gate();
+        sanctuaryToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13), "to the room deep in the Woods."));
+        overgrownSanctuaryGameMap.at(10, 4).setGround(sanctuaryToRoomGate);
+
+        // Add player
+        Player player = new Player("The Abstracted One", '@', 150, 200);
+        world.addPlayer(player, ancientWoodsGameMap.at(27, 5));
+
+        // Add Blacksmith
+        List<Monologue> blacksmithMonologues = Arrays.asList(
+                new Monologue("I used to be an adventurer like you, but then …. Nevermind, let’s get back to smithing."),
+                new Monologue("It’s dangerous to go alone. Take my creation with you on your adventure!"),
+                new Monologue("Ah, it’s you. Let’s get back to make your weapons stronger."),
+                new Monologue("Beyond the burial ground, you’ll come across the ancient woods ruled by Abxervyer. Use my creation to slay them and proceed further!", List.of(new ActorIsConsiousCondition(abxervyer))),
+                new Monologue("Somebody once told me that a sacred tree rules the land beyond the ancient woods until this day.", List.of(new ActorIsUnconsiousCondition(abxervyer))),
+                new Monologue("Hey now, that’s a weapon from a foreign land that I have not seen for so long. I can upgrade it for you if you wish.", List.of(new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GREAT_KNIFE)))
+        );
+
+        Blacksmith blacksmith = new Blacksmith(blacksmithMonologues);
+        gameMap.at(27, 6).addActor(blacksmith);
+
+        //Add Traveller
+        List<Monologue> travellerMonologues = Arrays.asList(
+                new Monologue("Of course, I will never give you up, valuable customer!"),
+                new Monologue("I promise I will never let you down with the quality of the items that I sell."),
+                new Monologue("You can always find me here. I'm never gonna run around and desert you, dear customer!"),
+                new Monologue("I'm never gonna make you cry with unfair prices."),
+                new Monologue("Trust is essential in this business. I promise I’m never gonna say goodbye to a valuable customer like you."),
+                new Monologue("Don't worry, I’m never gonna tell a lie and hurt you."),
+                new Monologue("Ooh, that’s a fascinating weapon you got there. I will pay a good price for it. You wouldn't get this price from any other guy.", List.of(new ActorIsConsiousCondition(abxervyer),new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GIANT_HAMMER))),
+                new Monologue("You know the rules of this world, and so do I. Each area is ruled by a lord. Defeat the lord of this area, Abxervyer, and you may proceed to the next area.", List.of(new ActorIsConsiousCondition(abxervyer))),
+                new Monologue("Congratulations on defeating the lord of this area. I noticed you still hold on to that hammer. Why don’t you sell it to me? We've known each other for so long. I can tell you probably don’t need that weapon any longer.", List.of(new ActorIsUnconsiousCondition(abxervyer),new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GIANT_HAMMER)))
+        );
+
+        Traveller traveller = new Traveller(travellerMonologues);
+        ancientWoodsGameMap.at(6, 3).addActor(traveller);
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
@@ -197,13 +260,6 @@ public class Application {
             }
         }
 
-        // Add player
-        Player player = new Player("The Abstracted One", '@', 150, 200);
-        player.addBalance(1000);
-
-        Blacksmith blacksmith = new Blacksmith("Blacksmith", 'B');
-        world.addPlayer(blacksmith, gameMap.at(27, 6) );
-        world.addPlayer(player, gameMap.at(29, 5));
         world.run();
     }
 }

@@ -5,7 +5,10 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import game.enums.Status;
+import game.actors.enemies.abilities.FollowCapable;
+import game.actors.enemies.abilities.MoveCapable;
+import game.behaviours.FollowBehaviour;
+import game.behaviours.WanderBehaviour;
 import game.items.Rune;
 import game.items.HealingVial;
 import game.utilities.Utility;
@@ -19,7 +22,7 @@ import game.weathers.Weather;
  * Modified by: Ishita Gupta, Khoi Nguyen
  *
  */
-public class ForestKeeper extends Enemy implements AncientWoodEntity {
+public class ForestKeeper extends Enemy implements AncientWoodEntity, FollowCapable, MoveCapable {
 
     //Private attributes
     private static final int DROP_VIAL_CHANCE = 20;
@@ -38,7 +41,6 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
         super("Forest Keeper", '8', HIT_POINTS);
         Utility.addItemByChance(this, DROP_VIAL_CHANCE, new HealingVial());
         Utility.addItemByChance(this,CHANCE_DROP_RUNE, new Rune(50));
-        this.addCapability(Status.RESIDENT_ANCIENT_WOODS);
 
         this.weather = weather;
     }
@@ -56,7 +58,8 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
         if (!this.isConscious()) {
             weather.unregisterEntity(this);
         }
-
+        canFollow();
+        canMove();
         return super.findAction(map);
     }
 
@@ -84,5 +87,15 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity {
         int healPoints = 10;
         this.heal(healPoints);
         display.println(this + " feels rejuvenated by the rain.");
+    }
+
+    @Override
+    public void canFollow() {
+        this.behaviours.put(0, new FollowBehaviour());
+    }
+
+    @Override
+    public void canMove() {
+        this.behaviours.put(2, new WanderBehaviour());
     }
 }

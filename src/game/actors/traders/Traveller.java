@@ -4,18 +4,25 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.BuyAction;
+import game.actions.ListenAction;
+import game.actors.traders.conversations.Monologue;
+import game.actors.traders.conversations.Talkable;
 import game.enums.Ability;
 import game.items.HealingVial;
 import game.items.RefreshingFlask;
 import game.weapons.Broadsword;
 import game.weapons.GreatKnife;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 /**
  * Class representing a Traveller.
  * Created by:
  * @author Laura Zhakupova
  */
-public class Traveller extends Trader {
+public class Traveller extends Trader implements Talkable {
 
     // Healing Vial price
     private static final int HEALING_VIAL_BUY_PRICE = 100;
@@ -30,12 +37,36 @@ public class Traveller extends Trader {
     // Great Knife price
     private static final int GREAT_KNIFE_BUY_PRICE = 300;
 
+    // List of monologues
+    private final Random rand = new Random();
+    private final List<Monologue> monologues;
+
+
     /**
      * The constructor of the Traveller class.
      */
-    public Traveller() {
+    public Traveller(List<Monologue> monologues) {
         super("Traveller", 'ඞ');
+        this.monologues = monologues;
         this.addCapability(Ability.CAN_BE_SOLD_TO);
+    }
+
+    /**
+     * Get the monologue to be spoken.
+     * @return the monologue to be spoken.
+     */
+    @Override
+    public String talked() {
+        List<String> availablePhrases = new ArrayList<>();
+
+        for (Monologue monologue : monologues) {
+            if (monologue.canBeSpoken()) {
+                String phrase = monologue.getPhrase();
+                availablePhrases.add(phrase);
+            }
+        }
+
+        return availablePhrases.get(rand.nextInt(availablePhrases.size()));
     }
 
     /**
@@ -50,10 +81,12 @@ public class Traveller extends Trader {
     public ActionList allowableActions(Actor otherActor, String direction, GameMap map) {
         ActionList list = super.allowableActions(otherActor, direction, map);
 
-        list.add(new BuyAction(this, new HealingVial(),HEALING_VIAL_BUY_PRICE));
-        list.add(new BuyAction(this, new RefreshingFlask(),REFRESHING_FLASK_BUY_PRICE));
-        list.add(new BuyAction(this, new Broadsword(),BROADSWORD_BUY_PRICE,BROADSWORD_BUY_SCAM_CHANCE));
-        list.add(new BuyAction(this, new GreatKnife(),GREAT_KNIFE_BUY_PRICE));
+        list.add(new BuyAction(this, new HealingVial(), HEALING_VIAL_BUY_PRICE));
+        list.add(new BuyAction(this, new RefreshingFlask(), REFRESHING_FLASK_BUY_PRICE));
+        list.add(new BuyAction(this, new Broadsword(), BROADSWORD_BUY_PRICE,BROADSWORD_BUY_SCAM_CHANCE));
+        list.add(new BuyAction(this, new GreatKnife(), GREAT_KNIFE_BUY_PRICE));
+
+        list.add(new ListenAction(this));
 
         return list;
     }
