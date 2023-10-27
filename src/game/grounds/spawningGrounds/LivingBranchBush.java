@@ -1,7 +1,7 @@
-package game.grounds.spawners;
+package game.grounds.spawningGrounds;
 
 import edu.monash.fit2099.engine.positions.Location;
-import game.actors.enemies.LivingBranch;
+import game.spawners.Spawners;
 
 public class LivingBranchBush extends SpawningGround{
     private final static int CHANCE_TO_SPAWN = 90;
@@ -18,6 +18,6 @@ public class LivingBranchBush extends SpawningGround{
      */
     @Override
     public void tick(Location location) {
-        super.spawnEnemy(new LivingBranch(), location);
+        super.spawnEnemy(Spawners.createEnemy("Living Branch"), location);
     }
 }

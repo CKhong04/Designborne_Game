@@ -1,7 +1,7 @@
-package game.grounds.spawners;
+package game.grounds.spawningGrounds;
 
 import edu.monash.fit2099.engine.positions.Location;
-import game.actors.enemies.EldentreeGuardian;
+import game.spawners.Spawners;
 
 public class GuardianHut extends SpawningGround{
     private final static int CHANCE_TO_SPAWN = 20;
@@ -19,6 +19,6 @@ public class GuardianHut extends SpawningGround{
      */
     @Override
     public void tick(Location location) {
-        super.spawnEnemy(new EldentreeGuardian(), location);
+        super.spawnEnemy(Spawners.createEnemy("Eldentree Guardian"), location);
     }
 }

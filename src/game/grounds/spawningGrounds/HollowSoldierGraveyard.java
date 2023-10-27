@@ -1,7 +1,7 @@
-package game.grounds.spawners;
+package game.grounds.spawningGrounds;
 
 import edu.monash.fit2099.engine.positions.Location;
-import game.actors.enemies.HollowSoldier;
+import game.spawners.Spawners;
 
 /**
  * Class representing a Graveyard for Hollow Soldier.
@@ -28,6 +28,6 @@ public class HollowSoldierGraveyard extends SpawningGround {
      * @param location The location of the Ground
      */
     public void tick(Location location) {
-        super.spawnEnemy(new HollowSoldier(),location);
+        super.spawnEnemy(Spawners.createEnemy("Hollow Soldier"),location);
     }
 }
