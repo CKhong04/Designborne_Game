@@ -59,10 +59,10 @@ public class Rune extends Item implements Consumable, RespawnEntity {
         actions.add(new ConsumeAction(this));
         return actions;
     }
-//    private boolean check = false;
+
     public void tick(Location currentLocation, Actor actor) {
         respawn.unregisterEntity(this);
-//        check = false;
+
 
     }
 
@@ -70,7 +70,7 @@ public class Rune extends Item implements Consumable, RespawnEntity {
     public void tick(Location currentLocation) {
         this.location = currentLocation;
         respawn.registerEntity(this);
-//        check = true;
+
     }
     @Override
     public void respawnUpdate() {
