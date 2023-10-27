@@ -1,4 +1,4 @@
-package game.grounds.spawningGrounds;
+package game.grounds.spawninggrounds;
 
 import edu.monash.fit2099.engine.positions.Location;
 import game.spawners.Spawners;

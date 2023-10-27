@@ -28,7 +28,7 @@ public class RedWolfSpawner implements Spawners {
      * @return A Red Wolf instance.
      */
     @Override
-    public Enemy getEnemy(Weather weather) {
+    public RedWolf getEnemy(Weather weather) {
         return new RedWolf(weather);
     }
 }

@@ -1,9 +1,8 @@
-package game.grounds.spawningGrounds;
+package game.grounds.spawninggrounds;
 
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
 import game.actors.enemies.Enemy;
-import game.actors.enemies.ForestKeeper;
 import game.spawners.Spawners;
 import game.weathers.AncientWoodEntity;
 import game.weathers.Weather;

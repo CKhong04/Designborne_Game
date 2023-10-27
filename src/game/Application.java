@@ -19,7 +19,7 @@ import game.actors.traders.conversations.conditions.ActorIsHoldingWeaponItemCond
 import game.actors.traders.conversations.conditions.ActorIsUnconsciousCondition;
 import game.enums.Status;
 import game.grounds.*;
-import game.grounds.spawningGrounds.*;
+import game.grounds.spawninggrounds.*;
 import game.items.BloodBerry;
 import game.utilities.FancyMessage;
 import game.weapons.Broadsword;

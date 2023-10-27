@@ -28,7 +28,7 @@ public class ForestKeeperSpawner implements Spawners {
      * @return A Forest Keeper.
      */
     @Override
-    public Enemy getEnemy(Weather weather) {
+    public ForestKeeper getEnemy(Weather weather) {
         return new ForestKeeper(weather);
     }
 }

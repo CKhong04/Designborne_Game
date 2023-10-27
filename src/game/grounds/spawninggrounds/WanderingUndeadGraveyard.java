@@ -1,25 +1,25 @@
-package game.grounds.spawningGrounds;
+package game.grounds.spawninggrounds;
 
 import edu.monash.fit2099.engine.positions.Location;
 import game.spawners.Spawners;
 
 /**
- * Class representing a Graveyard for Hollow Soldier.
+ * Class representing a Graveyard for Wandering Undead.
  * Created by:
  * @author Laura Zhakupova
  * Modified by:
- * Carissa Khong
+ * @author Carissa Khong
  */
-public class HollowSoldierGraveyard extends SpawningGround {
+public class WanderingUndeadGraveyard extends SpawningGround {
 
     //Private attributes
-    private static final int CHANCE_TO_SPAWN = 10;
+    private static final int CHANCE_TO_SPAWN = 25;
 
     /**
      * Constructor
      */
-    public HollowSoldierGraveyard() {
-        super(CHANCE_TO_SPAWN,'n');
+    public WanderingUndeadGraveyard() {
+        super(CHANCE_TO_SPAWN, 'n');
     }
 
     /**
@@ -28,6 +28,6 @@ public class HollowSoldierGraveyard extends SpawningGround {
      * @param location The location of the Ground
      */
     public void tick(Location location) {
-        super.spawnEnemy(Spawners.createEnemy("Hollow Soldier"),location);
+        super.spawnEnemy(Spawners.createEnemy("Wandering Undead"),location);
     }
 }
