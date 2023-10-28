@@ -93,10 +93,6 @@ public class Application {
         woodsToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(5,6),"to the Burial Ground."));
         ancientWoodsGameMap.at(27,6).setGround(woodsToBurialGroundGate);
 
-        // Add Traveller
-        Traveller traveller = new Traveller();
-        ancientWoodsGameMap.at(6, 3).addActor(traveller);
-
         // Set up the room map in ancient woods
         GameMap roomGameMap = new GameMap(groundFactory, Map.ROOM_MAP);
         world.addGameMap(roomGameMap);
