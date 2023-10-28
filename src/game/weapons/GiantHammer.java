@@ -43,6 +43,7 @@ public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapabl
      */
     public GiantHammer() {
         super("Giant Hammer", 'P', DAMAGE, "smashes", HIT_RATE);
+        this.addCapability(Status.HOLDING_GIANT_HAMMER);
     }
 
     /**
