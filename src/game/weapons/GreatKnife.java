@@ -144,7 +144,7 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
     public void upgrade(Actor actor) {
         actor.deductBalance(UPGRADE_PRICE);
         int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
-        int recoverPercentage = STAMINA_RECOVERY_RATE * maxStamina / 100;
+        int recoverPercentage = staminaRecoveryRate * maxStamina / 100;
         HIT_RATE += recoverPercentage;
     }
 }

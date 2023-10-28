@@ -21,7 +21,6 @@ import game.enums.Status;
 import game.grounds.*;
 import game.grounds.spawninggrounds.*;
 import game.items.BloodBerry;
-import game.items.OldKey;
 import game.utilities.FancyMessage;
 import game.utilities.Map;
 import game.weapons.Broadsword;
@@ -47,11 +46,11 @@ public class Application {
         GameMap gameMap = new GameMap(groundFactory, Map.ABANDONED_VILLAGE_MAP);
         world.addGameMap(gameMap);
 
-        Item broadsword = new Broadsword();
-        gameMap.at(27, 5).addItem(broadsword);
+        gameMap.at(27, 5).addItem(new Broadsword());
 
         gameMap.at(55,2).setGround(new WanderingUndeadGraveyard());
         gameMap.at(34,10).setGround(new WanderingUndeadGraveyard());
+        gameMap.at(28,0).setGround(new Floor());
 
         // Set up burial ground map
         GameMap burialGroundGameMap = new GameMap(groundFactory, Map.BURIAL_GROUND_MAP);
@@ -60,15 +59,17 @@ public class Application {
         burialGroundGameMap.at(23,2).setGround(new HollowSoldierGraveyard());
         burialGroundGameMap.at(13,11).setGround(new HollowSoldierGraveyard());
         burialGroundGameMap.at(2,14).setGround(new HollowSoldierGraveyard());
+        burialGroundGameMap.at(37,14).setGround(new Floor());
+        burialGroundGameMap.at(5, 6).setGround(new Floor());
 
         // Set up gates
         Gate villageToBurialGroundGate = new Gate();
         gameMap.at(27,0).setGround(villageToBurialGroundGate);
-        villageToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(39, 14), "to the Burial Ground."));
+        villageToBurialGroundGate.addMoveAction(new MoveActorAction(burialGroundGameMap.at(37, 14), "to the Burial Ground."));
 
         Gate groundToVillageGate = new Gate();
         burialGroundGameMap.at(38,14).setGround(groundToVillageGate);
-        groundToVillageGate.addMoveAction(new MoveActorAction(gameMap.at(27, 0), "to the Abandoned Village."));
+        groundToVillageGate.addMoveAction(new MoveActorAction(gameMap.at(28, 0), "to the Abandoned Village."));
 
         // Set up the ancient woods map
         GameMap ancientWoodsGameMap = new GameMap(groundFactory, Map.ANCIENT_WOODS_MAP);
@@ -81,6 +82,8 @@ public class Application {
 
         ancientWoodsGameMap.at(46,9).setGround(new ForestKeeperHut(sunnyWeather));
         ancientWoodsGameMap.at(8, 7).setGround(new ForestKeeperHut(sunnyWeather));
+        ancientWoodsGameMap.at(26,6).setGround(new Floor());
+        ancientWoodsGameMap.at(44,4).setGround(new Floor());
 
         ancientWoodsGameMap.at(47,1).addItem(new BloodBerry());
 
@@ -102,6 +105,7 @@ public class Application {
 
         roomGameMap.at(19,10).setGround(new ForestKeeperHut(sunnyWeather));
         roomGameMap.at(2, 11).setGround(new ForestKeeperHut(sunnyWeather));
+        roomGameMap.at(17, 13).setGround(new Floor());
 
         Item giantHammer = new GiantHammer();
         roomGameMap.at(27, 6).addItem(giantHammer);
@@ -119,10 +123,11 @@ public class Application {
         overgrownSanctuaryGameMap.at(8, 12).setGround(new HollowSoldierGraveyard());
         overgrownSanctuaryGameMap.at(42, 5).setGround(new GuardianHut());
         overgrownSanctuaryGameMap.at(22, 9).setGround(new LivingBranchBush());
+        overgrownSanctuaryGameMap.at(31, 2).setGround(new Floor());
 
         // Create the gate which Abxervyer will set once dead
         Gate roomToOtherDestinationsGate = new Gate();
-        roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(45,3), "to the Ancient Woods."));
+        roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(ancientWoodsGameMap.at(44,4), "to the Ancient Woods."));
         roomToOtherDestinationsGate.addMoveAction(new MoveActorAction(overgrownSanctuaryGameMap.at(31, 2), "to the Overgrown Sanctuary."));
 
         // Add the boss to the room
@@ -139,7 +144,7 @@ public class Application {
         world.addPlayer(player, gameMap.at(29, 5));
 
         // Add the monologues the blacksmith can use.
-        List<Monologue> monologues = Arrays.asList(
+        List<Monologue> blacksmithMonologues = Arrays.asList(
                 new Monologue("I used to be an adventurer like you, but then .... Nevermind, let’s get back to smithing."),
                 new Monologue("It’s dangerous to go alone. Take my creation with you on your adventure!"),
                 new Monologue("Ah, it’s you. Let’s get back to make your weapons stronger."),
@@ -159,9 +164,9 @@ public class Application {
                 new Monologue("I'm never gonna make you cry with unfair prices."),
                 new Monologue("Trust is essential in this business. I promise I’m never gonna say goodbye to a valuable customer like you."),
                 new Monologue("Don't worry, I’m never gonna tell a lie and hurt you."),
-                new Monologue("Ooh, that’s a fascinating weapon you got there. I will pay a good price for it. You wouldn't get this price from any other guy.", List.of(new ActorIsConsiousCondition(abxervyer),new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GIANT_HAMMER))),
-                new Monologue("You know the rules of this world, and so do I. Each area is ruled by a lord. Defeat the lord of this area, Abxervyer, and you may proceed to the next area.", List.of(new ActorIsConsiousCondition(abxervyer))),
-                new Monologue("Congratulations on defeating the lord of this area. I noticed you still hold on to that hammer. Why don’t you sell it to me? We've known each other for so long. I can tell you probably don’t need that weapon any longer.", List.of(new ActorIsUnconsiousCondition(abxervyer),new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GIANT_HAMMER)))
+                new Monologue("Ooh, that’s a fascinating weapon you got there. I will pay a good price for it. You wouldn't get this price from any other guy.", List.of(new ActorIsConsciousCondition(abxervyer),new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GIANT_HAMMER))),
+                new Monologue("You know the rules of this world, and so do I. Each area is ruled by a lord. Defeat the lord of this area, Abxervyer, and you may proceed to the next area.", List.of(new ActorIsConsciousCondition(abxervyer))),
+                new Monologue("Congratulations on defeating the lord of this area. I noticed you still hold on to that hammer. Why don’t you sell it to me? We've known each other for so long. I can tell you probably don’t need that weapon any longer.", List.of(new ActorIsUnconsciousCondition(abxervyer),new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GIANT_HAMMER)))
         );
 
         Traveller traveller = new Traveller(travellerMonologues);
