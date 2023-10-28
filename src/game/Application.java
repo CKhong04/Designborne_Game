@@ -138,6 +138,40 @@ public class Application {
         sanctuaryToRoomGate.addMoveAction(new MoveActorAction(roomGameMap.at(17,13), "to the room deep in the Woods."));
         overgrownSanctuaryGameMap.at(10, 4).setGround(sanctuaryToRoomGate);
 
+        // Add player
+        Player player = new Player("The Abstracted One", '@', 150, 200);
+        world.addPlayer(player, gameMap.at(27, 2));
+        player.addItemToInventory(new OldKey());
+
+        // Add Blacksmith
+        List<Monologue> blacksmithMonologues = Arrays.asList(
+                new Monologue("I used to be an adventurer like you, but then …. Nevermind, let’s get back to smithing."),
+                new Monologue("It’s dangerous to go alone. Take my creation with you on your adventure!"),
+                new Monologue("Ah, it’s you. Let’s get back to make your weapons stronger."),
+                new Monologue("Beyond the burial ground, you’ll come across the ancient woods ruled by Abxervyer. Use my creation to slay them and proceed further!", List.of(new ActorIsConsiousCondition(abxervyer))),
+                new Monologue("Somebody once told me that a sacred tree rules the land beyond the ancient woods until this day.", List.of(new ActorIsUnconsiousCondition(abxervyer))),
+                new Monologue("Hey now, that’s a weapon from a foreign land that I have not seen for so long. I can upgrade it for you if you wish.", List.of(new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GREAT_KNIFE)))
+        );
+
+        Blacksmith blacksmith = new Blacksmith(blacksmithMonologues);
+        gameMap.at(27, 6).addActor(blacksmith);
+
+        //Add Traveller
+        List<Monologue> travellerMonologues = Arrays.asList(
+                new Monologue("Of course, I will never give you up, valuable customer!"),
+                new Monologue("I promise I will never let you down with the quality of the items that I sell."),
+                new Monologue("You can always find me here. I'm never gonna run around and desert you, dear customer!"),
+                new Monologue("I'm never gonna make you cry with unfair prices."),
+                new Monologue("Trust is essential in this business. I promise I’m never gonna say goodbye to a valuable customer like you."),
+                new Monologue("Don't worry, I’m never gonna tell a lie and hurt you."),
+                new Monologue("Ooh, that’s a fascinating weapon you got there. I will pay a good price for it. You wouldn't get this price from any other guy.", List.of(new ActorIsConsiousCondition(abxervyer),new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GIANT_HAMMER))),
+                new Monologue("You know the rules of this world, and so do I. Each area is ruled by a lord. Defeat the lord of this area, Abxervyer, and you may proceed to the next area.", List.of(new ActorIsConsiousCondition(abxervyer))),
+                new Monologue("Congratulations on defeating the lord of this area. I noticed you still hold on to that hammer. Why don’t you sell it to me? We've known each other for so long. I can tell you probably don’t need that weapon any longer.", List.of(new ActorIsUnconsiousCondition(abxervyer),new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GIANT_HAMMER)))
+        );
+
+        Traveller traveller = new Traveller(travellerMonologues);
+        ancientWoodsGameMap.at(6, 3).addActor(traveller);
+
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
             new Display().println(line);
@@ -147,25 +181,6 @@ public class Application {
                 exception.printStackTrace();
             }
         }
-
-        // Add player
-        Player player = new Player("The Abstracted One", '@', 150, 200);
-        world.addPlayer(player, gameMap.at(27, 2));
-        player.addItemToInventory(new OldKey());
-
-        // Add the monologues
-        List<Monologue> monologues = Arrays.asList(
-                new Monologue("I used to be an adventurer like you, but then …. Nevermind, let’s get back to smithing."),
-                new Monologue("It’s dangerous to go alone. Take my creation with you on your adventure!"),
-                new Monologue("Ah, it’s you. Let’s get back to make your weapons stronger."),
-                new Monologue("Beyond the burial ground, you’ll come across the ancient woods ruled by Abxervyer. Use my creation to slay them and proceed further!", List.of(new ActorIsConsiousCondition(abxervyer))),
-                new Monologue("Somebody once told me that a sacred tree rules the land beyond the ancient woods until this day.", List.of(new ActorIsUnconsiousCondition(abxervyer))),
-                new Monologue("Hey now, that’s a weapon from a foreign land that I have not seen for so long. I can upgrade it for you if you wish.", List.of(new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GREAT_KNIFE)))
-        );
-
-        // Add the blacksmith
-        Blacksmith blacksmith = new Blacksmith(monologues);
-        ancientWoodsGameMap.at(27, 6).addActor(blacksmith);
 
         world.run();
     }
