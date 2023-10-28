@@ -2,6 +2,7 @@ package game.actors;
 
 import edu.monash.fit2099.engine.actions.Action;
 import edu.monash.fit2099.engine.actions.ActionList;
+import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttribute;
@@ -9,21 +10,26 @@ import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.displays.Menu;
+import edu.monash.fit2099.engine.positions.Location;
 import edu.monash.fit2099.engine.weapons.IntrinsicWeapon;
-import game.actions.DeathAction;
 import game.enums.Status;
+import game.items.Rune;
+import game.respawn.ImmortalRespawn;
+import game.respawn.MortalRespawn;
+import game.utilities.FancyMessage;
 
 /**
  * Class representing the Player.
  * Created by:
  * @author Adrian Kristanto
- * Modified by: Laura Zhakupova
+ * Modified by: Laura Zhakupova, Ishita Gupta, Carissa Khong
  */
 public class Player extends Actor {
     /**
      * Stamina recovery rate is 1% per turn
      */
-    private int staminaRecoveryRate = 1;
+    private final static int STAMINA_RECOVERY_RATE = 1;
+    private final GameMap spawningMap;
 
     /**
      * Constructor.
@@ -33,11 +39,67 @@ public class Player extends Actor {
      * @param hitPoints Player's starting number of hit points.
      * @param staminaPoints Player's starting number of stamina.
      */
-    public Player(String name, char displayChar, int hitPoints, int staminaPoints) {
+    public Player(String name, char displayChar, int hitPoints, int staminaPoints, GameMap spawningMap) {
         super(name, displayChar, hitPoints);
         this.addCapability(Status.HOSTILE_TO_ENEMY);
         this.addCapability(Status.DRINK_WATER);
         this.addAttribute(BaseActorAttributes.STAMINA, new BaseActorAttribute(staminaPoints));
+        this.spawningMap = spawningMap;
+    }
+
+    /**
+     * Overrides the unconscious method from the Actor class, where the actor is killed by another actor. Calls the
+     * respawn method to allow them to respawn.
+     * @param actor the perpetrator
+     * @param map where the actor fell unconscious
+     * @return A String articulating what had occurred.
+     */
+    @Override
+    public String unconscious(Actor actor, GameMap map) {
+        Location deathLocation = map.locationOf(this);
+        map.removeActor(this);
+        respawn(deathLocation);
+        return this + " met their demise in the hand of " + actor;
+    }
+
+    /**
+     * Overrides the unconscious method where an actor dies to natural causes. Calls the respawn method allowing the
+     * Player to respawn.
+     * @param map where the actor fell unconscious
+     * @return A String indicating the actor became unconscious.
+     */
+    @Override
+    public String unconscious(GameMap map) {
+        Location deathLocation = map.locationOf(this);
+        map.removeActor(this);
+        respawn(deathLocation);
+        return this + " ceased to exist.";
+    }
+
+    /**
+     * Handles the events that occur when the player dies and respawns, including notifying all necessary entities.
+     * @param deathLocation The location where the player died.
+     */
+    public void respawn(Location deathLocation) {
+        for (String line : FancyMessage.YOU_DIED.split("\n")) {
+            new Display().println(line);
+            try {
+                Thread.sleep(200);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+        }
+        this.spawningMap.at(29, 5).addActor(this);
+        this.modifyAttribute(BaseActorAttributes.HEALTH,ActorAttributeOperations.UPDATE,this.getAttributeMaximum(BaseActorAttributes.HEALTH));
+        this.modifyAttribute(BaseActorAttributes.STAMINA,ActorAttributeOperations.UPDATE,this.getAttributeMaximum(BaseActorAttributes.STAMINA));
+        int numOfRunes = this.getBalance();
+        this.deductBalance(numOfRunes);
+
+        MortalRespawn mortalRespawn = new MortalRespawn();
+        mortalRespawn.notifyEntities();
+        ImmortalRespawn immortalRespawn = new ImmortalRespawn();
+        immortalRespawn.notifyEntities();
+        deathLocation.addItem(new Rune(numOfRunes));
     }
 
     /**
@@ -58,7 +120,7 @@ public class Player extends Actor {
         int currentStamina = this.getAttribute(BaseActorAttributes.STAMINA);
         int maxStamina = this.getAttributeMaximum(BaseActorAttributes.STAMINA);
         if (currentStamina < maxStamina){
-            int recoverPercentage = staminaRecoveryRate * maxStamina / 100;
+            int recoverPercentage = STAMINA_RECOVERY_RATE * maxStamina / 100;
             this.modifyAttribute(BaseActorAttributes.STAMINA, ActorAttributeOperations.INCREASE,recoverPercentage);
         }
     }
@@ -88,7 +150,8 @@ public class Player extends Actor {
     @Override
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         if (!this.isConscious()){
-            return new DeathAction();
+            this.unconscious(map);
+            return new DoNothingAction();
         } else {
             recoverStamina();
 

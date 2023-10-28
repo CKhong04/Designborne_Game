@@ -136,12 +136,15 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         return newPrice;
     }
 
-
+    /**
+     * Called when upgrading the GreatKnife. Upgrades the hit rate of the GreatKnife.
+     * @param actor The actor holding the weapon.
+     */
     @Override
     public void upgrade(Actor actor) {
         actor.deductBalance(UPGRADE_PRICE);
         int maxStamina = actor.getAttributeMaximum(BaseActorAttributes.STAMINA);
-        int recoverPercentage = staminaRecoveryRate * maxStamina / 100;
+        int recoverPercentage = STAMINA_RECOVERY_RATE * maxStamina / 100;
         HIT_RATE += recoverPercentage;
     }
 }

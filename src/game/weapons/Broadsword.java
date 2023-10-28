@@ -106,6 +106,10 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
         }
     }
 
+    /**
+     * Returns a Focus Action for the Broadsword.
+     * @return A Focus Action.
+     */
     public FocusAction getFocusAction() {
         return new FocusAction(this, 20);
     }
@@ -204,6 +208,12 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
         return buyPrice;
     }
 
+    /**
+     * Overrides the damage method from the WeaponItem class in the game engine's weapons package.
+     * It checks if the damage multiplier has been updated already and is now greater than the default multiplier.
+     * If so, use the default damage multiplier.
+     * @return The damage inflicted using the weapon.
+     */
     @Override
     public int damage() {
         if (DAMAGE_MULTIPLIER > DEFAULT_DAMAGE_MULTIPLIER){
@@ -213,6 +223,11 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
     }
 
 
+    /**
+     * Called when upgrading the Broadsword. Updates the actor's balance and increases the damage inflicted when using
+     * the weapon.
+     * @param actor The actor holding the weapon.
+     */
     @Override
     public void upgrade(Actor actor) {
         actor.deductBalance(UPGRADE_PRICE);

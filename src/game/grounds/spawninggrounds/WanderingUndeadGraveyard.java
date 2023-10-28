@@ -1,7 +1,7 @@
-package game.grounds.spawners;
+package game.grounds.spawninggrounds;
 
 import edu.monash.fit2099.engine.positions.Location;
-import game.actors.enemies.WanderingUndead;
+import game.spawners.Spawners;
 
 /**
  * Class representing a Graveyard for Wandering Undead.
@@ -28,6 +28,6 @@ public class WanderingUndeadGraveyard extends SpawningGround {
      * @param location The location of the Ground
      */
     public void tick(Location location) {
-        super.spawnEnemy(new WanderingUndead(),location);
+        super.spawnEnemy(Spawners.createEnemy("Wandering Undead"),location);
     }
 }

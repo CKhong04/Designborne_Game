@@ -1,8 +1,9 @@
-package game.grounds.spawners;
+package game.grounds.spawninggrounds;
 
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
-import game.actors.enemies.ForestKeeper;
+import game.actors.enemies.Enemy;
+import game.spawners.Spawners;
 import game.weathers.AncientWoodEntity;
 import game.weathers.Weather;
 
@@ -38,12 +39,11 @@ public class ForestKeeperHut extends SpawningGround implements AncientWoodEntity
      */
     @Override
     public void tick(Location location) {
-        ForestKeeper forestKeeper = new ForestKeeper(weather);
-
+        Enemy forestKeeper = Spawners.createEnemy("Forest Keeper", weather);
         super.spawnEnemy(forestKeeper, location);
 
-        if (location.containsAnActor()) {
-            weather.registerEntity(forestKeeper);
+        if (location.containsAnActor()){
+            weather.registerEntity((AncientWoodEntity) forestKeeper);
         }
     }
 

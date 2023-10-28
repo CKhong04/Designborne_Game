@@ -8,31 +8,36 @@ import edu.monash.fit2099.engine.positions.Ground;
 import edu.monash.fit2099.engine.positions.Location;
 import game.enums.Status;
 import game.actions.UnlockGateAction;
+import game.respawn.ImmortalRespawn;
+import game.respawn.RespawnEntity;
 
 import java.util.ArrayList;
 
 /**
- * Class representing a gate.
+ * Class representing a gate. Gates are affected when the player respawns after dying. Therefore, they implement
+ * RespawnEntity.
  * Created by:
  * @author Laura Zhakupova
  * Modified by:
- * Carissa Khong
+ * Carissa Khong, Ishita Gupta
  */
-public class Gate extends Ground {
+public class Gate extends Ground implements RespawnEntity {
     // Private attributes
     private ArrayList<Action> moveActions = new ArrayList<>();
     private final Display display = new Display();
 
     /**
-     * A constructor.
+     * A constructor. The Gate must be registered as an immortal entity upon instantiation. This means it will not be
+     * wiped from the map when the player respawns.
      */
     public Gate(){
         super('=');
         this.addCapability(Status.LOCKED_GATE);
+        new ImmortalRespawn().registerEntity(this);
     }
 
     /**
-     * Allows adding a moving action to the gate.
+     * Allows the addition of one or more moving actions to the gate.
      *
      * @param moveAction action which allows user to move to another map.
      */
@@ -75,5 +80,13 @@ public class Gate extends Ground {
             }
         }
         return actions;
+    }
+
+    /**
+     * When the actor is respawned, all gates need to be locked again, meaning they must be unlocked again to use it.
+     */
+    @Override
+    public void respawnUpdate() {
+        this.addCapability(Status.LOCKED_GATE);
     }
 }

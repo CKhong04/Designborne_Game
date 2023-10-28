@@ -23,15 +23,13 @@ import game.utilities.Utility;
  * Modified by:
  * @author Ishita Gupta
  */
-public class RefreshingFlask extends Item implements Sellable, Buyable, Consumable, Upgradeable {
+public class RefreshingFlask extends Item implements Sellable, Buyable, Consumable, Upgradeable{
     //Private attributes
     private static int INCREASE_STAMINA_VALUE = 20;
     private static final int SELL_PRICE = 25;
     private static final int SELL_SCAM_CHANCE = 50;
     private static final int UPGRADE_PRICE = 175;
     private static boolean UPGRADE_HAPPENED = false;
-
-
 
     /**
      * Constructor.
@@ -121,6 +119,11 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
         return actions;
     }
 
+    /**
+     * When the Refreshing Flask is updated, this method is called, increasing the amount the stamina would be changed
+     * by to 100.
+     * @param actor The actor whose inventory the Refreshing Flask is in.
+     */
     @Override
     public void upgrade(Actor actor) {
         UPGRADE_HAPPENED = true;

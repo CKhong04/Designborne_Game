@@ -19,9 +19,9 @@ import game.utilities.Utility;
  * Class representing a healing vial.
  * Created by:
  * @author Laura Zhakupova
- * Modified by: Ishita Gupta
+ * Modified by: Ishita Gupta, Carissa Khong
  */
-public class HealingVial extends Item implements Sellable, Buyable, Consumable, Upgradeable {
+public class HealingVial extends Item implements Sellable, Buyable, Consumable, Upgradeable{
     //Private attributes
     private static int INCREASE_HEALTH_VALUE = 10;
     private static final int SELL_PRICE = 35;
@@ -114,10 +114,15 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
         actor.removeItemFromInventory(this);
     }
 
+    /**
+     * When an upgrade occurs, a boolean signifying the item has been updated becomes true. The actor has the upgrade
+     * price deducted from their balance. The value signifying the healing amount is updated to 80.
+     * @param actor The actor whose inventory the HealingVial is in.
+     */
     @Override
     public void upgrade(Actor actor) {
         UPGRADE_HAPPENED = true;
         actor.deductBalance(UPGRADE_PRICE);
-       INCREASE_HEALTH_VALUE = 80;
+        INCREASE_HEALTH_VALUE = 80;
     }
 }

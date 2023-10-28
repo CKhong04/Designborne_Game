@@ -17,6 +17,7 @@ import game.weathers.Weather;
 
 /**
  * The ForestKeeper class is a child class of the Enemy class. Forest Keepers are encountered in the Ancient Woods.
+ * The Forest Keeper is able to follow a hostile player and wander, therefore it implements FollowCapable and MoveCapable.
  * Created by:
  * @author Carissa Khong
  * Modified by: Ishita Gupta, Khoi Nguyen
@@ -89,11 +90,17 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity, FollowCapa
         display.println(this + " feels rejuvenated by the rain.");
     }
 
+    /**
+     * Forest Keepers are able to follow hostile actors, therefore, FollowBehaviour is added to their behaviours map.
+     */
     @Override
     public void canFollow() {
         this.behaviours.put(0, new FollowBehaviour());
     }
 
+    /**
+     * Forest Keepers are able to move around, a WanderBehaviour is added to their behaviours map to allow this.
+     */
     @Override
     public void canMove() {
         this.behaviours.put(2, new WanderBehaviour());

@@ -3,26 +3,34 @@ package game.items;
 import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
+import edu.monash.fit2099.engine.positions.Location;
 import game.actions.ConsumeAction;
 import game.items.itemproperties.Consumable;
+import game.respawn.MortalRespawn;
+import game.respawn.RespawnEntity;
 
 /**
  * Class representing an item, Rune
  * Created by:
  * @author Ishita Gupta
  */
-public class Rune extends Item implements Consumable {
+public class Rune extends Item implements Consumable, RespawnEntity {
     /**
      * The quantity of the item
      */
     private final int quantity;
+
+    private Location location;
+
+    private final MortalRespawn respawn = new MortalRespawn();
 
     /**
      * Constructor.
      *
      * @param quantity the quantity of the item
      */
-    public Rune(int quantity) {
+    public Rune(int quantity){
+
         super("Runes", '$', true);
         this.quantity = quantity;
     }
@@ -50,6 +58,23 @@ public class Rune extends Item implements Consumable {
         ActionList actions = super.allowableActions(actor);
         actions.add(new ConsumeAction(this));
         return actions;
+    }
+//    private boolean check = false;
+    public void tick(Location currentLocation, Actor actor) {
+        respawn.unregisterEntity(this);
+//        check = false;
+
+    }
+
+    @Override
+    public void tick(Location currentLocation) {
+        this.location = currentLocation;
+        respawn.registerEntity(this);
+//        check = true;
+    }
+    @Override
+    public void respawnUpdate() {
+        this.location.removeItem(this);
     }
 }
 

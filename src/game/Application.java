@@ -10,16 +10,16 @@ import edu.monash.fit2099.engine.positions.FancyGroundFactory;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.World;
 import game.actors.Player;
-import game.actors.enemies.Abxervyer;
+import game.actors.enemies.bosses.Abxervyer;
 import game.actors.traders.Blacksmith;
 import game.actors.traders.Traveller;
 import game.actors.traders.conversations.Monologue;
-import game.actors.traders.conversations.conditions.ActorIsConsiousCondition;
+import game.actors.traders.conversations.conditions.ActorIsConsciousCondition;
 import game.actors.traders.conversations.conditions.ActorIsHoldingWeaponItemCondition;
-import game.actors.traders.conversations.conditions.ActorIsUnconsiousCondition;
+import game.actors.traders.conversations.conditions.ActorIsUnconsciousCondition;
 import game.enums.Status;
 import game.grounds.*;
-import game.grounds.spawners.*;
+import game.grounds.spawninggrounds.*;
 import game.items.BloodBerry;
 import game.items.OldKey;
 import game.utilities.FancyMessage;
@@ -135,17 +135,16 @@ public class Application {
         overgrownSanctuaryGameMap.at(10, 4).setGround(sanctuaryToRoomGate);
 
         // Add player
-        Player player = new Player("The Abstracted One", '@', 150, 200);
-        world.addPlayer(player, gameMap.at(27, 2));
-        player.addItemToInventory(new OldKey());
+        Player player = new Player("The Abstracted One", '@', 150, 200, gameMap);
+        world.addPlayer(player, gameMap.at(29, 5));
 
-        // Add Blacksmith
-        List<Monologue> blacksmithMonologues = Arrays.asList(
-                new Monologue("I used to be an adventurer like you, but then …. Nevermind, let’s get back to smithing."),
+        // Add the monologues the blacksmith can use.
+        List<Monologue> monologues = Arrays.asList(
+                new Monologue("I used to be an adventurer like you, but then .... Nevermind, let’s get back to smithing."),
                 new Monologue("It’s dangerous to go alone. Take my creation with you on your adventure!"),
                 new Monologue("Ah, it’s you. Let’s get back to make your weapons stronger."),
-                new Monologue("Beyond the burial ground, you’ll come across the ancient woods ruled by Abxervyer. Use my creation to slay them and proceed further!", List.of(new ActorIsConsiousCondition(abxervyer))),
-                new Monologue("Somebody once told me that a sacred tree rules the land beyond the ancient woods until this day.", List.of(new ActorIsUnconsiousCondition(abxervyer))),
+                new Monologue("Beyond the burial ground, you’ll come across the ancient woods ruled by Abxervyer. Use my creation to slay them and proceed further!", List.of(new ActorIsConsciousCondition(abxervyer))),
+                new Monologue("Somebody once told me that a sacred tree rules the land beyond the ancient woods until this day.", List.of(new ActorIsUnconsciousCondition(abxervyer))),
                 new Monologue("Hey now, that’s a weapon from a foreign land that I have not seen for so long. I can upgrade it for you if you wish.", List.of(new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GREAT_KNIFE)))
         );
 

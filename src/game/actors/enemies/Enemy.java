@@ -5,14 +5,16 @@ import edu.monash.fit2099.engine.actions.ActionList;
 import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.actors.Behaviour;
+import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import edu.monash.fit2099.engine.items.Item;
 import edu.monash.fit2099.engine.positions.GameMap;
 import edu.monash.fit2099.engine.positions.Location;
-import game.actions.DeathAction;
 import game.behaviours.*;
 import game.enums.Ability;
 import game.enums.Status;
 import game.actions.AttackAction;
+import game.respawn.MortalRespawn;
+import game.respawn.RespawnEntity;
 
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +27,12 @@ import java.util.Map;
  * Modified by:
  * Carissa Khong, Ishita Gupta, Khoi Nguyen
  */
-public abstract class Enemy extends Actor {
-    // Private attributes
+public abstract class Enemy extends Actor implements RespawnEntity {
+    // Protected attribute
     protected Map<Integer, Behaviour> behaviours = new HashMap<>();
+    //Private attribute
+    private final MortalRespawn respawn = new MortalRespawn();
+
     /**
      * A constructor which accepts name, display character and hit points.
      * An enemy cannot move through a Floor in the maps, therefore, an Ability is added preventing this from happening.
@@ -40,6 +45,7 @@ public abstract class Enemy extends Actor {
         super(name, displayChar, hitPoints);
         this.addCapability(Ability.CANNOT_ACCESS_FLOOR);
         this.addCapability(Status.HOSTILE_TO_PLAYER);
+        respawn.registerEntity(this);
     }
 
     /**
@@ -48,9 +54,9 @@ public abstract class Enemy extends Actor {
      * @param map the map containing the Actor
      * @return the valid action that can be performed in that iteration or null if no valid action is found
      */
-    public Action findAction(GameMap map) {
+    protected Action findAction(GameMap map) {
         if (!this.isConscious()){
-            return new DeathAction();
+            this.unconscious(map);
         } else {
             this.behaviours.put(1, new AttackBehaviour());
             for (Behaviour behaviour : behaviours.values()) {
@@ -58,8 +64,8 @@ public abstract class Enemy extends Actor {
                 if(action != null)
                     return action;
             }
-            return new DoNothingAction();
         }
+        return new DoNothingAction();
     }
 
     /**
@@ -95,5 +101,21 @@ public abstract class Enemy extends Actor {
         return this + " met their demise at the hand of " + actor;
     }
 
+    /**
+     * Overrides the unconscious method called when an enemy falls unconscious due to natural causes.
+     * @param map where the actor fell unconscious
+     * @return The result from the unconscious method of the Actor class.
+     */
+    @Override
+    public String unconscious(GameMap map) {
+        respawn.unregisterEntity(this);
+        return super.unconscious(map);
+    }
 
+    /**
+     * When respawnUpdate is called, all enemies must be hurt by their health amount, so they become unconscious.
+     */
+    public void respawnUpdate(){
+        this.hurt(this.getAttribute(BaseActorAttributes.HEALTH));
+    }
 }

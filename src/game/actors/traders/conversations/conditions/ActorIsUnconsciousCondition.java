@@ -7,7 +7,7 @@ import edu.monash.fit2099.engine.actors.Actor;
  * Created by:
  * @author Minh Nguyen
  */
-public class ActorIsUnconsiousCondition implements Condition {
+public class ActorIsUnconsciousCondition implements Condition {
     /**
      * The actor to be checked.
      */
@@ -17,7 +17,7 @@ public class ActorIsUnconsiousCondition implements Condition {
      * Constructor.
      * @param actor the actor to be checked.
      */
-    public ActorIsUnconsiousCondition(Actor actor) {
+    public ActorIsUnconsciousCondition(Actor actor) {
         this.actor = actor;
     }
 

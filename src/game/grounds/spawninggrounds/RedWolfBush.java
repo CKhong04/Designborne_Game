@@ -1,8 +1,9 @@
-package game.grounds.spawners;
+package game.grounds.spawninggrounds;
 
 import edu.monash.fit2099.engine.displays.Display;
 import edu.monash.fit2099.engine.positions.Location;
-import game.actors.enemies.RedWolf;
+import game.actors.enemies.Enemy;
+import game.spawners.Spawners;
 import game.weathers.AncientWoodEntity;
 import game.weathers.Weather;
 
@@ -38,12 +39,11 @@ public class RedWolfBush extends SpawningGround implements AncientWoodEntity {
     @Override
 
     public void tick(Location location) {
-        RedWolf redWolf = new RedWolf(weather);
-
+        Enemy redWolf = Spawners.createEnemy("Red Wolf", weather);
         super.spawnEnemy(redWolf, location);
 
         if (location.containsAnActor()) {
-            weather.registerEntity(redWolf);
+            weather.registerEntity((AncientWoodEntity) redWolf);
         }
     }
 

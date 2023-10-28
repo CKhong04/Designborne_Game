@@ -19,7 +19,7 @@ import game.weapons.skills.GreatSlamCapable;
  * Modified by:
  * Carissa Khong, Laura Zhakupova
  */
-public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapable {
+public class GiantHammer extends WeaponItem implements Sellable, GreatSlamCapable{
     /**
      * The damage to this weapon.
      */
