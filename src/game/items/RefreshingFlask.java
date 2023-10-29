@@ -25,7 +25,7 @@ import game.utilities.Utility;
  */
 public class RefreshingFlask extends Item implements Sellable, Buyable, Consumable, Upgradeable{
     //Private attributes
-    private static int INCREASE_STAMINA_VALUE = 20;
+    private int increaseStaminaValue = 20;
     private static final int SELL_PRICE = 25;
     private static final int SELL_SCAM_CHANCE = 50;
     private static final int UPGRADE_PRICE = 175;
@@ -101,7 +101,7 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
 
         BaseActorAttributes baseActorAttributes = BaseActorAttributes.HEALTH;
         ActorAttributeOperations actorAttributeOperation = ActorAttributeOperations.INCREASE;
-        int updateValue = actor.getAttributeMaximum(baseActorAttributes) * INCREASE_STAMINA_VALUE / 100;
+        int updateValue = actor.getAttributeMaximum(baseActorAttributes) * increaseStaminaValue / 100;
         actor.modifyAttribute(baseActorAttributes, actorAttributeOperation, updateValue);actor.removeItemFromInventory(this);
         actor.removeItemFromInventory(this);
     }
@@ -128,6 +128,6 @@ public class RefreshingFlask extends Item implements Sellable, Buyable, Consumab
     public void upgrade(Actor actor) {
         UPGRADE_HAPPENED = true;
         actor.deductBalance(UPGRADE_PRICE);
-        INCREASE_STAMINA_VALUE = 100;
+        increaseStaminaValue = 100;
     }
 }
