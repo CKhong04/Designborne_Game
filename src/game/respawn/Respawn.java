@@ -14,11 +14,6 @@ public interface Respawn {
     ArrayList<RespawnEntity> mortalRespawnEntities = new ArrayList<>();
 
     /**
-     * An ArrayList of Respawn Entities containing all entities affected but not removed during respawning.
-     */
-    ArrayList<RespawnEntity> immortalRespawnEntities = new ArrayList<>();
-
-    /**
      * registerEntity registers Respawn Entities.
      * @param object A Respawn Entity
      */
