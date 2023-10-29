@@ -63,6 +63,11 @@ public class HollowSoldier extends Enemy implements MoveCapable {
     }
 
 
+    /**
+     * The canMove function is used to add a WanderBehaviour object to the behaviours HashMap.
+     * This allows the entity to move around randomly in its environment.
+     *
+     */
     @Override
     public void canMove() {
         this.behaviours.put(2, new WanderBehaviour());

@@ -100,13 +100,6 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
         return newPrice;
     }
 
-//    @Override
-//    public void tick(Location currentLocation) {
-//        if(UPGRADE_HAPPENED){
-//            INCREASE_HEALTH_VALUE = 10;
-//        }
-//    }
-
     /**
      * Consumes the item and removes it from the actor's inventory.
      * Make changes to the actor's required skill

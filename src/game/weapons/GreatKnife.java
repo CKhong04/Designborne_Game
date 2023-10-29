@@ -67,6 +67,13 @@ public class GreatKnife extends WeaponItem implements Buyable, Sellable, StabAnd
         return new StabAndStepAction(this, otherActor, targetLocation, STAMINA_DECREASE_PERCENTAGE);
     }
 
+    /**
+     * Allows the item to feel the passage of time.
+     *
+     * @param currentLocation Determine the current location of the player
+     *
+     *
+     */
     @Override
     public void tick(Location currentLocation) {
         this.removeCapability(Status.HOLDING_GREAT_KNIFE);
