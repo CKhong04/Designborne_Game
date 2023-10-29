@@ -98,6 +98,7 @@ public abstract class Enemy extends Actor implements RespawnEntity {
         for(Item item : inventory){
             deathLocation.addItem(item);
         }
+        respawn.unregisterEntity(this);
         return this + " met their demise at the hand of " + actor;
     }
 
