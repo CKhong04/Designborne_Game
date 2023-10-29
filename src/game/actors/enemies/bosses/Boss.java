@@ -4,7 +4,6 @@ import edu.monash.fit2099.engine.actors.attributes.ActorAttributeOperations;
 import edu.monash.fit2099.engine.actors.attributes.BaseActorAttributes;
 import game.actors.enemies.Enemy;
 import game.enums.Ability;
-import game.respawn.ImmortalRespawn;
 import game.respawn.MortalRespawn;
 import game.respawn.RespawnEntity;
 
@@ -25,8 +24,7 @@ public abstract class Boss extends Enemy implements RespawnEntity {
      */
     public Boss(String name, char displayChar, int hitPoints) {
         super(name, displayChar, hitPoints);
-        new ImmortalRespawn().registerEntity(this);
-        new MortalRespawn().unregisterEntity(this);
+        new MortalRespawn().registerEntity(this);
         this.addCapability(Ability.NOT_HURT_BY_VOID);
     }
 

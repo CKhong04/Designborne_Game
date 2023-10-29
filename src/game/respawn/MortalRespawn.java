@@ -38,7 +38,5 @@ public class MortalRespawn implements Respawn {
         for (RespawnEntity entity : mortalRespawnEntities) {
             entity.respawnUpdate();
         }
-        mortalRespawnEntities.clear();
-
     }
 }
