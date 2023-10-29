@@ -41,10 +41,6 @@ public class RedWolfBush extends SpawningGround implements AncientWoodEntity {
     public void tick(Location location) {
         Enemy redWolf = Spawners.createEnemy("Red Wolf", weather);
         super.spawnEnemy(redWolf, location);
-
-        if (location.containsAnActor()) {
-            weather.registerEntity((AncientWoodEntity) redWolf);
-        }
     }
 
     /**

@@ -31,6 +31,7 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity, FollowCapa
     private static final int CHANCE_DROP_RUNE = 100;
     private final Weather weather;
     private final Display display = new Display();
+    private boolean registered = false;
 
     /**
      * A constructor which accepts name, display character and hit points.
@@ -58,6 +59,10 @@ public class ForestKeeper extends Enemy implements AncientWoodEntity, FollowCapa
     public Action playTurn(ActionList actions, Action lastAction, GameMap map, Display display) {
         if (!this.isConscious()) {
             weather.unregisterEntity(this);
+        }
+        if (!registered){
+            weather.registerEntity(this);
+            registered = true;
         }
         canFollow();
         canMove();

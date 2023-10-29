@@ -41,10 +41,6 @@ public class ForestKeeperHut extends SpawningGround implements AncientWoodEntity
     public void tick(Location location) {
         Enemy forestKeeper = Spawners.createEnemy("Forest Keeper", weather);
         super.spawnEnemy(forestKeeper, location);
-
-        if (location.containsAnActor()){
-            weather.registerEntity((AncientWoodEntity) forestKeeper);
-        }
     }
 
     /**

@@ -31,6 +31,7 @@ public class RedWolf extends Enemy implements AncientWoodEntity, FollowCapable, 
     private static final int DAMAGE = 15;
     private final Display display = new Display();
     private final Weather weather;
+    private boolean registered = false;
 
     /**
      * The constructor of the Actor class.
@@ -62,6 +63,12 @@ public class RedWolf extends Enemy implements AncientWoodEntity, FollowCapable, 
         if (!this.isConscious()) {
             weather.unregisterEntity(this);
         }
+
+        if (!registered){
+            weather.registerEntity(this);
+            registered = true;
+        }
+
         canFollow();
         canMove();
         return super.findAction(map);
