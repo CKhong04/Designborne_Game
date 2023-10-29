@@ -172,7 +172,9 @@ public class Application {
 
         // Add traveller
         Traveller traveller = new Traveller(travellerMonologues);
-        ancientWoodsGameMap.at(6, 3).addActor(traveller);
+        gameMap.at(6, 3).addActor(traveller);
+
+        gameMap.at(6, 2).addItem(new GiantHammer());
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {
