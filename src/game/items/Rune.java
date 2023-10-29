@@ -60,18 +60,34 @@ public class Rune extends Item implements Consumable, RespawnEntity {
         return actions;
     }
 
+    /**
+     * Helps the item undergo passage of time
+     *
+     * @param currentLocation Determine the location of the entity
+     * @param actor Determine if the player is in range of the mob
+     *
+     */
     public void tick(Location currentLocation, Actor actor) {
         respawn.unregisterEntity(this);
 
 
     }
-
+    /**
+     * Helps the item undergo passage of time
+     *
+     * @param currentLocation Determine the location of the entity
+     *
+     */
     @Override
     public void tick(Location currentLocation) {
         this.location = currentLocation;
         respawn.registerEntity(this);
 
     }
+    /**
+     * The respawnUpdate function removes the item from the location it is in.
+     *
+     */
     @Override
     public void respawnUpdate() {
         this.location.removeItem(this);
