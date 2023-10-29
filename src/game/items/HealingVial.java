@@ -23,7 +23,7 @@ import game.utilities.Utility;
  */
 public class HealingVial extends Item implements Sellable, Buyable, Consumable, Upgradeable{
     //Private attributes
-    private static int INCREASE_HEALTH_VALUE = 10;
+    private int increaseHealthValue = 10;
     private static final int SELL_PRICE = 35;
 
     private static final int UPGRADE_PRICE = 250;
@@ -100,6 +100,13 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
         return newPrice;
     }
 
+//    @Override
+//    public void tick(Location currentLocation) {
+//        if(UPGRADE_HAPPENED){
+//            INCREASE_HEALTH_VALUE = 10;
+//        }
+//    }
+
     /**
      * Consumes the item and removes it from the actor's inventory.
      * Make changes to the actor's required skill
@@ -109,7 +116,7 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
     @Override
     public void consumeItem(Actor actor) {
         BaseActorAttributes baseActorAttributes = BaseActorAttributes.HEALTH;
-        int updateValue = actor.getAttributeMaximum(baseActorAttributes) * INCREASE_HEALTH_VALUE / 100;
+        int updateValue = actor.getAttributeMaximum(baseActorAttributes) * increaseHealthValue / 100;
         actor.heal(updateValue);
         actor.removeItemFromInventory(this);
     }
@@ -123,6 +130,6 @@ public class HealingVial extends Item implements Sellable, Buyable, Consumable, 
     public void upgrade(Actor actor) {
         UPGRADE_HAPPENED = true;
         actor.deductBalance(UPGRADE_PRICE);
-        INCREASE_HEALTH_VALUE = 80;
+        increaseHealthValue = 80;
     }
 }

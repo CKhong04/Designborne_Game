@@ -143,7 +143,7 @@ public class Application {
         Player player = new Player("The Abstracted One", '@', 150, 200, gameMap);
         world.addPlayer(player, gameMap.at(29, 5));
 
-        // Add the monologues the blacksmith can use.
+        // Add the monologues the blacksmith uses
         List<Monologue> blacksmithMonologues = Arrays.asList(
                 new Monologue("I used to be an adventurer like you, but then .... Nevermind, let’s get back to smithing."),
                 new Monologue("It’s dangerous to go alone. Take my creation with you on your adventure!"),
@@ -153,10 +153,11 @@ public class Application {
                 new Monologue("Hey now, that’s a weapon from a foreign land that I have not seen for so long. I can upgrade it for you if you wish.", List.of(new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GREAT_KNIFE)))
         );
 
+        // Add Blacksmith
         Blacksmith blacksmith = new Blacksmith(blacksmithMonologues);
         gameMap.at(27, 6).addActor(blacksmith);
 
-        //Add Traveller
+        // Add the monologues the Traveller uses
         List<Monologue> travellerMonologues = Arrays.asList(
                 new Monologue("Of course, I will never give you up, valuable customer!"),
                 new Monologue("I promise I will never let you down with the quality of the items that I sell."),
@@ -169,8 +170,11 @@ public class Application {
                 new Monologue("Congratulations on defeating the lord of this area. I noticed you still hold on to that hammer. Why don’t you sell it to me? We've known each other for so long. I can tell you probably don’t need that weapon any longer.", List.of(new ActorIsUnconsciousCondition(abxervyer),new ActorIsHoldingWeaponItemCondition(player, Status.HOLDING_GIANT_HAMMER)))
         );
 
+        // Add traveller
         Traveller traveller = new Traveller(travellerMonologues);
-        ancientWoodsGameMap.at(6, 3).addActor(traveller);
+        gameMap.at(6, 3).addActor(traveller);
+
+        gameMap.at(6, 2).addItem(new GiantHammer());
 
         // Print starting message
         for (String line : FancyMessage.TITLE.split("\n")) {

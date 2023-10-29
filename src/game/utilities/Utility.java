@@ -2,7 +2,10 @@ package game.utilities;
 
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.items.Item;
+import game.actors.traders.conversations.Monologue;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -53,5 +56,19 @@ public class Utility {
         } else {
             return originalPrice;
         }
+    }
+
+    public static String getRandomMonologue(List<Monologue> monologues){
+        List<String> availablePhrases = new ArrayList<>();
+        Random rand = new Random();
+
+        for (Monologue monologue : monologues) {
+            if (monologue.canBeSpoken()) {
+                String phrase = monologue.getPhrase();
+                availablePhrases.add(phrase);
+            }
+        }
+
+        return availablePhrases.get(rand.nextInt(availablePhrases.size()));
     }
 }

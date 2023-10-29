@@ -95,6 +95,7 @@ public abstract class Enemy extends Actor implements RespawnEntity {
     public String unconscious(Actor actor, GameMap map) {
         List<Item> inventory = this.getItemInventory();
         Location deathLocation = map.locationOf(this);
+        respawn.unregisterEntity(this);
         for(Item item : inventory){
             deathLocation.addItem(item);
         }
