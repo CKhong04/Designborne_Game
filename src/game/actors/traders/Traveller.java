@@ -10,12 +10,11 @@ import game.actors.traders.conversations.Talkable;
 import game.enums.Ability;
 import game.items.HealingVial;
 import game.items.RefreshingFlask;
+import game.utilities.Utility;
 import game.weapons.Broadsword;
 import game.weapons.GreatKnife;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Class representing a Traveller.
@@ -38,7 +37,6 @@ public class Traveller extends Trader implements Talkable {
     private static final int GREAT_KNIFE_BUY_PRICE = 300;
 
     // List of monologues
-    private final Random rand = new Random();
     private final List<Monologue> monologues;
 
 
@@ -57,16 +55,7 @@ public class Traveller extends Trader implements Talkable {
      */
     @Override
     public String talked() {
-        List<String> availablePhrases = new ArrayList<>();
-
-        for (Monologue monologue : monologues) {
-            if (monologue.canBeSpoken()) {
-                String phrase = monologue.getPhrase();
-                availablePhrases.add(phrase);
-            }
-        }
-
-        return availablePhrases.get(rand.nextInt(availablePhrases.size()));
+        return Utility.getRandomMonologue(this.monologues);
     }
 
     /**

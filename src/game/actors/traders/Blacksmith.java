@@ -1,20 +1,17 @@
 package game.actors.traders;
 
 import edu.monash.fit2099.engine.actions.ActionList;
-import edu.monash.fit2099.engine.actions.DoNothingAction;
 import edu.monash.fit2099.engine.actors.Actor;
 import edu.monash.fit2099.engine.positions.GameMap;
 import game.actions.ListenAction;
 import game.actors.traders.conversations.Monologue;
 import game.actors.traders.conversations.Talkable;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import game.enums.Ability;
+import game.utilities.Utility;
 
 public class Blacksmith extends Trader implements Talkable {
-    private final Random rand = new Random();
     /**
      * The list of monologues that the blacksmith can speak.
      */
@@ -36,16 +33,7 @@ public class Blacksmith extends Trader implements Talkable {
      */
     @Override
     public String talked() {
-        List<String> availablePhrases = new ArrayList<>();
-
-        for (Monologue monologue : monologues) {
-            if (monologue.canBeSpoken()) {
-                String phrase = monologue.getPhrase();
-                availablePhrases.add(phrase);
-            }
-        }
-
-        return availablePhrases.get(rand.nextInt(availablePhrases.size()));
+        return Utility.getRandomMonologue(this.monologues);
     }
 
     /**
