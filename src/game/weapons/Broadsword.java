@@ -94,7 +94,7 @@ public class Broadsword extends WeaponItem implements FocusCapable, Sellable, Bu
 
                 this.updateDamageMultiplier(DAMAGE_MULTIPLIER);
                 this.updateHitRate(NEW_HIT_RATE);
-                display.println("Focs skill turns left: " + turnCounter);
+                display.println("Focus skill turns left: " + turnCounter);
                 this.turnCounter -=1;
             } else if (this.turnCounter == 0) {
                 super.updateHitRate(HIT_RATE);
